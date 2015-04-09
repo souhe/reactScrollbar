@@ -1,14 +1,4 @@
 import React from 'react';
-import routes from './routes.jsx';
-import Router from 'react-router';
-import RouterContainer from './routerContainer.js';
-import xhttp from 'xhttp';
+import App from './app.jsx';
 
-xhttp.addErrInterceptor((data, xhr) => {
-    return {xhr, data};
-});
-
-var router = Router.run(routes, (Handler) => {
-    React.render(React.createElement(Handler, null), document.getElementById("main"));
-});
-RouterContainer.set(router);
+React.render(React.createElement(App, null), document.getElementById("main"));

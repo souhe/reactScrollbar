@@ -1,27 +1,13 @@
-@import 'variables/colors';
-@import 'mixins/fontStyles';
-
-@import 'common/common.less';
-@import 'login.less';
-@import 'testCaseViewer.less';
-@import 'toaster.less';
-@import 'swirl.less';
-@import 'toggle.less';
-
-html, body, #main{
+.scroll-container{
+    position: absolute;
+    width: 8px;
     height: 100%;
-}
-body{
-    .basic-fonts();
-    margin: 0;
-
-    h1, h2, h3, h4, h5, h6 {
-        font-weight: normal;
-    }
-
-    .container{
-        width: 100%;
-        height: 100%;
-        position: relative;
+    background: gray;
+    right: 0;
+    top: 0;
+    .scroll{
+        width: 6px;
+        height: 20px;
+        background: black;
     }
 }
