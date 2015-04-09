@@ -1,0 +1,27 @@
+@import 'variables/colors';
+@import 'mixins/fontStyles';
+
+@import 'common/common.less';
+@import 'login.less';
+@import 'testCaseViewer.less';
+@import 'toaster.less';
+@import 'swirl.less';
+@import 'toggle.less';
+
+html, body, #main{
+    height: 100%;
+}
+body{
+    .basic-fonts();
+    margin: 0;
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: normal;
+    }
+
+    .container{
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+}
