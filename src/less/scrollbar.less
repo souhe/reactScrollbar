@@ -1,14 +1,42 @@
-.scroll-container{
-    position: absolute;
-    width: 8px;
-    height: 100%;
-    background: gray;
-    right: 0;
-    top: 0;
-    .scroll{
-        width: 6px;
-        height: 20px;
-        background: black;
-        margin: 1px;
+.scrollarea-content{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.scrollarea{
+    .scrollbar-container{
+        position: absolute;
+        width: 8px;
+        height: 100%;
+        background: gray;
+        right: 0;
+        top: 0;
+        opacity: .1;
+
+        -webkit-transition: all .3s;
+           -moz-transition: all .3s;
+            -ms-transition: all .3s;
+             -o-transition: all .3s;
+                transition: all .3s;
+
+        &:hover{
+            opacity: .6 !important;
+        }
+
+        &.active{
+            opacity: .6 !important;
+        }
+
+        .scrollbar{
+            width: 6px;
+            height: 20px;
+            background: black;
+            margin: 1px;
+        }
+    }
+
+    &:hover .scrollbar-container{
+        opacity: .3;
     }
 }

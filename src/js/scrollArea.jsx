@@ -11,13 +11,11 @@ class ScrollArea extends React.Component{
     }
 
     componentDidMount(){
-        var content = React.findDOMNode(this.refs.content);
-        var container = React.findDOMNode(this);
+        this.setHeightsToState();
+    }
 
-        this.setState({
-            realHeight: content.offsetHeight,
-            containerHeight: container.offsetHeight
-        })
+    componentWillReceiveProps(newProps){
+        this.setHeightsToState();
     }
 
     render(){
@@ -25,9 +23,10 @@ class ScrollArea extends React.Component{
             marginTop: this.state.topPosition
         };
 
+        var classes = 'scrollarea ' + this.props.className;
         return (
-            <div className={this.props.className} onWheel={this.handleWheel.bind(this)}>
-                <div ref="content" style={style}>
+            <div className={classes} onWheel={this.handleWheel.bind(this)} style={{position: 'relative'}}>
+                <div ref="content" style={style} className="scrollarea-content">
                     {this.props.children}
                 </div>
                 <Scrollbar
@@ -39,21 +38,35 @@ class ScrollArea extends React.Component{
         );
     }
 
-    handleMove(topPosition){
-        console.log('cont top pos', topPosition);
-        this.setState({topPosition});
+    handleMove(deltaY){
+        var newTopPosition = this.computeTopPosition(deltaY);
+        this.setState({topPosition: newTopPosition});
     }
 
     handleWheel(x){
-        var element = React.findDOMNode(this.refs.content);
-        // element.margin += x.deltaY;
-        var newTopPosition = this.state.topPosition - x.deltaY;
+        var newTopPosition = this.computeTopPosition(-x.deltaY);
+        this.setState({topPosition: newTopPosition});
+    }
+
+    computeTopPosition(deltaY){
+        var newTopPosition = this.state.topPosition + deltaY;
         if(-newTopPosition > this.state.realHeight - this.state.containerHeight){
             newTopPosition = -(this.state.realHeight - this.state.containerHeight);
         } else if(newTopPosition > 0){
             newTopPosition = 0;
         }
-        this.setState({topPosition: newTopPosition});
+
+        return newTopPosition;
+    }
+
+    setHeightsToState(){
+        var content = React.findDOMNode(this.refs.content);
+        var container = React.findDOMNode(this);
+
+        this.setState({
+            realHeight: content.offsetHeight,
+            containerHeight: container.offsetHeight
+        });
     }
 }
 

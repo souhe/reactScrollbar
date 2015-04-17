@@ -11,6 +11,11 @@ class ScrollBar extends React.Component {
         }
     }
 
+    componentDidMount(){
+        document.addEventListener("mousemove", this.handleMouseMove.bind(this));
+        document.addEventListener("mouseup", this.handleMouseUp.bind(this));
+    }
+
     componentWillReceiveProps(nextProps){
         this.setState(this.calculateState(nextProps));
     }
@@ -31,13 +36,17 @@ class ScrollBar extends React.Component {
             height: this.state.scrollHeight,
             marginTop: this.state.topPosition
         };
+
+        var scrollbarClasses = 'scrollbar-container';
+        if(this.state.isDragging) scrollbarClasses += ' active';
+
         return (
-            <div className="scroll-container"
-                onMouseMove={this.handleMouseMove.bind(this)} >
-                <div className="scroll"
+            <div className={scrollbarClasses}
+                 >
+                <div className="scrollbar"
                     style={scrollStyle}
                     onMouseDown={this.handleMouseDown.bind(this)}
-                    onMouseUp={this.handleMouseUp.bind(this)} >
+                    >
 
                 </div>
             </div>
@@ -45,14 +54,12 @@ class ScrollBar extends React.Component {
     }
 
     handleMouseMove(e){
+        var multiplier = this.props.containerHeight / this.props.realHeight;
         if(this.state.isDragging){
-            var multiplier = this.props.containerHeight / this.props.realHeight;
+            e.preventDefault();
             var deltaY = this.state.lastClientY - e.clientY;
-            var newTopPosition = this.state.topPosition - deltaY;
-            console.log("new position", newTopPosition);
-
             this.setState({ lastClientY: e.clientY });
-            this.props.onMove(newTopPosition/multiplier);
+            this.props.onMove(deltaY / multiplier);
         }
     }
 
