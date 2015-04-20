@@ -3,21 +3,30 @@ import React from 'react';
 class ScrollBar extends React.Component {
     constructor(props){
         super(props);
+        var newState = this.calculateState(props);
         this.state = {
-            topPosition: 0,
-            scrollHeight: 0,
+            topPosition: newState.topPosition,
+            scrollHeight: newState.scrollHeight,
             isDragging: false,
             lastClientY: 0
         }
+
+        this.bindedHandleMouseMove = this.handleMouseMove.bind(this);
+        this.bindedHandleMouseUp = this.handleMouseUp.bind(this);
     }
 
     componentDidMount(){
-        document.addEventListener("mousemove", this.handleMouseMove.bind(this));
-        document.addEventListener("mouseup", this.handleMouseUp.bind(this));
+        document.addEventListener("mousemove", this.bindedHandleMouseMove);
+        document.addEventListener("mouseup", this.bindedHandleMouseUp);
     }
 
     componentWillReceiveProps(nextProps){
         this.setState(this.calculateState(nextProps));
+    }
+
+    componentWillUnmount(){
+        document.removeEventListener("mousemove", this.bindedHandleMouseMove);
+        document.removeEventListener("mouseup", this.bindedHandleMouseUp);
     }
 
     calculateState(props){
@@ -41,8 +50,7 @@ class ScrollBar extends React.Component {
         if(this.state.isDragging) scrollbarClasses += ' active';
 
         return (
-            <div className={scrollbarClasses}
-                 >
+            <div className={scrollbarClasses} >
                 <div className="scrollbar"
                     style={scrollStyle}
                     onMouseDown={this.handleMouseDown.bind(this)}

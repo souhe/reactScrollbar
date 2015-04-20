@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import ScrollArea from './scrollArea.jsx';
+import ScrollArea from '../../dist/scrollArea.js';
 
 class App extends React.Component{
     render() {

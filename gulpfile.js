@@ -3,13 +3,28 @@ var webpack = require('gulp-webpack');
 var concat = require('gulp-concat');
 var less = require('gulp-less');
 var webpackConf = require('./webpack.config.js');
+var babel = require('gulp-babel');
 var connect = require('gulp-connect');
 
 gulp.task("webpack", function() {
-    return gulp.src('src/js/main.js')
+    return gulp.src('example/js/main.js')
         .pipe(webpack( webpackConf ))
         .pipe(concat('main.js'))
-        .pipe(gulp.dest('dist/js'))
+        .pipe(gulp.dest('example'))
+        .pipe(connect.reload());
+});
+
+gulp.task('build-less', function(){
+    return gulp.src('./src/less/**/*.less')
+        .pipe(less())
+        .pipe(gulp.dest('./dist/css'))
+        .pipe(connect.reload());
+});
+
+gulp.task('build-less-example', function(){
+    return gulp.src('./example/less/**/*.less')
+        .pipe(less())
+        .pipe(gulp.dest('./example'))
         .pipe(connect.reload());
 });
 
@@ -21,29 +36,24 @@ gulp.task("connect", function(){
       });
 });
 
-gulp.task('build-less', function(){
-    return gulp.src('./src/less/**/*.less')
-        .pipe(less())
-        .pipe(gulp.dest('./dist/css'))
-        .pipe(connect.reload());
+gulp.task('babel', function(){
+    return gulp.src('src/js/*.*')
+        .pipe(babel())
+        .pipe(gulp.dest('dist'));
 });
 
-gulp.task('copy', function() {
-    gulp.src('src/index.html')
-      .pipe(gulp.dest('dist'));
+gulp.task('build', ['build-less', 'copy']);
 
-    gulp.src('src/font/*.*')
-      .pipe(gulp.dest('./dist/font'));
-});
-
-gulp.task('default', ['build-less', 'webpack', 'copy']);
+gulp.task('default', ['build-less', 'babel', 'build-less-example', 'webpack']);
 
 gulp.task('watch', function() {
     connect.server({
-       root: 'dist',
+       root: 'example',
        livereload: true,
        port: 8003
      });
     gulp.watch('src/**/*.less', ['build-less']);
-    gulp.watch(['src/**/*.js', 'src/**/*.jsx'], ['webpack']);
+    gulp.watch(['src/**/*.js', 'src/**/*.jsx'], ['babel']);
+    gulp.watch(['example/js/**/*.js', 'example/**/*.jsx'], ['webpack']);
+    gulp.watch('example/**/*.less', ['build-less-example']);
 });
