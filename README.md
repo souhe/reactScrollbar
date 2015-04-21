@@ -19,6 +19,9 @@ npm install react-scrollbar --save
         return (
           <ScrollArea
             speed={0.8}
+            className="area"
+            contentClassName="content"
+            horizontal={false}
             >
             Some long content.
           </ScrollArea>
@@ -47,7 +50,27 @@ then open [http://localhost:8003](http://localhost:80003).
 ```js
     <ScrollArea
         speed={Number}
+        className={String}
+        contentClassName={String}
+        horizontal={Boolean}
+        vertical={Boolean}
     >
 ```
 
-Default speed value is 1.
+#### speed
+Scroll speed applied to mouse wheel event.
+**Default: 1**
+
+#### className
+CSS class names added to main scroll area component.
+
+#### contentClassName
+CSS class names added to element with scroll area content.
+
+#### horizontal
+When set to false, horizontal scrollbar will not be available.
+**Default: true**
+
+#### vertical
+When set to false, vertical scrollbar will not be available, regardless of the content height.
+**Default: true**
