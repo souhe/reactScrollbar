@@ -39,21 +39,23 @@
         }
 
         position: absolute;
-        background: gray;
+        background: none;
         opacity: .1;
         z-index: 9999;
 
-        -webkit-transition: all .3s;
-           -moz-transition: all .3s;
-            -ms-transition: all .3s;
-             -o-transition: all .3s;
-                transition: all .3s;
+        -webkit-transition: all .4s;
+           -moz-transition: all .4s;
+            -ms-transition: all .4s;
+             -o-transition: all .4s;
+                transition: all .4s;
 
         &:hover{
+            background: gray;
             opacity: .6 !important;
         }
 
         &.active{
+            background: gray;
             opacity: .6 !important;
         }
     }

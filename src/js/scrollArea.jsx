@@ -37,7 +37,7 @@ class ScrollArea extends React.Component{
             marginLeft: this.state.leftPosition
         };
 
-        var scrollbarY = this.state.scrollableY? (
+        var scrollbarY = this.canScrollY()? (
             <Scrollbar
                 realSize={this.state.realHeight}
                 containerSize={this.state.containerHeight}
@@ -46,7 +46,7 @@ class ScrollArea extends React.Component{
                 type="vertical"/>
         ): null;
 
-        var scrollbarX = this.state.scrollableX? (
+        var scrollbarX = this.canScrollX()? (
             <Scrollbar
                 realSize={this.state.realWidth}
                 containerSize={this.state.containerWidth}
@@ -69,27 +69,31 @@ class ScrollArea extends React.Component{
     }
 
     handleMove(deltaY, deltaX){
-        var newState = this.computeHeights();
-        if(newState.scrollableY){
+        var newState = this.computeSizes();
+        if(this.canScrollY(newState)){
             newState.topPosition = this.computeTopPosition(deltaY);
         }
-        if(newState.scrollableX){
+        if(this.canScrollX(newState)){
             newState.leftPosition = this.computeLeftPosition(deltaX);
         }
         this.setState(newState);
     }
 
-    handleWheel(x){
-        var newState = this.computeHeights();
-        var deltaY = x.deltaY * this.props.speed;
-        var deltaX = x.deltaX * this.props.speed;
+    handleWheel(e){
+        var newState = this.computeSizes();
+        var deltaY = e.deltaY * this.props.speed;
+        var deltaX = e.deltaX * this.props.speed;
 
-        if(newState.scrollableY){
-            newState.topPosition = this.computeTopPosition(-deltaY);;
+        if(this.canScrollY(newState)){
+            newState.topPosition = this.computeTopPosition(-deltaY);
         }
 
-        if(newState.scrollableX){
+        if(this.canScrollX(newState)){
             newState.leftPosition = this.computeLeftPosition(-deltaX);
+        }
+
+        if(this.state.topPosition !== newState.topPosition || this.state.leftPosition !== newState.leftPosition){
+            e.preventDefault();
         }
 
         this.setState(newState);
@@ -118,23 +122,27 @@ class ScrollArea extends React.Component{
     }
 
     handleWindowResize(){
-        var newState = this.computeHeights();
+        var newState = this.computeSizes();
         var bottomPosition = newState.realHeight - newState.containerHeight;
         if(-this.state.topPosition >= bottomPosition){
-            newState.topPosition = newState.scrollable? -bottomPosition: 0;
+            newState.topPosition = this.canScrollY(newState)? -bottomPosition: 0;
         }
-        //TODO: add X
+
+        var rightPosition = newState.realWidth - newState.containerWidth;
+        if(-this.state.leftPosition >= rightPosition){
+            newState.leftPosition = this.canScrollX(newState)? -rightPosition: 0;
+        }
+
         this.setState(newState);
     }
 
-    computeHeights(){
+    computeSizes(){
         var realHeight = React.findDOMNode(this.refs.content).offsetHeight;
         var containerHeight = React.findDOMNode(this).offsetHeight;
         var realWidth = React.findDOMNode(this.refs.content).offsetWidth;
         var containerWidth = React.findDOMNode(this).offsetWidth;
         var scrollableY = realHeight > containerHeight;
         var scrollableX = realWidth > containerWidth;
-        console.log(scrollableX, scrollableY);
 
         return {
             realHeight: realHeight,
@@ -147,7 +155,7 @@ class ScrollArea extends React.Component{
     }
 
     setHeightsToState(){
-        var heights = this.computeHeights();
+        var heights = this.computeSizes();
         this.setState(heights);
     }
 
@@ -158,16 +166,28 @@ class ScrollArea extends React.Component{
     scrollBottom(){
         this.setState({topPosition: -(this.state.realHeight - this.state.containerHeight)});
     }
+
+    canScrollY(state = this.state){
+        return state.scrollableY && this.props.vertical;
+    }
+
+    canScrollX(state = this.state){
+        return state.scrollableX && this.props.horizontal;
+    }
 }
 
 ScrollArea.propTypes = {
     className: React.PropTypes.string,
     speed: React.PropTypes.number,
-    contentClassName: React.PropTypes.string
+    contentClassName: React.PropTypes.string,
+    vertical: React.PropTypes.bool,
+    horizontal: React.PropTypes.bool
 };
 
 ScrollArea.defaultProps = {
-    speed: 1
+    speed: 1,
+    vertical: true,
+    horizontal: true
 };
 
 export default ScrollArea;
