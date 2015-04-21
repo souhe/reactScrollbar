@@ -19,10 +19,16 @@ body .container {
   height: 100%;
   position: relative;
 }
-body .content {
+body .area {
   width: 300px;
   height: 300px;
   background: #5fe151;
   overflow: hidden;
   position: relative;
+}
+body .area .content {
+  min-width: 400px;
+}
+body .area ul {
+  width: 700px;
 }

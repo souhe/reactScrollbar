@@ -5,12 +5,12 @@ import ScrollArea from '../../dist/scrollArea.js';
 class App extends React.Component{
     render() {
         return (
-            <ScrollArea className="content">
+            <ScrollArea className="area" contentClassName="content">
                 <ul>
                     <li>item 1</li>
                     <li>item 2</li>
                     <li>item 3</li>
-                    <li>item 4</li>
+                    <li>item 4 long long long long long sf dsf sadf dsssssssssssssssssssssssssssssssssssssf sdfsd </li>
                     <li>item 5</li>
                     <li>item 6</li>
                     <li>item 7</li>

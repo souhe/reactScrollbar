@@ -53,7 +53,7 @@ gulp.task('watch', function() {
        port: 8003
      });
     gulp.watch('src/**/*.less', ['build-less']);
-    gulp.watch(['src/**/*.js', 'src/**/*.jsx'], ['babel']);
+    gulp.watch(['src/**/*.js', 'src/**/*.jsx'], ['babel', 'webpack']);
     gulp.watch(['example/js/**/*.js', 'example/**/*.jsx'], ['webpack']);
     gulp.watch('example/**/*.less', ['build-less-example']);
 });
