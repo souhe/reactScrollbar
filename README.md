@@ -2,6 +2,8 @@
 
 Simple ScrollArea component built for [React](facebook.github.io/react/).
 
+[Demo](souhe.github.io/reactScrollbar)
+
 ```bash
 npm install react-scrollbar --save
 ```
