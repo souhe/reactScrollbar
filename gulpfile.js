@@ -7,7 +7,7 @@ var babel = require('gulp-babel');
 var connect = require('gulp-connect');
 
 gulp.task("webpack", function() {
-    return gulp.src('example/js/main.js')
+    return gulp.src('./example/js/main.js')
         .pipe(webpack( webpackConf ))
         .pipe(concat('main.js'))
         .pipe(gulp.dest('example'))
