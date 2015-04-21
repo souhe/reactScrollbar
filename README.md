@@ -1,6 +1,6 @@
 # react-scrollbar
 
-Simple ScrollArea component built for [React](facebook.github.io/react/).
+Simple ScrollArea component built for [React](http://facebook.github.io/react/).
 
 [Demo](http://souhe.github.io/reactScrollbar)
 
@@ -11,7 +11,7 @@ npm install react-scrollbar --save
 ## Usage examples
 
 ```js
-    var React = reqire('react');
+    var React = require('react');
     var ScrollArea = require('react-scrollbar');
 
     var App = React.createClass({
