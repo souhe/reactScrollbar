@@ -32,6 +32,8 @@ npm install react-scrollbar --save
     React.render(<App/>, document.body);
 ```
 
+Then **include scrollbar.css** file into your project.
+
 ### Run the example app
 
 ```bash
