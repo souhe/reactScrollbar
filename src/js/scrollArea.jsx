@@ -20,15 +20,15 @@ class ScrollArea extends React.Component{
 
     componentDidMount(){
         window.addEventListener("resize", this.bindedHandleWindowResize);
-        this.setHeightsToState();
+        this.setSizesToState();
     }
 
     componentWillUnmount(){
         window.removeEventListener("resize", this.bindedHandleWindowResize);
     }
 
-    componentWillReceiveProps(newProps){
-        this.setHeightsToState();
+    componentDidUpdate(){
+        this.setSizesToState();
     }
 
     render(){
@@ -154,9 +154,11 @@ class ScrollArea extends React.Component{
         };
     }
 
-    setHeightsToState(){
-        var heights = this.computeSizes();
-        this.setState(heights);
+    setSizesToState(){
+        var sizes = this.computeSizes();
+        if(sizes.realHeight !== this.state.realHeight || sizes.realWidth !== this.state.realWidth){
+            this.setState(sizes);
+        }
     }
 
     scrollTop(){
