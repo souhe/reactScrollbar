@@ -48,7 +48,7 @@ gulp.task('default', ['build-less', 'babel', 'build-less-example', 'webpack']);
 
 gulp.task('watch', function() {
     connect.server({
-       root: 'examples/changingChildren',
+       root: 'examples/basic',
        livereload: true,
        port: 8003
      });
