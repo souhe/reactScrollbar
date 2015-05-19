@@ -7,10 +7,10 @@ var babel = require('gulp-babel');
 var connect = require('gulp-connect');
 
 gulp.task("webpack", function() {
-    return gulp.src('./example/js/main.js')
+    return gulp.src('./examples/**/js/main.js')
         .pipe(webpack( webpackConf ))
         .pipe(concat('main.js'))
-        .pipe(gulp.dest('example'))
+        .pipe(gulp.dest('../'))
         .pipe(connect.reload());
 });
 
@@ -22,9 +22,9 @@ gulp.task('build-less', function(){
 });
 
 gulp.task('build-less-example', function(){
-    return gulp.src('./example/less/**/*.less')
+    return gulp.src('./examples/**/less/**/*.less')
         .pipe(less())
-        .pipe(gulp.dest('./example'))
+        .pipe(gulp.dest('../'))
         .pipe(connect.reload());
 });
 
@@ -48,12 +48,12 @@ gulp.task('default', ['build-less', 'babel', 'build-less-example', 'webpack']);
 
 gulp.task('watch', function() {
     connect.server({
-       root: 'example',
+       root: 'examples/changingChildren',
        livereload: true,
        port: 8003
      });
     gulp.watch('src/**/*.less', ['build-less']);
     gulp.watch(['src/**/*.js', 'src/**/*.jsx'], ['babel', 'webpack']);
-    gulp.watch(['example/js/**/*.js', 'example/**/*.jsx'], ['webpack']);
-    gulp.watch('example/**/*.less', ['build-less-example']);
+    gulp.watch(['examples/**/js/**/*.js', 'examples/**/*.jsx'], ['webpack']);
+    gulp.watch('examples/**/*.less', ['build-less-example']);
 });

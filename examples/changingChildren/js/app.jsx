@@ -1,7 +1,7 @@
 import React from 'react'
 
 // import ScrollArea from '../../dist/scrollArea.js'; //TODO: toggle comments
-import ScrollArea from '../../src/js/scrollArea.jsx';
+import ScrollArea from '../../../src/js/scrollArea.jsx';
 
 class App extends React.Component{
     constructor(props){
