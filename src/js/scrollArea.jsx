@@ -1,5 +1,5 @@
 import React from 'react';
-import Scrollbar from './scrollBar.js';
+import Scrollbar from './scrollBar.jsx'; //TODO: change to ./scrollBar.js
 
 class ScrollArea extends React.Component{
     constructor(props){
@@ -71,10 +71,10 @@ class ScrollArea extends React.Component{
     handleMove(deltaY, deltaX){
         var newState = this.computeSizes();
         if(this.canScrollY(newState)){
-            newState.topPosition = this.computeTopPosition(deltaY);
+            newState.topPosition = this.computeTopPosition(deltaY, newState);
         }
         if(this.canScrollX(newState)){
-            newState.leftPosition = this.computeLeftPosition(deltaX);
+            newState.leftPosition = this.computeLeftPosition(deltaX, newState);
         }
         this.setState(newState);
     }
@@ -85,11 +85,11 @@ class ScrollArea extends React.Component{
         var deltaX = e.deltaX * this.props.speed;
 
         if(this.canScrollY(newState)){
-            newState.topPosition = this.computeTopPosition(-deltaY);
+            newState.topPosition = this.computeTopPosition(-deltaY, newState);
         }
 
         if(this.canScrollX(newState)){
-            newState.leftPosition = this.computeLeftPosition(-deltaX);
+            newState.leftPosition = this.computeLeftPosition(-deltaX, newState);
         }
 
         if(this.state.topPosition !== newState.topPosition || this.state.leftPosition !== newState.leftPosition){
@@ -99,21 +99,22 @@ class ScrollArea extends React.Component{
         this.setState(newState);
     }
 
-    computeTopPosition(deltaY){
+    computeTopPosition(deltaY, sizes){
         var newTopPosition = this.state.topPosition + deltaY;
-        if(-newTopPosition > this.state.realHeight - this.state.containerHeight){
-            newTopPosition = -(this.state.realHeight - this.state.containerHeight);
-        } else if(newTopPosition > 0){
+
+        if(-newTopPosition > sizes.realHeight - sizes.containerHeight){
+            newTopPosition = -(sizes.realHeight - sizes.containerHeight);
+        }
+        if(newTopPosition > 0){
             newTopPosition = 0;
         }
-
         return newTopPosition;
     }
 
-    computeLeftPosition(deltaX){
+    computeLeftPosition(deltaX, sizes){
         var newLeftPosition = this.state.leftPosition + deltaX;
-        if(-newLeftPosition > this.state.realWidth - this.state.containerWidth){
-            newLeftPosition = -(this.state.realWidth - this.state.containerWidth);
+        if(-newLeftPosition > sizes.realWidth - sizes.containerWidth){
+            newLeftPosition = -(sizes.realWidth - sizes.containerWidth);
         } else if(newLeftPosition > 0){
             newLeftPosition = 0;
         }
@@ -141,8 +142,8 @@ class ScrollArea extends React.Component{
         var containerHeight = React.findDOMNode(this).offsetHeight;
         var realWidth = React.findDOMNode(this.refs.content).offsetWidth;
         var containerWidth = React.findDOMNode(this).offsetWidth;
-        var scrollableY = realHeight > containerHeight;
-        var scrollableX = realWidth > containerWidth;
+        var scrollableY = realHeight > containerHeight || this.state.topPosition != 0;
+        var scrollableX = realWidth > containerWidth || this.state.leftPosition != 0;
 
         return {
             realHeight: realHeight,
