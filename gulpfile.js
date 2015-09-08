@@ -38,7 +38,7 @@ gulp.task("connect", function(){
 
 gulp.task('babel', function(){
     return gulp.src('src/js/*.*')
-        .pipe(babel())
+        .pipe(babel({modules: 'umd'}))
         .pipe(gulp.dest('dist'));
 });
 
