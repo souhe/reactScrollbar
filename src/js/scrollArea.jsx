@@ -1,5 +1,5 @@
 import React from 'react';
-import Scrollbar from './scrollBar.js'; //TODO: change to ./scrollBar.js
+import Scrollbar from './scrollBar';
 
 class ScrollArea extends React.Component{
     constructor(props){
