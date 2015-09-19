@@ -1,5 +1,5 @@
 import React from 'react';
-import Scrollbar from './scrollBar';
+import Scrollbar from './scrollBar'; //FIXME
 
 class ScrollArea extends React.Component{
     constructor(props){
