@@ -1,3 +1,5 @@
+[![npm package](https://img.shields.io/npm/v/react-scrollbar.svg?style=flat-square)](https://www.npmjs.org/package/react-scrollbar)
+
 # react-scrollbar
 
 Simple ScrollArea component built for [React](http://facebook.github.io/react/).
@@ -40,7 +42,7 @@ Then **include scrollbar.css** file into your project.
 git clone https://github.com/souhe/reactScrollbar.git
 cd reactScrollbar
 npm install
-gulp
+gulp watch
 ```
 
 then open [http://localhost:8003](http://localhost:80003).
