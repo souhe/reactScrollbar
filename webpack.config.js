@@ -1,6 +1,7 @@
 module.exports = {
     resolve: {
         modulesDirectories: ['node_modules', 'bower_components'],
+        extensions: ['', '.js', '.jsx']
     },
     
     output: {

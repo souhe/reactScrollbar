@@ -1,6 +1,6 @@
 import '../less/site.less';
 import React from 'react';
-import Scrollbar from './scrollBar.jsx'; //FIXME
+import Scrollbar from './scrollBar'; 
 
 class ScrollArea extends React.Component{
     constructor(props){
