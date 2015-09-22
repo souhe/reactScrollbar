@@ -20,7 +20,8 @@ module.exports = {
     
     module: {
         loaders: [
-            { test: /\.js|\.jsx$/, exclude: /node_modules/, loader: 'babel'}
+            { test: /\.js|\.jsx$/, exclude: /node_modules/, loader: 'babel' },
+            { test: /\.less$/, loader: 'style!css!less' }
         ]
     },
     devtool: "inline-source-map"
