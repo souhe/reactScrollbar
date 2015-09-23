@@ -5,6 +5,7 @@ var less = require('gulp-less');
 var babel = require('gulp-babel');
 var connect = require('gulp-connect');
 var merge = require('merge-stream');
+var runSequence = require('run-sequence');
 
 var webpackConf = require('./webpack.config.js');
 var webpackExamplesConf = require('./webpackExamples.config.js');
@@ -44,7 +45,9 @@ gulp.task('less-examples', function(){
         .pipe(connect.reload());
 });
 
-gulp.task('default', ['build', 'build-examples', 'less-examples']);
+gulp.task('default', function(callback){
+    runSequence('build', ['build-examples', 'less-examples'], callback);
+});
 
 gulp.task('watch', function() {
     connect.server({
@@ -53,7 +56,7 @@ gulp.task('watch', function() {
        port: 8003
      });
      
-    gulp.watch(['src/**/*.js', 'src/**/*.jsx', 'src/**/*.less'], ['build', 'build-examples']);
+    gulp.watch(['src/**/*.js', 'src/**/*.jsx', 'src/**/*.less'], ['default']);
     gulp.watch(['examples/**/js/**/*.js', 'examples/**/*.jsx'], ['build-examples']);
     gulp.watch('examples/**/*.less', ['less-examples']);
 });

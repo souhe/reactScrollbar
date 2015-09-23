@@ -38,6 +38,7 @@
     "less": "^2.5.1",
     "less-loader": "^2.2.1",
     "merge-stream": "^1.0.0",
+    "run-sequence": "^1.1.4",
     "style-loader": "^0.10.2",
     "webpack": "^1.12.2",
     "webpack-stream": "^2.1.0"
