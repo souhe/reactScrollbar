@@ -1,6 +1,7 @@
 import React from 'react'
+// import ScrollArea from '../../../dist/scrollArea.js'; 
+import ScrollArea from '../../../src/js/scrollArea'; //FIXME: remove
 
-import ScrollArea from '../../../dist/scrollArea.js'; 
 
 class App extends React.Component{
     constructor(props){
@@ -39,7 +40,7 @@ class Content extends React.Component {
     }
 
     componentWillRecieveProps(newProps){
-        this.setState({itemsCount: newProps.itemsCount})
+        this.setState({itemsCount: newProps.itemsCount});
     }
 
     render(){
@@ -55,7 +56,7 @@ class Content extends React.Component {
                 <button onClick={this.handleAddButtonClick.bind(this)} >Add 10</button>
                 <button onClick={this.handleRemoveButtonClick.bind(this)} >Remove 10</button>
             </div>
-        )
+        );
     }
 
     handleAddButtonClick(){
@@ -64,9 +65,7 @@ class Content extends React.Component {
 
     handleRemoveButtonClick(){
         this.setState({itemsCount: this.state.itemsCount - 10});
-
     }
 }
-
 
 export default App;

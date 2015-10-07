@@ -1,6 +1,6 @@
-import '../less/site.less';
+import '../less/scrollbar.less';
 import React from 'react';
-import Scrollbar from './scrollBar'; 
+import Scrollbar from './scrollBar';
 
 class ScrollArea extends React.Component{
     constructor(props){
@@ -60,13 +60,48 @@ class ScrollArea extends React.Component{
         var contentClasses = 'scrollarea-content ' + this.props.contentClassName
         return (
             <div className={classes} onWheel={this.handleWheel.bind(this)}>
-                <div ref="content" style={style} className={contentClasses}>
+                <div ref="content"
+                    style={style}
+                    className={contentClasses}
+                    onTouchStart={this.handleTouchStart.bind(this)}
+                    onTouchMove={this.handleTouchMove.bind(this)}
+                    onTouchEnd={this.handleTouchEnd}>
                     {this.props.children}
                 </div>
                 {scrollbarY}
                 {scrollbarX}
             </div>
         );
+    }
+
+    handleTouchStart(e){
+        console.log("touch starT: ", e.touches);
+        e.preventDefault();
+        let {touches} = e;
+        if(touches.length === 1){
+            let {clientX, clientY} = touches[0];
+            this.setState({ lastClientYPosition: clientY, lastClientXPosition: clientX });
+        }
+        //e.preventDefault();
+    }
+
+    handleTouchMove(e){
+        console.log("touch movE: ", e.touches);
+        e.preventDefault();
+        let {touches} = e;
+
+        if(touches.length === 1){
+            let {clientX, clientY} = touches[0];
+
+            let deltaY = this.state.lastClientYPosition - clientY;
+            let deltaX = this.state.lastClientXPosition - clientX;
+            this.handleMove(-deltaY, -deltaX);
+            this.setState({ lastClientYPosition: clientY, lastClientXPosition: clientX });
+        }
+    }
+
+    onTouchEnd (){
+        console.log("touch end");
     }
 
     handleMove(deltaY, deltaX){
