@@ -64,8 +64,7 @@ class ScrollArea extends React.Component{
                     style={style}
                     className={contentClasses}
                     onTouchStart={this.handleTouchStart.bind(this)}
-                    onTouchMove={this.handleTouchMove.bind(this)}
-                    onTouchEnd={this.handleTouchEnd}>
+                    onTouchMove={this.handleTouchMove.bind(this)}>
                     {this.props.children}
                 </div>
                 {scrollbarY}
@@ -75,21 +74,17 @@ class ScrollArea extends React.Component{
     }
 
     handleTouchStart(e){
-        console.log("touch starT: ", e.touches);
         e.preventDefault();
         let {touches} = e;
         if(touches.length === 1){
             let {clientX, clientY} = touches[0];
             this.setState({ lastClientYPosition: clientY, lastClientXPosition: clientX });
         }
-        //e.preventDefault();
     }
 
     handleTouchMove(e){
-        console.log("touch movE: ", e.touches);
         e.preventDefault();
         let {touches} = e;
-
         if(touches.length === 1){
             let {clientX, clientY} = touches[0];
 
@@ -98,10 +93,6 @@ class ScrollArea extends React.Component{
             this.handleMove(-deltaY, -deltaX);
             this.setState({ lastClientYPosition: clientY, lastClientXPosition: clientX });
         }
-    }
-
-    onTouchEnd (){
-        console.log("touch end");
     }
 
     handleMove(deltaY, deltaX){
