@@ -1,6 +1,7 @@
 import '../less/scrollbar.less';
 import React from 'react';
 import Scrollbar from './scrollBar';
+import ReactDOM from 'react-dom';
 
 class ScrollArea extends React.Component{
     constructor(props){
@@ -16,7 +17,19 @@ class ScrollArea extends React.Component{
             scrollableY: false
         };
 
+        this.scrollArea = {
+            refresh: () => {
+                this.setSizesToState();
+            }
+        }
+
         this.bindedHandleWindowResize = this.handleWindowResize.bind(this);
+    }
+
+    getChildContext(){
+        return {
+            scrollArea: this.scrollArea
+        };
     }
 
     componentDidMount(){
@@ -74,7 +87,6 @@ class ScrollArea extends React.Component{
     }
 
     handleTouchStart(e){
-        e.preventDefault();
         let {touches} = e;
         if(touches.length === 1){
             let {clientX, clientY} = touches[0];
@@ -165,10 +177,10 @@ class ScrollArea extends React.Component{
     }
 
     computeSizes(){
-        var realHeight = React.findDOMNode(this.refs.content).offsetHeight;
-        var containerHeight = React.findDOMNode(this).offsetHeight;
-        var realWidth = React.findDOMNode(this.refs.content).offsetWidth;
-        var containerWidth = React.findDOMNode(this).offsetWidth;
+        var realHeight = ReactDOM.findDOMNode(this.refs.content).offsetHeight;
+        var containerHeight = ReactDOM.findDOMNode(this).offsetHeight;
+        var realWidth = ReactDOM.findDOMNode(this.refs.content).offsetWidth;
+        var containerWidth = ReactDOM.findDOMNode(this).offsetWidth;
         var scrollableY = realHeight > containerHeight || this.state.topPosition != 0;
         var scrollableX = realWidth > containerWidth || this.state.leftPosition != 0;
 
@@ -205,6 +217,10 @@ class ScrollArea extends React.Component{
         return state.scrollableX && this.props.horizontal;
     }
 }
+
+ScrollArea.childContextTypes = {
+    scrollArea: React.PropTypes.object
+};
 
 ScrollArea.propTypes = {
     className: React.PropTypes.string,

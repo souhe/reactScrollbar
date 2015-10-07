@@ -1,5 +1,5 @@
 import React from 'react'
-// import ScrollArea from '../../../dist/scrollArea.js'; 
+// import ScrollArea from '../../../dist/scrollArea.js';
 import ScrollArea from '../../../src/js/scrollArea'; //FIXME: remove
 
 
@@ -39,7 +39,7 @@ class Content extends React.Component {
         };
     }
 
-    componentWillRecieveProps(newProps){
+    componentWillReceiveProps(newProps){
         this.setState({itemsCount: newProps.itemsCount});
     }
 
@@ -47,7 +47,7 @@ class Content extends React.Component {
         var itemElements = [];
 
         for( var i = 0; i< this.state.itemsCount; i++){
-            itemElements.push(<div className="item">Item {i}</div>);
+            itemElements.push(<div className="item" key={i}>Item {i}</div>);
         }
 
         return (
@@ -60,12 +60,16 @@ class Content extends React.Component {
     }
 
     handleAddButtonClick(){
-        this.setState({itemsCount: this.state.itemsCount + 10});
+        this.setState({itemsCount: this.state.itemsCount + 10}, this.context.scrollArea.refresh);
     }
 
     handleRemoveButtonClick(){
-        this.setState({itemsCount: this.state.itemsCount - 10});
+        this.setState({itemsCount: this.state.itemsCount - 10}, this.context.scrollArea.refresh); //FIXME: not working
     }
 }
+
+Content.contextTypes = {
+    scrollArea: React.PropTypes.object
+};
 
 export default App;

@@ -3,7 +3,7 @@ module.exports = {
         modulesDirectories: ['node_modules', 'bower_components'],
         extensions: ['', '.js', '.jsx']
     },
-    
+
     output: {
         library: 'ScrollArea',
         libraryTarget: 'umd'
@@ -18,10 +18,14 @@ module.exports = {
           amd: "react"
       }
     }],
-    
+
     module: {
         loaders: [
-            { test: /\.js|\.jsx$/, exclude: /node_modules/, loader: 'babel' },
+            { test: /\.js|\.jsx$/, exclude: /node_modules/, loader: 'babel', query: {
+                    optional: ['runtime'],
+                    stage: 0
+                }
+            },
             { test: /\.less$/, loader: 'style!css!less' }
         ]
     },
