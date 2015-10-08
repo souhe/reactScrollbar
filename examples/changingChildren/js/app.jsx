@@ -1,6 +1,5 @@
 import React from 'react'
-// import ScrollArea from '../../../dist/scrollArea.js';
-import ScrollArea from '../../../src/js/scrollArea'; //FIXME: remove
+import ScrollArea from '../../../src/js/scrollArea';
 
 
 class App extends React.Component{
@@ -17,7 +16,7 @@ class App extends React.Component{
             <div>
                 <ScrollArea className="area" contentClassName="content">
 
-                    {() => <Content itemsCount={this.state.itemsCount} />}
+                    <Content itemsCount={this.state.itemsCount} />
 
                 </ScrollArea>
             </div>
