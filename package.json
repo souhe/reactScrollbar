@@ -22,8 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "classnames": "^1.2.0",
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react": "^0.14.0"
   },
   "devDependencies": {
     "babel": "^5.8.23",
@@ -39,6 +38,7 @@
     "less": "^2.5.1",
     "less-loader": "^2.2.1",
     "merge-stream": "^1.0.0",
+    "react-dom": "^0.14.0",
     "run-sequence": "^1.1.4",
     "style-loader": "^0.10.2",
     "webpack": "^1.12.2",

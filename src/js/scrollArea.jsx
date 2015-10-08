@@ -1,10 +1,8 @@
 import '../less/scrollbar.less';
 import React from 'react';
 import Scrollbar from './scrollBar';
-import ReactDOM from 'react-dom';
+import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero} from './utils';
 
-const requireFunctionChild = isUsingOwnerContext(React);
-var didWarnAboutChild = false;
 export default class ScrollArea extends React.Component{
     constructor(props){
         super(props);
@@ -80,7 +78,7 @@ export default class ScrollArea extends React.Component{
         var classes = 'scrollarea ' + className;
         var contentClasses = 'scrollarea-content ' + contentClassName
         return (
-            <div className={classes} onWheel={this.handleWheel.bind(this)}>
+            <div ref="wrapper" className={classes} onWheel={this.handleWheel.bind(this)}>
                 <div ref="content"
                     style={style}
                     className={contentClasses}
@@ -176,10 +174,10 @@ export default class ScrollArea extends React.Component{
     }
 
     computeSizes(){
-        var realHeight = ReactDOM.findDOMNode(this.refs.content).offsetHeight;
-        var containerHeight = ReactDOM.findDOMNode(this).offsetHeight;
-        var realWidth = ReactDOM.findDOMNode(this.refs.content).offsetWidth;
-        var containerWidth = ReactDOM.findDOMNode(this).offsetWidth;
+        var realHeight = findDOMNode(this.refs.content).offsetHeight;
+        var containerHeight = findDOMNode(this.refs.wrapper).offsetHeight;
+        var realWidth = findDOMNode(this.refs.content).offsetWidth;
+        var containerWidth = findDOMNode(this.refs.wrapper).offsetWidth;
 
         return {
             realHeight: realHeight,
@@ -210,7 +208,7 @@ export default class ScrollArea extends React.Component{
     }
 
     canScrollX(state = this.state){
-        let scrollableX = state.realHeight > state.containerHeight || this.state.topPosition != 0
+        let scrollableX = state.realWidth > state.containerWidth || this.state.leftPosition != 0;
         return scrollableX && this.props.horizontal;
     }
 
@@ -227,10 +225,6 @@ export default class ScrollArea extends React.Component{
 
         return newState;
     }
-}
-
-function positiveOrZero(number){
-    return number < 0 ? 0 : number;
 }
 
 ScrollArea.childContextTypes = {
@@ -250,34 +244,3 @@ ScrollArea.defaultProps = {
     vertical: true,
     horizontal: true
 };
-
-function isUsingOwnerContext(React) {
-    const { version } = React;
-    if (typeof version !== 'string') {
-        return true;
-    }
-
-    const parts = version.split('.');
-    const major = parseInt(parts[0], 10);
-    const minor = parseInt(parts[1], 10);
-
-    return major === 0 && minor === 13;
-}
-
-function warnAboutFunctionChild() {
-    if (didWarnAboutChild || requireFunctionChild) {
-      return;
-    }
-
-    didWarnAboutChild = true;
-    console.error('With React 0.14 and later versions, you no longer need to wrap <ScrollArea> child into a function.');
-  }
-
-function warnAboutElementChild() {
-    if (didWarnAboutChild || !requireFunctionChild) {
-          return;
-    }
-
-    didWarnAboutChild = true;
-    console.error( 'With React 0.13, you need to wrap <ScrollArea> child into a function.' );
-  }
