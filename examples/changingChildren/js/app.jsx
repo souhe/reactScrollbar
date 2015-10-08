@@ -54,7 +54,7 @@ class Content extends React.Component {
     }
 
     handleRemoveButtonClick(){
-        this.setState({itemsCount: this.state.itemsCount - 10}, this.context.scrollArea.refresh); //FIXME: not working
+        this.setState({itemsCount: this.state.itemsCount - 10}, this.context.scrollArea.refresh);
     }
 }
 

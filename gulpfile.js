@@ -51,7 +51,7 @@ gulp.task('default', function(callback){
 
 gulp.task('watch', function() {
     connect.server({
-       root: 'examples/changingChildren',
+       root: 'examples/basic',
        livereload: true,
        port: 8003
      });

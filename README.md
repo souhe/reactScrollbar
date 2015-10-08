@@ -11,10 +11,14 @@ Simple ScrollArea component built for [React](http://facebook.github.io/react/).
 npm install react-scrollbar --save
 ```
 
+React Scrollbar requires **React 0.13 or later**
+
 ## Usage examples
 
+#### React 0.14
 ```js
     var React = require('react');
+    var ReactDOM = require('react-dom');
     var ScrollArea = require('react-scrollbar');
 
     var App = React.createClass({
@@ -26,16 +30,22 @@ npm install react-scrollbar --save
             contentClassName="content"
             horizontal={false}
             >
-            Some long content.
+            <div>Some long content.</div>
           </ScrollArea>
         );
       }
     });
 
-    React.render(<App/>, document.body);
+    ReactDOM.render(<App/>, document.body);
 ```
 
-Then **include scrollbar.css** file into your project.
+#### React 0.13
+For **React 0.13** you need to wrap ```<ScrollArea>``` child into a function.
+```js
+<ScrollArea>
+    { () => <div>Some long content. </div> }
+</ScrollArea>
+```
 
 ### Run the example app
 
@@ -79,3 +89,40 @@ When set to false, horizontal scrollbar will not be available.
 #### vertical
 When set to false, vertical scrollbar will not be available, regardless of the content height.
 **Default: true**
+
+### Context
+In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:
+
+#### `refresh()`
+That method allows manual refreshing of the scrollbar.
+
+```js
+class App extends React.Component {
+    render(){
+        return (
+            <ScrollArea>
+                <Content />
+            </ScrollArea>
+        );
+    }
+}
+
+class Content extends React.Component {
+    render(){
+        return (
+            <div onClick={this.handleSomeAction.bind(this)}> Some long content </div>
+        );
+    }
+
+    handleSomeAction(){
+        this.context.scrollArea.refresh();
+    }
+}
+
+Content.contextTypes = {
+    scrollArea: React.PropTypes.object
+};
+```
+
+## Change long
+Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page.
