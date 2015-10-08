@@ -3,9 +3,9 @@ import React from 'react';
 import Scrollbar from './scrollBar';
 import ReactDOM from 'react-dom';
 
-
-
-class ScrollArea extends React.Component{
+const requireFunctionChild = isUsingOwnerContext(React);
+var didWarnAboutChild = false;
+export default class ScrollArea extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -14,9 +14,7 @@ class ScrollArea extends React.Component{
             realHeight: 0,
             containerHeight: 0,
             realWidth: 0,
-            containerWidth: 0,
-            // scrollableX: false,
-            // scrollableY: false
+            containerWidth: 0
         };
 
         this.scrollArea = {
@@ -48,6 +46,7 @@ class ScrollArea extends React.Component{
     }
 
     render(){
+        let {children, className, contentClassName} = this.props
         var style = {
             marginTop: this.state.topPosition,
             marginLeft: this.state.leftPosition
@@ -71,8 +70,15 @@ class ScrollArea extends React.Component{
                 type="horizontal"/>
         ): null;
 
-        var classes = 'scrollarea ' + this.props.className;
-        var contentClasses = 'scrollarea-content ' + this.props.contentClassName
+        if(typeof children === 'function'){
+            warnAboutFunctionChild();
+            children = children();
+        } else {
+            warnAboutElementChild();
+        }
+
+        var classes = 'scrollarea ' + className;
+        var contentClasses = 'scrollarea-content ' + contentClassName
         return (
             <div className={classes} onWheel={this.handleWheel.bind(this)}>
                 <div ref="content"
@@ -80,7 +86,7 @@ class ScrollArea extends React.Component{
                     className={contentClasses}
                     onTouchStart={this.handleTouchStart.bind(this)}
                     onTouchMove={this.handleTouchMove.bind(this)}>
-                    {this.props.children}
+                    {children}
                 </div>
                 {scrollbarY}
                 {scrollbarX}
@@ -174,16 +180,12 @@ class ScrollArea extends React.Component{
         var containerHeight = ReactDOM.findDOMNode(this).offsetHeight;
         var realWidth = ReactDOM.findDOMNode(this.refs.content).offsetWidth;
         var containerWidth = ReactDOM.findDOMNode(this).offsetWidth;
-        // var scrollableY = realHeight > containerHeight || this.state.topPosition != 0;
-        // var scrollableX = realWidth > containerWidth || this.state.leftPosition != 0;
 
         return {
             realHeight: realHeight,
             containerHeight: containerHeight,
             realWidth: realWidth,
-            containerWidth: containerWidth,
-            // scrollableX: scrollableX,
-            // scrollableY: scrollableY
+            containerWidth: containerWidth
         };
     }
 
@@ -249,4 +251,33 @@ ScrollArea.defaultProps = {
     horizontal: true
 };
 
-export default ScrollArea;
+function isUsingOwnerContext(React) {
+    const { version } = React;
+    if (typeof version !== 'string') {
+        return true;
+    }
+
+    const parts = version.split('.');
+    const major = parseInt(parts[0], 10);
+    const minor = parseInt(parts[1], 10);
+
+    return major === 0 && minor === 13;
+}
+
+function warnAboutFunctionChild() {
+    if (didWarnAboutChild || requireFunctionChild) {
+      return;
+    }
+
+    didWarnAboutChild = true;
+    console.error('With React 0.14 and later versions, you no longer need to wrap <ScrollArea> child into a function.');
+  }
+
+function warnAboutElementChild() {
+    if (didWarnAboutChild || !requireFunctionChild) {
+          return;
+    }
+
+    didWarnAboutChild = true;
+    console.error( 'With React 0.13, you need to wrap <ScrollArea> child into a function.' );
+  }

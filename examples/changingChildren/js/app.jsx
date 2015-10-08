@@ -12,17 +12,12 @@ class App extends React.Component{
         };
     }
 
-
-    handleAddClick(){
-        this.setState({itemsCount: this.state.itemsCount + 10});
-    }
-
     render() {
         return (
             <div>
                 <ScrollArea className="area" contentClassName="content">
 
-                    <Content itemsCount={this.state.itemsCount} />
+                    {() => <Content itemsCount={this.state.itemsCount} />}
 
                 </ScrollArea>
             </div>
@@ -37,10 +32,6 @@ class Content extends React.Component {
         this.state = {
             itemsCount : props.itemsCount
         };
-    }
-
-    componentWillReceiveProps(newProps){
-        this.setState({itemsCount: newProps.itemsCount});
     }
 
     render(){
