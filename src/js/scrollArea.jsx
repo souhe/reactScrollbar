@@ -3,6 +3,8 @@ import React from 'react';
 import Scrollbar from './scrollBar';
 import ReactDOM from 'react-dom';
 
+
+
 class ScrollArea extends React.Component{
     constructor(props){
         super(props);
@@ -13,8 +15,8 @@ class ScrollArea extends React.Component{
             containerHeight: 0,
             realWidth: 0,
             containerWidth: 0,
-            scrollableX: false,
-            scrollableY: false
+            // scrollableX: false,
+            // scrollableY: false
         };
 
         this.scrollArea = {
@@ -163,16 +165,7 @@ class ScrollArea extends React.Component{
 
     handleWindowResize(){
         var newState = this.computeSizes();
-        var bottomPosition = newState.realHeight - newState.containerHeight;
-        if(-this.state.topPosition >= bottomPosition){
-            newState.topPosition = this.canScrollY(newState)? -bottomPosition: 0;
-        }
-
-        var rightPosition = newState.realWidth - newState.containerWidth;
-        if(-this.state.leftPosition >= rightPosition){
-            newState.leftPosition = this.canScrollX(newState)? -rightPosition: 0;
-        }
-
+        newState = this.getModifiedPositionsIfNeeded(newState);
         this.setState(newState);
     }
 
@@ -181,23 +174,23 @@ class ScrollArea extends React.Component{
         var containerHeight = ReactDOM.findDOMNode(this).offsetHeight;
         var realWidth = ReactDOM.findDOMNode(this.refs.content).offsetWidth;
         var containerWidth = ReactDOM.findDOMNode(this).offsetWidth;
-        var scrollableY = realHeight > containerHeight || this.state.topPosition != 0;
-        var scrollableX = realWidth > containerWidth || this.state.leftPosition != 0;
+        // var scrollableY = realHeight > containerHeight || this.state.topPosition != 0;
+        // var scrollableX = realWidth > containerWidth || this.state.leftPosition != 0;
 
         return {
             realHeight: realHeight,
             containerHeight: containerHeight,
             realWidth: realWidth,
             containerWidth: containerWidth,
-            scrollableX: scrollableX,
-            scrollableY: scrollableY
+            // scrollableX: scrollableX,
+            // scrollableY: scrollableY
         };
     }
 
     setSizesToState(){
         var sizes = this.computeSizes();
         if(sizes.realHeight !== this.state.realHeight || sizes.realWidth !== this.state.realWidth){
-            this.setState(sizes);
+            this.setState(this.getModifiedPositionsIfNeeded(sizes));
         }
     }
 
@@ -210,12 +203,32 @@ class ScrollArea extends React.Component{
     }
 
     canScrollY(state = this.state){
-        return state.scrollableY && this.props.vertical;
+        let scrollableY = state.realHeight > state.containerHeight || this.state.topPosition != 0;
+        return scrollableY && this.props.vertical;
     }
 
     canScrollX(state = this.state){
-        return state.scrollableX && this.props.horizontal;
+        let scrollableX = state.realHeight > state.containerHeight || this.state.topPosition != 0
+        return scrollableX && this.props.horizontal;
     }
+
+    getModifiedPositionsIfNeeded(newState){
+        var bottomPosition = newState.realHeight - newState.containerHeight;
+        if(-this.state.topPosition >= bottomPosition){
+            newState.topPosition = this.canScrollY(newState)? -positiveOrZero(bottomPosition): 0;
+        }
+
+        var rightPosition = newState.realWidth - newState.containerWidth;
+        if(-this.state.leftPosition >= rightPosition){
+            newState.leftPosition = this.canScrollX(newState)? -positiveOrZero(rightPosition): 0;
+        }
+
+        return newState;
+    }
+}
+
+function positiveOrZero(number){
+    return number < 0 ? 0 : number;
 }
 
 ScrollArea.childContextTypes = {
