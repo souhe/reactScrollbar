@@ -1,3 +1,5 @@
 /node_modules/
 /bower_components/
 /npm-debug.log
+/examples/basic/main.js
+/examples/changingChildren/main.js
