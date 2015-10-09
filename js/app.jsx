@@ -15,7 +15,7 @@ class App extends React.Component{
         var itemElements = [];
 
         for( var i = 0; i< this.state.itemsCount; i++){
-            itemElements.push(<div className="item">item {i}</div>);
+            itemElements.push(<div className="item" key={i}>item {i}</div>);
         }
 
         return (
