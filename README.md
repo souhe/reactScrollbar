@@ -40,7 +40,7 @@ React Scrollbar requires **React 0.13 or later**
 ```
 
 #### React 0.13
-For **React 0.13** you need to wrap ```<ScrollArea>``` child into a function.
+For **React 0.13** you need to wrap `<ScrollArea>` child into a function.
 ```js
 <ScrollArea>
     { () => <div>Some long content. </div> }
@@ -124,5 +124,19 @@ Content.contextTypes = {
 };
 ```
 
-## Change long
-Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page.
+# Change log
+<!-- Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. -->
+
+## v0.2.0
+#### `Refresh()` method
+
+#### Touch support
+Now React Scrollbar supports touch events.
+
+To each <ScrollArea> child could be injected an object `scrollArea` contains method `refresh()` which could refresh react scrollbar state.
+
+When using **React 0.13** it's necessary to wrap `<ScrollArea>` child into a function. This is a temporary workaround for a React 0.13 context issue, which is fixed in React 0.14.
+#### React 0.14 support
+
+#### No need to include `css` styles to project anymore.
+Styles are now boundled together with scripts.
