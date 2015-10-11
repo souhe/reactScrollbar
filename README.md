@@ -129,15 +129,14 @@ Content.contextTypes = {
 <!-- Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. -->
 
 ## v0.2.0
-#### `Refresh()` method
+- #### `Refresh()` method
 To each <ScrollArea> child could be injected an object `scrollArea` contains method `refresh()` which could refresh react scrollbar state.
-
 When using **React 0.13** it's necessary to wrap `<ScrollArea>` child into a function. This is a temporary workaround for a React 0.13 context issue, which is fixed in React 0.14.
 
-#### Touch support
+- #### Touch support
 Now React Scrollbar supports touch events.
 
-#### React 0.14 support
+- #### React 0.14 support
 
-#### No need to include `css` styles to project anymore.
+- #### No need to include `css` styles to project anymore.
 Styles are now boundled together with scripts.
