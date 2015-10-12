@@ -1,5 +1,5 @@
 import React from 'react'
-import ScrollArea from '../../../src/js/scrollArea'; 
+import ScrollArea from '../../../src/js/scrollArea';
 class App extends React.Component{
     constructor(props){
         super(props);
@@ -20,9 +20,18 @@ class App extends React.Component{
             itemElements.push(<div className="item" key={i}>item {i}</div>);
         }
 
+        let scrollBarStyles = {borderRadius: 5};
+
         return (
             <div>
-                <ScrollArea className="area" contentClassName="content">
+                <ScrollArea
+                  className="area"
+                  contentClassName="content"
+                  verticalScrollbarStyle={scrollBarStyles}
+                  verticalContainerStyle={scrollBarStyles}
+                  horizontalScrollbarStyle={scrollBarStyles}
+                  horizontalContainerStyle={scrollBarStyles}
+                  >
 
                     {itemElements}
 

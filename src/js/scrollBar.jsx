@@ -56,9 +56,9 @@ class ScrollBar extends React.Component {
         }]);
 
         return (
-            <div className={scrollbarClasses} >
+            <div className={scrollbarClasses} style={this.props.containerStyle} >
                 <div className="scrollbar"
-                    style={scrollStyle}
+                    style={Object.assign({}, this.props.scrollbarStyle, scrollStyle)}
                     onMouseDown={this.handleMouseDown.bind(this)}
                     >
 
@@ -116,6 +116,8 @@ ScrollBar.propTypes = {
     realSize: React.PropTypes.number,
     containerSize: React.PropTypes.number,
     position: React.PropTypes.number,
+    containerStyle: React.PropTypes.object,
+    scrollbarStyle: React.PropTypes.object,
     type: React.PropTypes.oneOf(['vertical', 'horizontal'])
 };
 

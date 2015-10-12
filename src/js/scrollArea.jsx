@@ -45,7 +45,7 @@ export default class ScrollArea extends React.Component{
 
     render(){
         let {children, className, contentClassName} = this.props
-        var style = {
+        var contentStyle = {
             marginTop: this.state.topPosition,
             marginLeft: this.state.leftPosition
         };
@@ -56,6 +56,8 @@ export default class ScrollArea extends React.Component{
                 containerSize={this.state.containerHeight}
                 position={-this.state.topPosition}
                 onMove={this.handleMove.bind(this)}
+                containerStyle={this.props.verticalContainerStyle}
+                scrollbarStyle={this.props.verticalScrollbarStyle}
                 type="vertical"/>
         ): null;
 
@@ -65,6 +67,8 @@ export default class ScrollArea extends React.Component{
                 containerSize={this.state.containerWidth}
                 position={-this.state.leftPosition}
                 onMove={this.handleMove.bind(this)}
+                containerStyle={this.props.horizontalContainerStyle}
+                scrollbarStyle={this.props.horizontalScrollbarStyle}
                 type="horizontal"/>
         ): null;
 
@@ -75,12 +79,12 @@ export default class ScrollArea extends React.Component{
             warnAboutElementChild();
         }
 
-        var classes = 'scrollarea ' + className;
-        var contentClasses = 'scrollarea-content ' + contentClassName
+        var classes = 'scrollarea ' + (className || '');
+        var contentClasses = 'scrollarea-content ' + (contentClassName || '');
         return (
-            <div ref="wrapper" className={classes} onWheel={this.handleWheel.bind(this)}>
+            <div ref="wrapper" style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
                 <div ref="content"
-                    style={style}
+                    style={Object.assign({}, this.props.contentStyle, contentStyle)}
                     className={contentClasses}
                     onTouchStart={this.handleTouchStart.bind(this)}
                     onTouchMove={this.handleTouchMove.bind(this)}>
@@ -233,10 +237,16 @@ ScrollArea.childContextTypes = {
 
 ScrollArea.propTypes = {
     className: React.PropTypes.string,
+    style: React.PropTypes.object,
     speed: React.PropTypes.number,
     contentClassName: React.PropTypes.string,
+    contentStyle: React.PropTypes.object,
     vertical: React.PropTypes.bool,
-    horizontal: React.PropTypes.bool
+    verticalContainerStyle: React.PropTypes.object,
+    verticalScrollbarStyle: React.PropTypes.object,
+    horizontal: React.PropTypes.bool,
+    horizontalContainerStyle: React.PropTypes.object,
+    horizontalScrollbarStyle: React.PropTypes.object,
 };
 
 ScrollArea.defaultProps = {
