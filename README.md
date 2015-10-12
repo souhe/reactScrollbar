@@ -66,9 +66,15 @@ then open [http://localhost:8003](http://localhost:80003).
     <ScrollArea
         speed={Number}
         className={String}
+        style={Object}
         contentClassName={String}
+        contentStyle={Object}
         horizontal={Boolean}
+        horizontalContainerStyle={Object}
+        horizontalScrollbarStyle={Object}
         vertical={Boolean}
+        verticalContainerStyle={Object}
+        verticalScrollbarStyle={Object}
     >
 ```
 
@@ -79,16 +85,34 @@ Scroll speed applied to mouse wheel event.
 #### className
 CSS class names added to main scroll area component.
 
+#### style
+Inline styles applied to the main scroll area component.
+
 #### contentClassName
 CSS class names added to element with scroll area content.
+
+#### contentStyle
+Inline styles applied to element with scroll area content.
 
 #### horizontal
 When set to false, horizontal scrollbar will not be available.
 **Default: true**
 
+#### horizontalContainerStyle
+Inline styles applied to horizontal scrollbar's container.
+
+#### horizontalScrollbarStyle
+Inline styles applied to horizontal scrollbar.
+
 #### vertical
 When set to false, vertical scrollbar will not be available, regardless of the content height.
 **Default: true**
+
+#### verticalContainerStyle
+Inline styles applied to vertical scrollbar's container.
+
+#### verticalScrollbarStyle
+Inline styles applied to vertical scrollbar.
 
 ### Context
 In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:
