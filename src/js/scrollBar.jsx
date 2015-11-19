@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import throttle from 'lodash.throttle';
 
 class ScrollBar extends React.Component {
     constructor(props){
@@ -19,6 +20,10 @@ class ScrollBar extends React.Component {
         }
 
         this.bindedHandleMouseUp = this.handleMouseUp.bind(this);
+    }
+
+    componentWillMount(){
+        this.bindedHandleMouseMove = throttle(this.bindedHandleMouseMove, 200);
     }
 
     componentDidMount(){
