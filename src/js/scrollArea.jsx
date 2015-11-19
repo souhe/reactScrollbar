@@ -2,6 +2,7 @@ import '../less/scrollbar.less';
 import React from 'react';
 import Scrollbar from './scrollBar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero} from './utils';
+import debounce from 'lodash.debounce';
 
 export default class ScrollArea extends React.Component{
     constructor(props){
@@ -28,6 +29,10 @@ export default class ScrollArea extends React.Component{
         return {
             scrollArea: this.scrollArea
         };
+    }
+
+    componentWillMount() {
+        this.bindedHandleWindowResize = debounce(this.bindedHandleWindowResize, 150);
     }
 
     componentDidMount(){
