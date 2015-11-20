@@ -7,12 +7,20 @@ var connect = require('gulp-connect');
 var merge = require('merge-stream');
 var runSequence = require('run-sequence');
 
-var webpackConf = require('./webpack.config.js');
+var webpackDevConf = require('./webpack.dev.config.js');
+var webpackProductionConf = require('./webpack.production.config.js');
 var webpackExamplesConf = require('./webpackExamples.config.js');
 
 gulp.task('build', function() {
     return gulp.src('src/js/scrollArea.jsx')
-        .pipe(webpack(webpackConf))
+        .pipe(webpack(webpackDevConf))
+        .pipe(concat('scrollArea.js'))
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('production', function() {
+    return gulp.src('src/js/scrollArea.jsx')
+        .pipe(webpack(webpackProductionConf))
         .pipe(concat('scrollArea.js'))
         .pipe(gulp.dest('dist'));
 });
