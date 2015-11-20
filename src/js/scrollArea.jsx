@@ -2,6 +2,7 @@ import '../less/scrollbar.less';
 import React from 'react';
 import Scrollbar from './scrollBar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero} from './utils';
+import lineHeight from 'line-height';
 
 export default class ScrollArea extends React.Component{
     constructor(props){
@@ -32,6 +33,7 @@ export default class ScrollArea extends React.Component{
 
     componentDidMount(){
         window.addEventListener("resize", this.bindedHandleWindowResize);
+        this.lineHeightPx = lineHeight(findDOMNode(this.refs.content));
         this.setSizesToState();
     }
 
@@ -130,8 +132,22 @@ export default class ScrollArea extends React.Component{
 
     handleWheel(e){
         var newState = this.computeSizes();
-        var deltaY = e.deltaY * this.props.speed;
-        var deltaX = e.deltaX * this.props.speed;
+        var deltaY = e.deltaY;
+        var deltaX = e.deltaX;
+
+        /*
+         * WheelEvent.deltaMode can differ between browsers and must be normalized
+         * e.deltaMode === 0: The delta values are specified in pixels
+         * e.deltaMode === 1: The delta values are specified in lines
+         * https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent/deltaMode
+         */
+        if (e.deltaMode === 1) {
+            deltaY = deltaY * this.lineHeightPx;
+            deltaX = deltaX * this.lineHeightPx;
+        }
+
+        deltaY = deltaY * this.props.speed;
+        deltaX = deltaX * this.props.speed;
 
         if(this.canScrollY(newState)){
             newState.topPosition = this.computeTopPosition(-deltaY, newState);
