@@ -18,6 +18,15 @@ export default class ScrollArea extends React.Component{
         this.scrollArea = {
             refresh: () => {
                 this.setSizesToState();
+            },
+            scrollTop: () => {
+                this.scrollTop();
+            },
+            scrollBottom: () => {
+                this.scrollBottom();
+            },
+            scrollTo: (position) => {
+                this.scrollTo(position);
             }
         }
 
@@ -204,6 +213,10 @@ export default class ScrollArea extends React.Component{
 
     scrollBottom(){
         this.setState({topPosition: -(this.state.realHeight - this.state.containerHeight)});
+    }
+
+    scrollTo(position){
+        this.setState({topPosition: position});
     }
 
     canScrollY(state = this.state){
