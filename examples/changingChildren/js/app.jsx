@@ -42,11 +42,44 @@ class Content extends React.Component {
 
         return (
             <div>
+                <div>
+                    <button onClick={this.handleScrollBottomButtonClick.bind(this)} > Scroll Bottom </button>
+                    <button onClick={this.handleScroll100ButtonClick.bind(this)} > Scroll X  100 </button>
+                    <button onClick={this.handleScrollRightButtonClick.bind(this)} > Scroll Right </button>
+                    <button onClick={this.handleScrollLeftButtonClick.bind(this)} > Scroll Left </button>
+                    <button onClick={this.handleScrollY40ButtonClick.bind(this)} > Scroll Y 40 </button>
+                </div>
                 {itemElements}
                 <button onClick={this.handleAddButtonClick.bind(this)} >Add 10</button>
                 <button onClick={this.handleRemoveButtonClick.bind(this)} >Remove 10</button>
+                <button onClick={this.handleScrollTopButtonClick.bind(this)} > Scroll Top </button>
+                
             </div>
         );
+    }
+    
+    handleScrollTopButtonClick() {
+        this.context.scrollArea.scrollTop();
+    }
+    
+    handleScrollBottomButtonClick() {
+        this.context.scrollArea.scrollBottom();
+    }
+    
+    handleScroll100ButtonClick() {
+        this.context.scrollArea.scrollXTo(100);
+    }
+    
+    handleScrollLeftButtonClick() {
+        this.context.scrollArea.scrollLeft();
+    }
+    
+    handleScrollRightButtonClick() {
+        this.context.scrollArea.scrollRight();
+    }
+    
+    handleScrollY40ButtonClick() {
+        this.context.scrollArea.scrollYTo(40);
     }
 
     handleAddButtonClick(){

@@ -149,8 +149,26 @@ Content.contextTypes = {
 };
 ```
 
+<!--#### `scrollTop()`
+It allows to scroll to the top of `ScrollArea` component.
+
+#### `scrollBottom()`
+It allows to scroll to the bottom of `ScrollArea` component.
+
+#### `scrollXTo(topPosition)`
+It moves vertical scrollbar to `topPosition`. 
+
+#### `scrollLeft()`
+It allows to scroll to the left of `ScrollArea` component.
+
+#### `scrollRight()`
+It allows to scroll to the right of `ScrollArea` component.
+
+#### `scrollYTo(leftPosition)`
+It moves horizontal scrollbar to `leftPosition`. -->
+
 # Change log
-<!-- Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. -->
+Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. 
 
 ## v0.2.0
 - #### `Refresh()` method

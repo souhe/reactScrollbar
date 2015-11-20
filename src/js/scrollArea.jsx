@@ -25,8 +25,17 @@ export default class ScrollArea extends React.Component{
             scrollBottom: () => {
                 this.scrollBottom();
             },
-            scrollTo: (position) => {
-                this.scrollTo(position);
+            scrollYTo: (position) => {
+                this.scrollYTo(position);
+            },
+            scrollLeft: () => {
+                this.scrollLeft();
+            },
+            scrollRight: () => {
+                this.scrollRight();
+            },
+            scrollXTo: (position) => {
+                this.scrollXTo(position);
             }
         }
 
@@ -159,7 +168,15 @@ export default class ScrollArea extends React.Component{
 
     computeTopPosition(deltaY, sizes){
         var newTopPosition = this.state.topPosition + deltaY;
+        return this.normalizeTopPosition(newTopPosition, sizes);
+    }
 
+    computeLeftPosition(deltaX, sizes){
+        var newLeftPosition = this.state.leftPosition + deltaX;
+        return this.normalizeLeftPosition(newLeftPosition, sizes);
+    }
+    
+    normalizeTopPosition(newTopPosition, sizes){    
         if(-newTopPosition > sizes.realHeight - sizes.containerHeight){
             newTopPosition = -(sizes.realHeight - sizes.containerHeight);
         }
@@ -168,9 +185,8 @@ export default class ScrollArea extends React.Component{
         }
         return newTopPosition;
     }
-
-    computeLeftPosition(deltaX, sizes){
-        var newLeftPosition = this.state.leftPosition + deltaX;
+    
+    normalizeLeftPosition(newLeftPosition, sizes){
         if(-newLeftPosition > sizes.realWidth - sizes.containerWidth){
             newLeftPosition = -(sizes.realWidth - sizes.containerWidth);
         } else if(newLeftPosition > 0){
@@ -214,9 +230,23 @@ export default class ScrollArea extends React.Component{
     scrollBottom(){
         this.setState({topPosition: -(this.state.realHeight - this.state.containerHeight)});
     }
+    
+    scrollLeft(){
+        this.setState({leftPosition: 0});
+    }
 
-    scrollTo(position){
+    scrollRight(){
+        this.setState({leftPosition: -(this.state.realWidth - this.state.containerWidth)});
+    }
+
+    scrollYTo(topPosition){
+        let position = this.normalizeTopPosition(-topPosition, this.computeSizes());
         this.setState({topPosition: position});
+    }
+    
+    scrollXTo(leftPosition){
+        let position = this.normalizeLeftPosition(-leftPosition, this.computeSizes());
+        this.setState({leftPosition: position});
     }
 
     canScrollY(state = this.state){
