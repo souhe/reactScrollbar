@@ -149,7 +149,7 @@ Content.contextTypes = {
 };
 ```
 
-<!--#### `scrollTop()`
+#### `scrollTop()`
 It allows to scroll to the top of `ScrollArea` component.
 
 #### `scrollBottom()`
@@ -165,11 +165,39 @@ It allows to scroll to the left of `ScrollArea` component.
 It allows to scroll to the right of `ScrollArea` component.
 
 #### `scrollYTo(leftPosition)`
-It moves horizontal scrollbar to `leftPosition`. -->
+It moves horizontal scrollbar to `leftPosition`. 
 
 # Change log
 Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. 
 
+## v0.3.0
+### New `context` methods:
+ - #### `scrollTop()`
+ It allows to scroll to the top of `ScrollArea` component.
+ - #### `scrollBottom()`
+ It allows to scroll to the bottom of `ScrollArea` component.
+ - #### `scrollXTo(topPosition)` 
+ It moves vertical scrollbar to `topPosition`. 
+ - #### `scrollLeft()` 
+ It allows to scroll to the left of `ScrollArea` component.
+ - #### `scrollRight()`
+ It allows to scroll to the right of `ScrollArea` component.
+ - #### `scrollYTo(leftPosition)`
+ It moves horizontal scrollbar to `leftPosition`.
+  
+### Bug fixes
+ - #### fixed browserify support
+  
+
+## v0.2.2
+New props for inline styles:
+ - `style` - Inline styles applied to the main scroll area component.
+ - `contentStyle` - Inline styles applied to element with scroll area content
+ - `horizontalContainerStyle` - Inline styles applied to horizontal scrollbar's container
+ - `horizontalScrollbarStyle` - Inline styles applied to horizontal scrollbar
+ - `verticalContainerStyle` - Inline styles applied to vertical scrollbar's container
+ - `verticalScrollbarStyle` - Inline styles applied to vertical scrollbar
+ 
 ## v0.2.0
 - #### `Refresh()` method
 To each <ScrollArea> child could be injected an object `scrollArea` contains method `refresh()` which could refresh react scrollbar state.
