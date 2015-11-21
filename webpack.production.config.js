@@ -14,7 +14,8 @@ config.plugins = [
         compressor: {
             screw_ie8: true,
             warnings: false
-        }
+        },
+        sourceMap: false
     })
 ];
 
