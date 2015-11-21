@@ -171,26 +171,26 @@ It moves horizontal scrollbar to `leftPosition`.
 Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. 
 
 ## v0.3.0
-### New `context` methods:
- - #### `scrollTop()`
+- ### New `context` methods:
+ - `scrollTop()` - 
  It allows to scroll to the top of `ScrollArea` component.
- - #### `scrollBottom()`
+ - `scrollBottom()` - 
  It allows to scroll to the bottom of `ScrollArea` component.
- - #### `scrollXTo(topPosition)` 
+ -  `scrollXTo(topPosition)`  - 
  It moves vertical scrollbar to `topPosition`. 
- - #### `scrollLeft()` 
+ -  `scrollLeft()`  - 
  It allows to scroll to the left of `ScrollArea` component.
- - #### `scrollRight()`
+ -  `scrollRight()` - 
  It allows to scroll to the right of `ScrollArea` component.
- - #### `scrollYTo(leftPosition)`
+ -  `scrollYTo(leftPosition)` - 
  It moves horizontal scrollbar to `leftPosition`.
   
-### Bug fixes
- - #### fixed browserify support
+- ### Bug fixes
+ -  fixed browserify support
   
 
 ## v0.2.2
-New props for inline styles:
+- ### New props for inline styles:
  - `style` - Inline styles applied to the main scroll area component.
  - `contentStyle` - Inline styles applied to element with scroll area content
  - `horizontalContainerStyle` - Inline styles applied to horizontal scrollbar's container
