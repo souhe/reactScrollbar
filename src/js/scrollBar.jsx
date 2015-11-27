@@ -58,10 +58,9 @@ class ScrollBar extends React.Component {
         return (
             <div className={scrollbarClasses} style={this.props.containerStyle} >
                 <div className="scrollbar"
-                    style={Object.assign({}, this.props.scrollbarStyle, scrollStyle)}
+                    style={{...this.props.scrollbarStyle, ...scrollStyle}}
                     onMouseDown={this.handleMouseDown.bind(this)}
                     >
-
                 </div>
             </div>
         );

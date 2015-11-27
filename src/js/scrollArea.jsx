@@ -104,7 +104,7 @@ export default class ScrollArea extends React.Component{
         return (
             <div ref="wrapper" style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
                 <div ref="content"
-                    style={Object.assign({}, this.props.contentStyle, contentStyle)}
+                    style={{...this.props.contentStyle, ...contentStyle}}
                     className={contentClasses}
                     onTouchStart={this.handleTouchStart.bind(this)}
                     onTouchMove={this.handleTouchMove.bind(this)}>
