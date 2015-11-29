@@ -3,6 +3,7 @@ import React from 'react';
 import Scrollbar from './scrollBar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero} from './utils';
 import lineHeight from 'line-height';
+import {Motion, spring} from 'react-motion';
 
 export default class ScrollArea extends React.Component{
     constructor(props){
@@ -51,7 +52,7 @@ export default class ScrollArea extends React.Component{
 
     componentDidMount(){
         window.addEventListener("resize", this.bindedHandleWindowResize);
-        this.lineHeightPx = lineHeight(findDOMNode(this.refs.content));
+        this.lineHeightPx = 10;//lineHeight(findDOMNode(this.refs.content));
         this.setSizesToState();
     }
 
@@ -65,10 +66,11 @@ export default class ScrollArea extends React.Component{
 
     render(){
         let {children, className, contentClassName} = this.props
-        var contentStyle = {
-            marginTop: this.state.topPosition,
-            marginLeft: this.state.leftPosition
-        };
+        // let contentStyle = {
+        //     // marginTop: this.state.topPosition,
+        //     // marginLeft: this.state.leftPosition,
+        //     transform: `translate(${ this.state.leftPosition }px, ${ this.state.topPosition }px)`
+        // };
 
         var scrollbarY = this.canScrollY()? (
             <Scrollbar
@@ -101,18 +103,28 @@ export default class ScrollArea extends React.Component{
 
         var classes = 'scrollarea ' + (className || '');
         var contentClasses = 'scrollarea-content ' + (contentClassName || '');
+        
+        let contentStyle = {
+            marginTop: spring(this.state.topPosition),
+            marginLeft: spring(this.state.leftPosition),
+            ...contentStyle
+        };
         return (
-            <div ref="wrapper" style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
-                <div ref="content"
-                    style={{...this.props.contentStyle, ...contentStyle}}
-                    className={contentClasses}
-                    onTouchStart={this.handleTouchStart.bind(this)}
-                    onTouchMove={this.handleTouchMove.bind(this)}>
-                    {children}
-                </div>
-                {scrollbarY}
-                {scrollbarX}
-            </div>
+            <Motion style={contentStyle}>
+                { style => 
+                    <div ref={x => this.wrapper = x} style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
+                        <div ref={x => this.content = x}
+                            style={style}
+                            className={contentClasses}
+                            onTouchStart={this.handleTouchStart.bind(this)}
+                            onTouchMove={this.handleTouchMove.bind(this)}>
+                            {children}
+                        </div>
+                        {scrollbarY}
+                        {scrollbarX}
+                    </div>
+                }
+            </Motion>
         );
     }
 
@@ -219,10 +231,10 @@ export default class ScrollArea extends React.Component{
     }
 
     computeSizes(){
-        var realHeight = findDOMNode(this.refs.content).offsetHeight;
-        var containerHeight = findDOMNode(this.refs.wrapper).offsetHeight;
-        var realWidth = findDOMNode(this.refs.content).offsetWidth;
-        var containerWidth = findDOMNode(this.refs.wrapper).offsetWidth;
+        var realHeight = findDOMNode(this.content).offsetHeight;
+        var containerHeight = findDOMNode(this.wrapper).offsetHeight;
+        var realWidth = findDOMNode(this.content).offsetWidth;
+        var containerWidth = findDOMNode(this.wrapper).offsetWidth;
 
         return {
             realHeight: realHeight,

@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import {Motion, spring} from 'react-motion';
 
 class ScrollBar extends React.Component {
     constructor(props){
@@ -47,7 +48,7 @@ class ScrollBar extends React.Component {
     }
 
     render(){
-        var scrollStyle = this.createScrollStyles();
+        var scrollStyle = this.createSpringifiedStyles(); //TODO: create .smooth prop and use it here
 
         var scrollbarClasses = classNames(['scrollbar-container', {
             'active': this.state.isDragging,
@@ -56,13 +57,17 @@ class ScrollBar extends React.Component {
         }]);
 
         return (
-            <div className={scrollbarClasses} style={this.props.containerStyle} >
-                <div className="scrollbar"
-                    style={{...this.props.scrollbarStyle, ...scrollStyle}}
-                    onMouseDown={this.handleMouseDown.bind(this)}
-                    >
-                </div>
-            </div>
+            <Motion style={{...this.props.scrollbarStyle, ...scrollStyle}}>
+                { style => 
+                    <div className={scrollbarClasses} style={this.props.containerStyle} >
+                        <div className="scrollbar"
+                            style={style}
+                            onMouseDown={this.handleMouseDown.bind(this)}
+                            >
+                        </div>
+                    </div>
+                }
+            </Motion>
         );
     }
 
@@ -105,6 +110,20 @@ class ScrollBar extends React.Component {
             return {
                 width: this.state.scrollSize,
                 marginLeft: this.state.position
+            };
+        }
+    }
+    
+    createSpringifiedStyles(){ //TODO: refactor
+        if(this.props.type === 'vertical'){
+            return {
+                height: spring(this.state.scrollSize),
+                marginTop: spring(this.state.position)
+            };
+        } else {
+            return {
+                width: spring(this.state.scrollSize),
+                marginLeft: spring(this.state.position)
             };
         }
     }
