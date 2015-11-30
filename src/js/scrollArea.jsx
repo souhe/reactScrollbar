@@ -9,6 +9,7 @@ const eventTypes= {
     wheel: 'wheel',
     api: 'api',
     touch: 'touch',
+    touchEnd: 'touchEnd',
     mousemove: 'mousemove'
 };
 
@@ -73,7 +74,8 @@ export default class ScrollArea extends React.Component{
 
     render(){
         let {children, className, contentClassName} = this.props
-        let withMotion = this.props.smoothScrolling && (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api);
+        let withMotion = this.props.smoothScrolling && 
+            (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api || this.state.eventType === eventTypes.touchEnd);
         
         let scrollbarY = this.canScrollY()? (
             <Scrollbar
@@ -123,7 +125,8 @@ export default class ScrollArea extends React.Component{
                             style={style}
                             className={contentClasses}
                             onTouchStart={this.handleTouchStart.bind(this)}
-                            onTouchMove={this.handleTouchMove.bind(this)}>
+                            onTouchMove={this.handleTouchMove.bind(this)}
+                            onTouchEnd={this.handleTouchEnd.bind(this)}>
                             {children}
                         </div>
                         {scrollbarY}
@@ -154,12 +157,19 @@ export default class ScrollArea extends React.Component{
 
             let deltaY = this.state.lastClientYPosition - clientY;
             let deltaX = this.state.lastClientXPosition - clientX;
-            this.handleMove(-deltaY, -deltaX);
-            this.setStateFromEvent({ lastClientYPosition: clientY, lastClientXPosition: clientX });
+            this.lastDeltaY = deltaY;
+            this.lastdeltaX = deltaX;
+            this.handleMove(-deltaY, -deltaX, { lastClientYPosition: clientY, lastClientXPosition: clientX });
         }
     }
+    
+    handleTouchEnd(e){
+        this.handleMove(-this.lastDeltaY*8, -this.lastdeltaX*8, {}, eventTypes.touchEnd);
+        this.lastDeltaY = 0;
+        this.lastdeltaX = 0;
+    }
 
-    handleMove(deltaY, deltaX){
+    handleMove(deltaY, deltaX, additionalState = {}, eventType){
         var newState = this.computeSizes();
         if(this.canScrollY(newState)){
             newState.topPosition = this.computeTopPosition(deltaY, newState);
@@ -167,7 +177,7 @@ export default class ScrollArea extends React.Component{
         if(this.canScrollX(newState)){
             newState.leftPosition = this.computeLeftPosition(deltaX, newState);
         }
-        this.setStateFromEvent(newState);
+        this.setStateFromEvent({...additionalState, ...newState}, eventType);
     }
 
     handleWheel(e){
