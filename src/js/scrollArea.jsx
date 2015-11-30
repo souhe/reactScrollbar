@@ -1,9 +1,16 @@
 import '../less/scrollbar.less';
 import React from 'react';
 import Scrollbar from './scrollBar';
-import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero} from './utils';
+import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
 import lineHeight from 'line-height';
 import {Motion, spring} from 'react-motion';
+
+const eventTypes= {
+    wheel: 'wheel',
+    api: 'api',
+    touch: 'touch',
+    mousemove: 'mousemove'
+};
 
 export default class ScrollArea extends React.Component{
     constructor(props){
@@ -52,7 +59,7 @@ export default class ScrollArea extends React.Component{
 
     componentDidMount(){
         window.addEventListener("resize", this.bindedHandleWindowResize);
-        this.lineHeightPx = 10;//lineHeight(findDOMNode(this.refs.content));
+        this.lineHeightPx = lineHeight(findDOMNode(this.content));
         this.setSizesToState();
     }
 
@@ -66,13 +73,9 @@ export default class ScrollArea extends React.Component{
 
     render(){
         let {children, className, contentClassName} = this.props
-        // let contentStyle = {
-        //     // marginTop: this.state.topPosition,
-        //     // marginLeft: this.state.leftPosition,
-        //     transform: `translate(${ this.state.leftPosition }px, ${ this.state.topPosition }px)`
-        // };
-
-        var scrollbarY = this.canScrollY()? (
+        let withMotion = this.props.smoothScrolling && (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api);
+        
+        let scrollbarY = this.canScrollY()? (
             <Scrollbar
                 realSize={this.state.realHeight}
                 containerSize={this.state.containerHeight}
@@ -80,10 +83,11 @@ export default class ScrollArea extends React.Component{
                 onMove={this.handleMove.bind(this)}
                 containerStyle={this.props.verticalContainerStyle}
                 scrollbarStyle={this.props.verticalScrollbarStyle}
+                smoothScrolling={withMotion}
                 type="vertical"/>
         ): null;
 
-        var scrollbarX = this.canScrollX()? (
+        let scrollbarX = this.canScrollX()? (
             <Scrollbar
                 realSize={this.state.realWidth}
                 containerSize={this.state.containerWidth}
@@ -91,6 +95,7 @@ export default class ScrollArea extends React.Component{
                 onMove={this.handleMove.bind(this)}
                 containerStyle={this.props.horizontalContainerStyle}
                 scrollbarStyle={this.props.horizontalScrollbarStyle}
+                smoothScrolling={withMotion}
                 type="horizontal"/>
         ): null;
 
@@ -101,16 +106,17 @@ export default class ScrollArea extends React.Component{
             warnAboutElementChild();
         }
 
-        var classes = 'scrollarea ' + (className || '');
-        var contentClasses = 'scrollarea-content ' + (contentClassName || '');
+        let classes = 'scrollarea ' + (className || '');
+        let contentClasses = 'scrollarea-content ' + (contentClassName || '');
         
         let contentStyle = {
-            marginTop: spring(this.state.topPosition),
-            marginLeft: spring(this.state.leftPosition),
-            ...contentStyle
+            marginTop: this.state.topPosition,
+            marginLeft: this.state.leftPosition
         };
+        contentStyle = withMotion ? modifyObjValues(contentStyle, x => spring(x)) : contentStyle;
+        
         return (
-            <Motion style={contentStyle}>
+            <Motion style={{...this.props.contentStyle, ...contentStyle}}>
                 { style => 
                     <div ref={x => this.wrapper = x} style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
                         <div ref={x => this.content = x}
@@ -127,12 +133,16 @@ export default class ScrollArea extends React.Component{
             </Motion>
         );
     }
+    
+    setStateFromEvent(newState, eventType){
+        this.setState({...newState, eventType: eventType});
+    }
 
     handleTouchStart(e){
         let {touches} = e;
         if(touches.length === 1){
             let {clientX, clientY} = touches[0];
-            this.setState({ lastClientYPosition: clientY, lastClientXPosition: clientX });
+            this.setStateFromEvent({ lastClientYPosition: clientY, lastClientXPosition: clientX });
         }
     }
 
@@ -145,7 +155,7 @@ export default class ScrollArea extends React.Component{
             let deltaY = this.state.lastClientYPosition - clientY;
             let deltaX = this.state.lastClientXPosition - clientX;
             this.handleMove(-deltaY, -deltaX);
-            this.setState({ lastClientYPosition: clientY, lastClientXPosition: clientX });
+            this.setStateFromEvent({ lastClientYPosition: clientY, lastClientXPosition: clientX });
         }
     }
 
@@ -157,7 +167,7 @@ export default class ScrollArea extends React.Component{
         if(this.canScrollX(newState)){
             newState.leftPosition = this.computeLeftPosition(deltaX, newState);
         }
-        this.setState(newState);
+        this.setStateFromEvent(newState);
     }
 
     handleWheel(e){
@@ -191,7 +201,7 @@ export default class ScrollArea extends React.Component{
             e.preventDefault();
         }
 
-        this.setState(newState);
+        this.setStateFromEvent(newState, eventTypes.wheel);
     }
 
     computeTopPosition(deltaY, sizes){
@@ -227,7 +237,7 @@ export default class ScrollArea extends React.Component{
     handleWindowResize(){
         var newState = this.computeSizes();
         newState = this.getModifiedPositionsIfNeeded(newState);
-        this.setState(newState);
+        this.setStateFromEvent(newState);
     }
 
     computeSizes(){
@@ -247,34 +257,34 @@ export default class ScrollArea extends React.Component{
     setSizesToState(){
         var sizes = this.computeSizes();
         if(sizes.realHeight !== this.state.realHeight || sizes.realWidth !== this.state.realWidth){
-            this.setState(this.getModifiedPositionsIfNeeded(sizes));
+            this.setStateFromEvent(this.getModifiedPositionsIfNeeded(sizes));
         }
     }
 
     scrollTop(){
-        this.setState({topPosition: 0});
+        this.setStateFromEvent({topPosition: 0}, eventTypes.api);
     }
 
     scrollBottom(){
-        this.setState({topPosition: -(this.state.realHeight - this.state.containerHeight)});
+        this.setStateFromEvent({topPosition: -(this.state.realHeight - this.state.containerHeight)}, eventTypes.api);
     }
     
     scrollLeft(){
-        this.setState({leftPosition: 0});
+        this.setStateFromEvent({leftPosition: 0}, eventTypes.api);
     }
 
     scrollRight(){
-        this.setState({leftPosition: -(this.state.realWidth - this.state.containerWidth)});
+        this.setStateFromEvent({leftPosition: -(this.state.realWidth - this.state.containerWidth)}, eventTypes.api);
     }
 
     scrollYTo(topPosition){
         let position = this.normalizeTopPosition(-topPosition, this.computeSizes());
-        this.setState({topPosition: position});
+        this.setStateFromEvent({topPosition: position}, eventTypes.api);
     }
     
     scrollXTo(leftPosition){
         let position = this.normalizeLeftPosition(-leftPosition, this.computeSizes());
-        this.setState({leftPosition: position});
+        this.setStateFromEvent({leftPosition: position}, eventTypes.api);
     }
 
     canScrollY(state = this.state){
@@ -318,10 +328,12 @@ ScrollArea.propTypes = {
     horizontal: React.PropTypes.bool,
     horizontalContainerStyle: React.PropTypes.object,
     horizontalScrollbarStyle: React.PropTypes.object,
+    smoothScrolling: React.PropTypes.bool
 };
 
 ScrollArea.defaultProps = {
     speed: 1,
     vertical: true,
-    horizontal: true
+    horizontal: true,
+    smoothScrolling: false
 };

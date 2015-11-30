@@ -10,6 +10,7 @@ export function findDOMNode(component){
         return React.findDOMNode(component);
     }
 }
+
 export function warnAboutFunctionChild() {
     if (didWarnAboutChild || react13) {
       return;
@@ -32,15 +33,24 @@ export function positiveOrZero(number){
     return number < 0 ? 0 : number;
 }
 
-  function isReact13(React) {
-      const { version } = React;
-      if (typeof version !== 'string') {
-          return true;
-      }
+export function modifyObjValues (obj, modifier = x => x){
+    let modifiedObj = {};
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)) modifiedObj[key] = modifier(obj[key]);
+    }
+    
+    return modifiedObj;
+}
 
-      const parts = version.split('.');
-      const major = parseInt(parts[0], 10);
-      const minor = parseInt(parts[1], 10);
+function isReact13(React) {
+    const { version } = React;
+    if (typeof version !== 'string') {
+        return true;
+    }
 
-      return major === 0 && minor === 13;
-  }
+    const parts = version.split('.');
+    const major = parseInt(parts[0], 10);
+    const minor = parseInt(parts[1], 10);
+
+    return major === 0 && minor === 13;
+}

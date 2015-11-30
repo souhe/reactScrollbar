@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import {Motion, spring} from 'react-motion';
+import {modifyObjValues} from './utils';
 
 class ScrollBar extends React.Component {
     constructor(props){
@@ -48,7 +49,8 @@ class ScrollBar extends React.Component {
     }
 
     render(){
-        var scrollStyle = this.createSpringifiedStyles(); //TODO: create .smooth prop and use it here
+        let scrollStyles = this.createScrollStyles();
+        scrollStyles = this.props.smoothScrolling ? modifyObjValues(scrollStyles, x => spring(x)) : scrollStyles;
 
         var scrollbarClasses = classNames(['scrollbar-container', {
             'active': this.state.isDragging,
@@ -57,7 +59,7 @@ class ScrollBar extends React.Component {
         }]);
 
         return (
-            <Motion style={{...this.props.scrollbarStyle, ...scrollStyle}}>
+            <Motion style={{...this.props.scrollbarStyle, ...scrollStyles}}>
                 { style => 
                     <div className={scrollbarClasses} style={this.props.containerStyle} >
                         <div className="scrollbar"
@@ -113,20 +115,6 @@ class ScrollBar extends React.Component {
             };
         }
     }
-    
-    createSpringifiedStyles(){ //TODO: refactor
-        if(this.props.type === 'vertical'){
-            return {
-                height: spring(this.state.scrollSize),
-                marginTop: spring(this.state.position)
-            };
-        } else {
-            return {
-                width: spring(this.state.scrollSize),
-                marginLeft: spring(this.state.position)
-            };
-        }
-    }
 }
 
 ScrollBar.propTypes = {
@@ -136,10 +124,12 @@ ScrollBar.propTypes = {
     position: React.PropTypes.number,
     containerStyle: React.PropTypes.object,
     scrollbarStyle: React.PropTypes.object,
-    type: React.PropTypes.oneOf(['vertical', 'horizontal'])
+    type: React.PropTypes.oneOf(['vertical', 'horizontal']),
+    smoothScrolling: React.PropTypes.bool
 };
 
 ScrollBar.defaultProps = {
-    type : 'vertical'
+    type : 'vertical',
+    smoothScrolling: false
 }
 export default ScrollBar;
