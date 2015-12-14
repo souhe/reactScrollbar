@@ -50,7 +50,7 @@ class ScrollBar extends React.Component {
 
     render(){
         let scrollStyles = this.createScrollStyles();
-        scrollStyles = this.props.smoothScrolling ? modifyObjValues(scrollStyles, x => spring(x)) : scrollStyles;
+        let springifiedScrollStyles = this.props.smoothScrolling ? modifyObjValues(this.createScrollStyles(), x => spring(x)) : scrollStyles;
 
         var scrollbarClasses = classNames(['scrollbar-container', {
             'active': this.state.isDragging,
@@ -59,7 +59,7 @@ class ScrollBar extends React.Component {
         }]);
 
         return (
-            <Motion style={{...this.props.scrollbarStyle, ...scrollStyles}}>
+            <Motion style={{...this.props.scrollbarStyle, ...springifiedScrollStyles}}>
                 { style => 
                     <div className={scrollbarClasses} style={this.props.containerStyle} >
                         <div className="scrollbar"

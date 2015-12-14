@@ -47,6 +47,13 @@ export default class ScrollArea extends React.Component{
             scrollXTo: (position) => {
                 this.scrollXTo(position);
             }
+        };
+        
+        this.evntsPreviousValues = {
+            clientX: 0,
+            clientY: 0,
+            deltaX: 0,
+            deltaY: 0
         }
 
         this.bindedHandleWindowResize = this.handleWindowResize.bind(this);
@@ -115,10 +122,10 @@ export default class ScrollArea extends React.Component{
             marginTop: this.state.topPosition,
             marginLeft: this.state.leftPosition
         };
-        contentStyle = withMotion ? modifyObjValues(contentStyle, x => spring(x)) : contentStyle;
+        let springifiedContentStyle = withMotion ? modifyObjValues(contentStyle, x => spring(x)) : contentStyle;
         
         return (
-            <Motion style={{...this.props.contentStyle, ...contentStyle}}>
+            <Motion style={{...this.props.contentStyle, ...springifiedContentStyle}}>
                 { style => 
                     <div ref={x => this.wrapper = x} style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
                         <div ref={x => this.content = x}
@@ -145,7 +152,11 @@ export default class ScrollArea extends React.Component{
         let {touches} = e;
         if(touches.length === 1){
             let {clientX, clientY} = touches[0];
-            this.setStateFromEvent({ lastClientYPosition: clientY, lastClientXPosition: clientX });
+            this.eventPreviousValues = {
+                ...this.eventPreviousValues,
+                clientY,
+                clientX
+            };
         }
     }
 
@@ -155,29 +166,47 @@ export default class ScrollArea extends React.Component{
         if(touches.length === 1){
             let {clientX, clientY} = touches[0];
 
-            let deltaY = this.state.lastClientYPosition - clientY;
-            let deltaX = this.state.lastClientXPosition - clientX;
-            this.lastDeltaY = deltaY;
-            this.lastdeltaX = deltaX;
-            this.handleMove(-deltaY, -deltaX, { lastClientYPosition: clientY, lastClientXPosition: clientX });
+            let deltaY = this.eventPreviousValues.clientY - clientY;
+            let deltaX = this.eventPreviousValues.clientX - clientX;
+            this.eventPreviousValues = {
+                ...this.eventPreviousValues,
+                deltaY,
+                deltaX,
+                clientY,
+                clientX
+            };
+            this.handleMove(-deltaY, -deltaX);
         }
     }
     
     handleTouchEnd(e){
-        this.handleMove(-this.lastDeltaY*8, -this.lastdeltaX*8, {}, eventTypes.touchEnd);
-        this.lastDeltaY = 0;
-        this.lastdeltaX = 0;
+        let {deltaX: lastDeltaX, deltaY: lastDeltaY} = this.eventPreviousValues;
+                       
+        this.handleMove(-lastDeltaY * 10, -lastDeltaX * 10, eventTypes.touchEnd);  
+        this.eventPreviousValues = {
+            ...this.eventPreviousValues,
+            deltaY: 0,
+            deltaX: 0
+        };      
     }
 
-    handleMove(deltaY, deltaX, additionalState = {}, eventType){
-        var newState = this.computeSizes();
+    handleMove(deltaY, deltaX, eventType){
+        if(!this.eventPreviousValues.sizes){
+            this.eventPreviousValues = {
+                ...this.eventPreviousValues,
+                sizes: this.computeSizes()
+            };
+        }
+        let newState = this.eventPreviousValues.sizes;
+        
         if(this.canScrollY(newState)){
             newState.topPosition = this.computeTopPosition(deltaY, newState);
         }
         if(this.canScrollX(newState)){
             newState.leftPosition = this.computeLeftPosition(deltaX, newState);
         }
-        this.setStateFromEvent({...additionalState, ...newState}, eventType);
+        this.setStateFromEvent(newState, eventType);
+        //this.content.setAttribute('style', `margin-top: ${newState.topPosition}px; margin-left: ${newState.leftPosition}px;`);
     }
 
     handleWheel(e){
@@ -251,10 +280,10 @@ export default class ScrollArea extends React.Component{
     }
 
     computeSizes(){
-        var realHeight = findDOMNode(this.content).offsetHeight;
-        var containerHeight = findDOMNode(this.wrapper).offsetHeight;
-        var realWidth = findDOMNode(this.content).offsetWidth;
-        var containerWidth = findDOMNode(this.wrapper).offsetWidth;
+        var realHeight = this.content.offsetHeight;
+        var containerHeight = this.wrapper.offsetHeight;
+        var realWidth = this.content.offsetWidth;
+        var containerWidth = this.wrapper.offsetWidth;
 
         return {
             realHeight: realHeight,
@@ -298,13 +327,11 @@ export default class ScrollArea extends React.Component{
     }
 
     canScrollY(state = this.state){
-        let scrollableY = state.realHeight > state.containerHeight || this.state.topPosition != 0;
-        return scrollableY && this.props.vertical;
+        return this.props.vertical;
     }
 
     canScrollX(state = this.state){
-        let scrollableX = state.realWidth > state.containerWidth || this.state.leftPosition != 0;
-        return scrollableX && this.props.horizontal;
+        return this.props.horizontal;
     }
 
     getModifiedPositionsIfNeeded(newState){
