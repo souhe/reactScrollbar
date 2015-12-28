@@ -22,8 +22,8 @@ class ScrollBar extends React.Component {
     }
 
     componentDidMount(){
-        document.addEventListener("mousemove", this.bindedHandleMouseMove);
-        document.addEventListener("mouseup", this.bindedHandleMouseUp);
+        ownerDocument.addEventListener("mousemove", this.bindedHandleMouseMove);
+        ownerDocument.addEventListener("mouseup", this.bindedHandleMouseUp);
     }
 
     componentWillReceiveProps(nextProps){
@@ -31,8 +31,8 @@ class ScrollBar extends React.Component {
     }
 
     componentWillUnmount(){
-        document.removeEventListener("mousemove", this.bindedHandleMouseMove);
-        document.removeEventListener("mouseup", this.bindedHandleMouseUp);
+        ownerDocument.removeEventListener("mousemove", this.bindedHandleMouseMove);
+        ownerDocument.removeEventListener("mouseup", this.bindedHandleMouseUp);
     }
 
     calculateState(props){
@@ -118,10 +118,12 @@ ScrollBar.propTypes = {
     position: React.PropTypes.number,
     containerStyle: React.PropTypes.object,
     scrollbarStyle: React.PropTypes.object,
-    type: React.PropTypes.oneOf(['vertical', 'horizontal'])
+    type: React.PropTypes.oneOf(['vertical', 'horizontal']),
+    ownerDocument: React.propTypes.node
 };
 
 ScrollBar.defaultProps = {
-    type : 'vertical'
+    type : 'vertical',
+    ownerDocument: document
 }
 export default ScrollBar;
