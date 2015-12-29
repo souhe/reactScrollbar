@@ -309,8 +309,8 @@ ScrollArea.propTypes = {
     horizontal: React.PropTypes.bool,
     horizontalContainerStyle: React.PropTypes.object,
     horizontalScrollbarStyle: React.PropTypes.object,
-    contentWindow: React.PropTypes.node,
-    ownerDocument: React.PropTypes.node
+    contentWindow: React.PropTypes.any,
+    ownerDocument: React.PropTypes.any
 };
 
 ScrollArea.defaultProps = {

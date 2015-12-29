@@ -119,7 +119,7 @@ ScrollBar.propTypes = {
     containerStyle: React.PropTypes.object,
     scrollbarStyle: React.PropTypes.object,
     type: React.PropTypes.oneOf(['vertical', 'horizontal']),
-    ownerDocument: React.PropTypes.node
+    ownerDocument: React.PropTypes.any
 };
 
 ScrollBar.defaultProps = {
