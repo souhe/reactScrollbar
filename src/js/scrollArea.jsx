@@ -145,6 +145,11 @@ export default class ScrollArea extends React.Component{
         if(this.canScrollX(newState)){
             newState.leftPosition = this.computeLeftPosition(deltaX, newState);
         }
+
+        if(this.props.onScroll){
+            this.props.onScroll(newState);
+        }
+        
         this.setState(newState);
     }
 
@@ -177,6 +182,10 @@ export default class ScrollArea extends React.Component{
 
         if(this.state.topPosition !== newState.topPosition || this.state.leftPosition !== newState.leftPosition){
             e.preventDefault();
+        }
+
+        if(this.props.onScroll){
+            this.props.onScroll(newState);
         }
 
         this.setState(newState);
@@ -306,6 +315,7 @@ ScrollArea.propTypes = {
     horizontal: React.PropTypes.bool,
     horizontalContainerStyle: React.PropTypes.object,
     horizontalScrollbarStyle: React.PropTypes.object,
+    onScroll: React.PropTypes.func,
 };
 
 ScrollArea.defaultProps = {
