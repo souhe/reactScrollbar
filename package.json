@@ -40,6 +40,7 @@
     "less": "^2.5.1",
     "less-loader": "^2.2.1",
     "merge-stream": "^1.0.0",
+    "object-assign": "^4.0.1",
     "react-dom": "^0.14.0",
     "run-sequence": "^1.1.4",
     "style-loader": "^0.10.2",

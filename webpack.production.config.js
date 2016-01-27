@@ -2,8 +2,9 @@
 
 var webpack = require('webpack');
 var baseConfig  = require('./webpack.base.config.js');
+var objectAssign = require('object-assign');
 
-var config = Object.assign({}, baseConfig);
+var config = objectAssign({}, baseConfig);
 
 config.plugins = [
     new webpack.optimize.OccurenceOrderPlugin(),
