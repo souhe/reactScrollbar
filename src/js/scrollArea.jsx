@@ -155,13 +155,15 @@ export default class ScrollArea extends React.Component{
             this.eventPreviousValues = {
                 ...this.eventPreviousValues,
                 clientY,
-                clientX
+                clientX,
+                timestamp: Date.now()
             };
         }
     }
 
     handleTouchMove(e){
         e.preventDefault();
+        
         let {touches} = e;
         if(touches.length === 1){
             let {clientX, clientY} = touches[0];
@@ -173,7 +175,8 @@ export default class ScrollArea extends React.Component{
                 deltaY,
                 deltaX,
                 clientY,
-                clientX
+                clientX,
+                timestamp: Date.now()
             };
             
             this.setStateFromEvent(this.composeNewState(-deltaX, -deltaY));
@@ -181,10 +184,11 @@ export default class ScrollArea extends React.Component{
     }
     
     handleTouchEnd(e){
-        let {deltaX: lastDeltaX, deltaY: lastDeltaY} = this.eventPreviousValues;        
+        let {deltaX: lastDeltaX, deltaY: lastDeltaY, timestamp: lastTimestamp} = this.eventPreviousValues;        
         
-        //TODO: after pause do not iertial scroll
-        this.setStateFromEvent(this.composeNewState(-lastDeltaX * 10, -lastDeltaY * 10), eventTypes.touchEnd);
+        if(Date.now() - lastTimestamp < 200){
+            this.setStateFromEvent(this.composeNewState(-lastDeltaX * 10, -lastDeltaY * 10), eventTypes.touchEnd);
+        }
         this.eventPreviousValues = {
             ...this.eventPreviousValues,
             deltaY: 0,
