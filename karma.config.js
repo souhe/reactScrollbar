@@ -1,29 +1,32 @@
-var webpackDevConfig = require('./webpack.dev.config.js');
+const webpackDevConfig = require('./webpack.dev.config.js');
 
 module.exports = function (config) {
   config.set({
-    browsers: [ 'PhantomJS' ],
+    browsers: [ 'PhantomJS', 'Chrome' ],
     files: [
-      'tests/test.bundle.js',
-      'node_modules/react/dist/react.js'
+      './test/tests.bundle.js'
     ],
-    frameworks: [ 'chai', 'mocha' ],
-    plugins: [
-      'karma-chai',
-      'karma-mocha',
-      'karma-sourcemap-loader',
-      'karma-webpack',
-      'karma-phantomjs-launcher',
-      'karma-mocha-reporter'
-    ],
+    frameworks: [ 'mocha' ],
     preprocessors: {
-      'tests/test.bundle.js': [ 'webpack', 'sourcemap' ]
+      './test/tests.bundle.js': [ 'webpack', 'sourcemap' ]
     },
     reporters: [ 'mocha' ],
     singleRun: true,
-    webpack: webpackDevConfig,
-    webpackMiddleware: {
-      noInfo: true,
+    webpack: {
+        devtool: 'inline-source-map',
+        resolve: {
+            modulesDirectories: ['node_modules', 'bower_components'],
+            extensions: ['', '.js', '.jsx']
+        },
+        module: {
+            loaders: [
+                { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel' },
+                { test: /\.less$/, loader: 'style!css!less' }
+            ]
+        }
+    },
+    webpackServer: {
+      noInfo: true
     }
   });
 };
