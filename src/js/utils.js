@@ -42,7 +42,7 @@ export function modifyObjValues (obj, modifier = x => x){
     return modifiedObj;
 }
 
-function isReact13(React) {
+function isReact13(React = {}) { //TODO: change it
     const { version } = React;
     if (typeof version !== 'string') {
         return true;
