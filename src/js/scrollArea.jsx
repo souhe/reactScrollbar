@@ -170,6 +170,7 @@ export default class ScrollArea extends React.Component{
 
             let deltaY = this.eventPreviousValues.clientY - clientY;
             let deltaX = this.eventPreviousValues.clientX - clientX;
+            
             this.eventPreviousValues = {
                 ...this.eventPreviousValues,
                 deltaY,
@@ -189,6 +190,7 @@ export default class ScrollArea extends React.Component{
         if(Date.now() - lastTimestamp < 200){
             this.setStateFromEvent(this.composeNewState(-lastDeltaX * 10, -lastDeltaY * 10), eventTypes.touchEnd);
         }
+        
         this.eventPreviousValues = {
             ...this.eventPreviousValues,
             deltaY: 0,
@@ -227,6 +229,12 @@ export default class ScrollArea extends React.Component{
         this.setStateFromEvent(newState, eventTypes.wheel);
     }
     
+    handleWindowResize(){
+        let newState = this.computeSizes();
+        newState = this.getModifiedPositionsIfNeeded(newState);
+        this.setStateFromEvent(newState);
+    }
+    
     composeNewState(deltaX, deltaY){
         let newState = this.computeSizes();
         
@@ -241,12 +249,12 @@ export default class ScrollArea extends React.Component{
     }
 
     computeTopPosition(deltaY, sizes){
-        var newTopPosition = this.state.topPosition + deltaY;
+        let newTopPosition = this.state.topPosition + deltaY;
         return this.normalizeTopPosition(newTopPosition, sizes);
     }
 
     computeLeftPosition(deltaX, sizes){
-        var newLeftPosition = this.state.leftPosition + deltaX;
+        let newLeftPosition = this.state.leftPosition + deltaX;
         return this.normalizeLeftPosition(newLeftPosition, sizes);
     }
     
@@ -270,17 +278,11 @@ export default class ScrollArea extends React.Component{
         return newLeftPosition;
     }
 
-    handleWindowResize(){
-        var newState = this.computeSizes();
-        newState = this.getModifiedPositionsIfNeeded(newState);
-        this.setStateFromEvent(newState);
-    }
-
     computeSizes(){
-        var realHeight = this.content.offsetHeight;
-        var containerHeight = this.wrapper.offsetHeight;
-        var realWidth = this.content.offsetWidth;
-        var containerWidth = this.wrapper.offsetWidth;
+        let realHeight = this.content.offsetHeight;
+        let containerHeight = this.wrapper.offsetHeight;
+        let realWidth = this.content.offsetWidth;
+        let containerWidth = this.wrapper.offsetWidth;
 
         return {
             realHeight: realHeight,
@@ -291,7 +293,7 @@ export default class ScrollArea extends React.Component{
     }
 
     setSizesToState(){
-        var sizes = this.computeSizes();
+        let sizes = this.computeSizes();
         if(sizes.realHeight !== this.state.realHeight || sizes.realWidth !== this.state.realWidth){
             this.setStateFromEvent(this.getModifiedPositionsIfNeeded(sizes));
         }
@@ -332,12 +334,12 @@ export default class ScrollArea extends React.Component{
     }
 
     getModifiedPositionsIfNeeded(newState){
-        var bottomPosition = newState.realHeight - newState.containerHeight;
+        let bottomPosition = newState.realHeight - newState.containerHeight;
         if(-this.state.topPosition >= bottomPosition){
             newState.topPosition = this.canScrollY(newState)? -positiveOrZero(bottomPosition): 0;
         }
 
-        var rightPosition = newState.realWidth - newState.containerWidth;
+        let rightPosition = newState.realWidth - newState.containerWidth;
         if(-this.state.leftPosition >= rightPosition){
             newState.leftPosition = this.canScrollX(newState)? -positiveOrZero(rightPosition): 0;
         }

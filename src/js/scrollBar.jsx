@@ -6,7 +6,7 @@ import {modifyObjValues} from './utils';
 class ScrollBar extends React.Component {
     constructor(props){
         super(props);
-        var newState = this.calculateState(props);
+        let newState = this.calculateState(props);
         this.state = {
             position: newState.position,
             scrollSize: newState.scrollSize,
@@ -38,9 +38,9 @@ class ScrollBar extends React.Component {
     }
 
     calculateState(props){
-        var scrollSize = props.containerSize * props.containerSize / props.realSize;
-        var multiplier = props.containerSize / props.realSize;
-        var position = props.position * multiplier;
+        let scrollSize = props.containerSize * props.containerSize / props.realSize;
+        let multiplier = props.containerSize / props.realSize;
+        let position = props.position * multiplier;
 
         return {
             scrollSize: scrollSize,
@@ -52,7 +52,7 @@ class ScrollBar extends React.Component {
         let scrollStyles = this.createScrollStyles();
         let springifiedScrollStyles = this.props.smoothScrolling ? modifyObjValues(this.createScrollStyles(), x => spring(x)) : scrollStyles;
 
-        var scrollbarClasses = classNames(['scrollbar-container', {
+        let scrollbarClasses = classNames(['scrollbar-container', {
             'active': this.state.isDragging,
             'horizontal': this.props.type === 'horizontal',
             'vertical': this.props.type === 'vertical'
@@ -74,27 +74,27 @@ class ScrollBar extends React.Component {
     }
 
     handleMouseMoveForHorizontal(e){
-        var multiplier = this.props.containerSize / this.props.realSize;
+        let multiplier = this.props.containerSize / this.props.realSize;
         if(this.state.isDragging){
             e.preventDefault();
-            var deltaX = this.state.lastClientPosition - e.clientX;
+            let deltaX = this.state.lastClientPosition - e.clientX;
             this.setState({ lastClientPosition: e.clientX });
             this.props.onMove(0, deltaX / multiplier);
         }
     }
 
     handleMouseMoveForVertical(e){
-        var multiplier = this.props.containerSize / this.props.realSize;
+        let multiplier = this.props.containerSize / this.props.realSize;
         if(this.state.isDragging){
             e.preventDefault();
-            var deltaY = this.state.lastClientPosition - e.clientY;
+            let deltaY = this.state.lastClientPosition - e.clientY;
             this.setState({ lastClientPosition: e.clientY });
             this.props.onMove(deltaY / multiplier, 0);
         }
     }
 
     handleMouseDown(e){
-        var lastClientPosition = this.props.type === 'vertical'? e.clientY: e.clientX
+        let lastClientPosition = this.props.type === 'vertical'? e.clientY: e.clientX
         this.setState({isDragging: true, lastClientPosition: lastClientPosition });
     }
 
