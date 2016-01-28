@@ -9,3 +9,4 @@ branches:
   only: 
     - master
     - dev
+    - tests
