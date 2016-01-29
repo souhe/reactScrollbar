@@ -1,5 +1,5 @@
 import expect from 'expect';
-import {positiveOrZero, modifyObjValues} from '../src/js/utils';
+import {positiveOrZero, modifyObjValues, isReact13} from '../src/js/utils';
 
 describe('utils', () => {
    describe('positiveOrZero', () => {
@@ -29,5 +29,15 @@ describe('utils', () => {
            let result = modifyObjValues({a: 1, b: 2});
            expect(result).toEqual({a: 1, b: 2});
        });
+   });
+   
+   describe('isReact13', () => {
+      it('should return true for React 0.13', () => {
+          let reactMockup = {
+              version: '0.13'
+          }
+          let result = isReact13(reactMockup);
+          expect(result).toBe(true);
+      });
    });
 });
