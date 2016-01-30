@@ -1,6 +1,6 @@
 import '../less/scrollbar.less';
 import React from 'react';
-import Scrollbar from './scrollBar';
+import ScrollBar from './scrollBar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
 import lineHeight from 'line-height';
 import {Motion, spring} from 'react-motion';
@@ -85,7 +85,7 @@ export default class ScrollArea extends React.Component{
             (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api || this.state.eventType === eventTypes.touchEnd);
         
         let scrollbarY = this.canScrollY()? (
-            <Scrollbar
+            <ScrollBar
                 realSize={this.state.realHeight}
                 containerSize={this.state.containerHeight}
                 position={-this.state.topPosition}
@@ -97,7 +97,7 @@ export default class ScrollArea extends React.Component{
         ): null;
 
         let scrollbarX = this.canScrollX()? (
-            <Scrollbar
+            <ScrollBar
                 realSize={this.state.realWidth}
                 containerSize={this.state.containerWidth}
                 position={-this.state.leftPosition}

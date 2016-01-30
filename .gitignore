@@ -1,6 +1,7 @@
 /dist/
 /node_modules/
 /bower_components/
+/.vscode/
 /npm-debug.log
 examples/*/*.js
 examples/*/*.css
