@@ -35,15 +35,23 @@ class ScrollBar extends React.Component {
         document.removeEventListener("mousemove", this.bindedHandleMouseMove);
         document.removeEventListener("mouseup", this.bindedHandleMouseUp);
     }
+    
+    calculateFractionalPosition(realSize, containerSize, position){
+        let relativeSize = realSize - containerSize;
+        let positivePosition = Math.abs(position);
+        
+        return 1 - ((relativeSize - positivePosition) / relativeSize);
+    }
 
     calculateState(props){
-        let scrollSize = props.containerSize * props.containerSize / props.realSize;
-        let multiplier = props.containerSize / props.realSize;
-        let position = props.position * multiplier;
-
+        let fractionalPosition = this.calculateFractionalPosition(props.realSize, props.containerSize, props.position); 
+        let proportionalToPageScrollSize = props.containerSize * props.containerSize / props.realSize;
+        let scrollSize = proportionalToPageScrollSize < props.minScrollSize ? props.minScrollSize : proportionalToPageScrollSize;
+        
+        let position = (props.containerSize - scrollSize) * fractionalPosition;    
         return {
             scrollSize: scrollSize,
-            position: position
+            position: Math.round(position)
         };
     }
 
@@ -52,7 +60,7 @@ class ScrollBar extends React.Component {
         let isVoriziontal = type === 'horizontal';
         let isVertical = type === 'vertical';
         let scrollStyles = this.createScrollStyles();
-        let springifiedScrollStyles = smoothScrolling ? modifyObjValues(this.createScrollStyles(), x => spring(x)) : scrollStyles;
+        let springifiedScrollStyles = smoothScrolling ? modifyObjValues(scrollStyles, x => spring(x)) : scrollStyles;
 
         let scrollbarClasses = `scrollbar-container ${isDragging ? 'active' : ''} ${isVoriziontal ? 'horizontal' : ''} ${isVertical ? 'vertical' : ''}`; 
 
@@ -123,7 +131,8 @@ ScrollBar.propTypes = {
     containerStyle: React.PropTypes.object,
     scrollbarStyle: React.PropTypes.object,
     type: React.PropTypes.oneOf(['vertical', 'horizontal']),
-    smoothScrolling: React.PropTypes.bool
+    smoothScrolling: React.PropTypes.bool,
+    minScrollSize: React.PropTypes.number
 };
 
 ScrollBar.defaultProps = {

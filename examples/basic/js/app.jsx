@@ -5,7 +5,7 @@ class App extends React.Component{
         super(props);
 
         this.state = {
-            itemsCount : 30
+            itemsCount : 40
         };
     }
 
@@ -32,6 +32,7 @@ class App extends React.Component{
                   horizontalScrollbarStyle={scrollBarStyles}
                   horizontalContainerStyle={scrollBarStyles}
                   smoothScrolling= {true}
+                  minScrollSize={40}
                   >
 
                     {itemElements}

@@ -50,7 +50,7 @@ describe('ScrollBar component', () => {
            position: -20
        });
                  
-       expect(instance.state.position).toBe(-5);    
+       expect(instance.state.position).toBe(5);    
     });
     
     it('ScrollBar should have proper size', () => {
@@ -115,5 +115,53 @@ describe('ScrollBar component', () => {
        
        expect(handleMoveSpy.calls.length).toEqual(4);
        expect(handleMoveSpy.calls[3].arguments).toEqual([-40 , 0]);
+    });
+    
+    it('Should be possible to set min scrollbar size', () => {
+        let minScrollBarSize = 10;
+        let {instance} = setupScrollBar({
+            realSize: 10000, 
+            containerSize: 100,
+            type: 'vertical',
+            minScrollSize: minScrollBarSize
+        });     
+       
+        expect(instance.state.scrollSize).toBe(minScrollBarSize);   
+    });
+    
+    it('Calculate percentagePosition should work properly for realSize: 300, containerSize: 100, position: 0', () => {
+        let {instance} = setupScrollBar();
+        
+        expect(instance.calculateFractionalPosition(300, 100, 0)).toEqual(0);
+    });
+    
+    it('Calculate percentagePosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
+        let {instance} = setupScrollBar();
+        
+        expect(instance.calculateFractionalPosition(300, 100, -200)).toEqual(1);
+    });
+    
+    it('Calculate percentagePosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
+        let {instance} = setupScrollBar();
+        
+        expect(instance.calculateFractionalPosition(300, 100, -100)).toEqual(0.5);
+    });
+    
+    it('Calculate percentagePosition should work properly for realSize: 160, containerSize: 80, position: -20', () => {
+        let {instance} = setupScrollBar();
+        
+        expect(instance.calculateFractionalPosition(160, 80, -20)).toEqual(0.25);
+    });
+    
+    it('Position of scrollbar should be proper when minScrollBarSize is set', () => {
+        let {instance} = setupScrollBar({
+            position: -9900, 
+            realSize: 10000,
+            containerSize: 100,
+            type: 'vertical',
+            minScrollSize: 10
+        });    
+        
+        expect(instance.state.position).toBe(90);
     });
 });

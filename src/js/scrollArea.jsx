@@ -93,6 +93,7 @@ export default class ScrollArea extends React.Component{
                 containerStyle={this.props.verticalContainerStyle}
                 scrollbarStyle={this.props.verticalScrollbarStyle}
                 smoothScrolling={withMotion}
+                minScrollSize={this.props.minScrollSize}
                 type="vertical"/>
         ): null;
 
@@ -105,6 +106,7 @@ export default class ScrollArea extends React.Component{
                 containerStyle={this.props.horizontalContainerStyle}
                 scrollbarStyle={this.props.horizontalScrollbarStyle}
                 smoothScrolling={withMotion}
+                minScrollSize={this.props.minScrollSize}
                 type="horizontal"/>
         ): null;
 
@@ -364,7 +366,8 @@ ScrollArea.propTypes = {
     horizontal: React.PropTypes.bool,
     horizontalContainerStyle: React.PropTypes.object,
     horizontalScrollbarStyle: React.PropTypes.object,
-    smoothScrolling: React.PropTypes.bool
+    smoothScrolling: React.PropTypes.bool,
+    minScrollSize: React.PropTypes.number
 };
 
 ScrollArea.defaultProps = {
