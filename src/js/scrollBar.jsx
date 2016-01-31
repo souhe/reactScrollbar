@@ -1,5 +1,4 @@
 import React from 'react';
-import classNames from 'classnames';
 import {Motion, spring} from 'react-motion';
 import {modifyObjValues} from './utils';
 
@@ -49,19 +48,18 @@ class ScrollBar extends React.Component {
     }
 
     render(){
+        let {smoothScrolling, isDragging, type, scrollbarStyle, containerStyle} = this.props;
+        let isVoriziontal = type === 'horizontal';
+        let isVertical = type === 'vertical';
         let scrollStyles = this.createScrollStyles();
-        let springifiedScrollStyles = this.props.smoothScrolling ? modifyObjValues(this.createScrollStyles(), x => spring(x)) : scrollStyles;
+        let springifiedScrollStyles = smoothScrolling ? modifyObjValues(this.createScrollStyles(), x => spring(x)) : scrollStyles;
 
-        let scrollbarClasses = classNames(['scrollbar-container', {
-            'active': this.state.isDragging,
-            'horizontal': this.props.type === 'horizontal',
-            'vertical': this.props.type === 'vertical'
-        }]);
+        let scrollbarClasses = `scrollbar-container ${isDragging ? 'active' : ''} ${isVoriziontal ? 'horizontal' : ''} ${isVertical ? 'vertical' : ''}`; 
 
         return (
-            <Motion style={{...this.props.scrollbarStyle, ...springifiedScrollStyles}}>
+            <Motion style={{...scrollbarStyle, ...springifiedScrollStyles}}>
                 { style => 
-                    <div className={scrollbarClasses} style={this.props.containerStyle} >
+                    <div className={scrollbarClasses} style={containerStyle} >
                         <div className="scrollbar"
                             style={style}
                             onMouseDown={this.handleMouseDown.bind(this)}

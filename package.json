@@ -21,7 +21,6 @@
   "author": "souhe",
   "license": "MIT",
   "dependencies": {
-    "classnames": "^1.2.0",
     "line-height": "^0.1.1",
     "react": "^0.14.6",
     "react-motion": "^0.3.1"
