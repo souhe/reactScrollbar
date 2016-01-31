@@ -31,11 +31,11 @@
     "babel-loader": "^5.3.2",
     "babel-runtime": "^5.8.24",
     "chai": "^3.5.0",
-    "css-loader": "^0.10.1",
+    "css-loader": "^0.23.1",
     "expect": "^1.13.4",
     "expect-jsx": "^2.2.2",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.2.1",
+    "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.5.2",
     "gulp-connect": "^2.2.0",
     "gulp-less": "^3.0.2",
@@ -56,9 +56,9 @@
     "react-addons-test-utils": "^0.14.6",
     "react-dom": "^0.14.0",
     "run-sequence": "^1.1.4",
-    "style-loader": "^0.10.2",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.2",
-    "webpack-stream": "^2.1.0"
+    "webpack-stream": "^3.1.0"
   },
   "bugs": {
     "url": "https://github.com/souhe/reactScrollbar/issues"
