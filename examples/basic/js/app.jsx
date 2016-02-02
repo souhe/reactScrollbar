@@ -13,6 +13,10 @@ class App extends React.Component{
         this.setState({itemsCount: this.state.itemsCount + 10});
     }
 
+    handleScroll(scrollData){
+      console.log(scrollData);
+    }
+
     render() {
         var itemElements = [];
 
@@ -31,6 +35,7 @@ class App extends React.Component{
                   verticalContainerStyle={scrollBarStyles}
                   horizontalScrollbarStyle={scrollBarStyles}
                   horizontalContainerStyle={scrollBarStyles}
+                  onScroll={this.handleScroll}
                   >
 
                     {itemElements}
