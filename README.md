@@ -114,6 +114,14 @@ Inline styles applied to vertical scrollbar's container.
 #### verticalScrollbarStyle
 Inline styles applied to vertical scrollbar.
 
+#### contentWindow
+You can override window to make scrollarea works inside iframe.
+**Default: window**
+
+#### ownerDocument
+You can override document to make scrollarea works inside iframe.
+**Default: document**
+
 ### Context
 In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:
 
