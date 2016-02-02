@@ -75,12 +75,23 @@ then open [http://localhost:8003](http://localhost:80003).
         vertical={Boolean}
         verticalContainerStyle={Object}
         verticalScrollbarStyle={Object}
+        onScroll={(value) => {}}
     >
 ```
 
 #### speed
 Scroll speed applied to mouse wheel event.
 **Default: 1**
+
+#### onScroll
+`onScroll(value: Object)` event which can notify the parent component when the container scrolls.
+- `value: Object` - informations about current position
+ - `value.leftPosition: Number` - content left position (distance in pixels from the left side of container)
+ - `value.topPosition: Number` - content top position (distance in pixels from the top of container)
+ - `value.containerHeight: Number` - container height
+ - `value.containerWidth: Number` - container width
+ - `value.realHeight: Number` - real content height
+ - `value.realWidth: Number` - real content width
 
 #### className
 CSS class names added to main scroll area component.
