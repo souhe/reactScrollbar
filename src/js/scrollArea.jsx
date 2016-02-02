@@ -50,13 +50,13 @@ export default class ScrollArea extends React.Component{
     }
 
     componentDidMount(){
-        window.addEventListener("resize", this.bindedHandleWindowResize);
+        this.props.contentWindow.addEventListener("resize", this.bindedHandleWindowResize);
         this.lineHeightPx = lineHeight(findDOMNode(this.refs.content));
         this.setSizesToState();
     }
 
     componentWillUnmount(){
-        window.removeEventListener("resize", this.bindedHandleWindowResize);
+        this.props.contentWindow.removeEventListener("resize", this.bindedHandleWindowResize);
     }
 
     componentDidUpdate(){
@@ -64,7 +64,8 @@ export default class ScrollArea extends React.Component{
     }
 
     render(){
-        let {children, className, contentClassName} = this.props
+        let {children, className, contentClassName, ownerDocument} = this.props;
+
         var contentStyle = {
             marginTop: this.state.topPosition,
             marginLeft: this.state.leftPosition
@@ -72,6 +73,7 @@ export default class ScrollArea extends React.Component{
 
         var scrollbarY = this.canScrollY()? (
             <Scrollbar
+                ownerDocument={ownerDocument}
                 realSize={this.state.realHeight}
                 containerSize={this.state.containerHeight}
                 position={-this.state.topPosition}
@@ -83,6 +85,7 @@ export default class ScrollArea extends React.Component{
 
         var scrollbarX = this.canScrollX()? (
             <Scrollbar
+                ownerDocument={ownerDocument}
                 realSize={this.state.realWidth}
                 containerSize={this.state.containerWidth}
                 position={-this.state.leftPosition}
@@ -145,6 +148,11 @@ export default class ScrollArea extends React.Component{
         if(this.canScrollX(newState)){
             newState.leftPosition = this.computeLeftPosition(deltaX, newState);
         }
+
+        if(this.props.onScroll){
+            this.props.onScroll(newState);
+        }
+        
         this.setState(newState);
     }
 
@@ -177,6 +185,10 @@ export default class ScrollArea extends React.Component{
 
         if(this.state.topPosition !== newState.topPosition || this.state.leftPosition !== newState.leftPosition){
             e.preventDefault();
+        }
+
+        if(this.props.onScroll){
+            this.props.onScroll(newState);
         }
 
         this.setState(newState);
@@ -306,10 +318,15 @@ ScrollArea.propTypes = {
     horizontal: React.PropTypes.bool,
     horizontalContainerStyle: React.PropTypes.object,
     horizontalScrollbarStyle: React.PropTypes.object,
+    onScroll: React.PropTypes.func,
+    contentWindow: React.PropTypes.any,
+    ownerDocument: React.PropTypes.any
 };
 
 ScrollArea.defaultProps = {
     speed: 1,
     vertical: true,
-    horizontal: true
+    horizontal: true,
+    contentWindow: window,
+    ownerDocument: document
 };
