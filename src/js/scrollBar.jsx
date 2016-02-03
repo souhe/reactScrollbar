@@ -68,12 +68,12 @@ class ScrollBar extends React.Component {
             <Motion style={{...scrollbarStyle, ...springifiedScrollStyles}}>
                 { style => 
                     <div className={scrollbarClasses} style={containerStyle} >
-                <div className="scrollbar"
-                            style={style}
-                    onMouseDown={this.handleMouseDown.bind(this)}
-                    >
-                </div>
-            </div>
+                        <div className="scrollbar"
+                                    style={style}
+                            onMouseDown={this.handleMouseDown.bind(this)}
+                            >
+                        </div>
+                    </div>
                 }
             </Motion>
         );
@@ -140,5 +140,5 @@ ScrollBar.defaultProps = {
     type : 'vertical',
     ownerDocument: document,
     smoothScrolling: false
-}
+};
 export default ScrollBar;
