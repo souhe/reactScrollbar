@@ -23,8 +23,8 @@ class ScrollBar extends React.Component {
     }
 
     componentDidMount(){
-        document.addEventListener("mousemove", this.bindedHandleMouseMove);
-        document.addEventListener("mouseup", this.bindedHandleMouseUp);
+        this.props.ownerDocument.addEventListener("mousemove", this.bindedHandleMouseMove);
+        this.props.ownerDocument.addEventListener("mouseup", this.bindedHandleMouseUp);
     }
 
     componentWillReceiveProps(nextProps){
@@ -32,10 +32,10 @@ class ScrollBar extends React.Component {
     }
 
     componentWillUnmount(){
-        document.removeEventListener("mousemove", this.bindedHandleMouseMove);
-        document.removeEventListener("mouseup", this.bindedHandleMouseUp);
+        this.props.ownerDocument.removeEventListener("mousemove", this.bindedHandleMouseMove);
+        this.props.ownerDocument.removeEventListener("mouseup", this.bindedHandleMouseUp);
     }
-    
+
     calculateFractionalPosition(realSize, containerSize, position){
         let relativeSize = realSize - containerSize;
         let positivePosition = Math.abs(position);
@@ -47,7 +47,7 @@ class ScrollBar extends React.Component {
         let fractionalPosition = this.calculateFractionalPosition(props.realSize, props.containerSize, props.position); 
         let proportionalToPageScrollSize = props.containerSize * props.containerSize / props.realSize;
         let scrollSize = proportionalToPageScrollSize < props.minScrollSize ? props.minScrollSize : proportionalToPageScrollSize;
-        
+
         let position = (props.containerSize - scrollSize) * fractionalPosition;    
         return {
             scrollSize: scrollSize,
@@ -68,12 +68,12 @@ class ScrollBar extends React.Component {
             <Motion style={{...scrollbarStyle, ...springifiedScrollStyles}}>
                 { style => 
                     <div className={scrollbarClasses} style={containerStyle} >
-                        <div className="scrollbar"
+                <div className="scrollbar"
                             style={style}
-                            onMouseDown={this.handleMouseDown.bind(this)}
-                            >
-                        </div>
-                    </div>
+                    onMouseDown={this.handleMouseDown.bind(this)}
+                    >
+                </div>
+            </div>
                 }
             </Motion>
         );
@@ -131,12 +131,14 @@ ScrollBar.propTypes = {
     containerStyle: React.PropTypes.object,
     scrollbarStyle: React.PropTypes.object,
     type: React.PropTypes.oneOf(['vertical', 'horizontal']),
+    ownerDocument: React.PropTypes.any,
     smoothScrolling: React.PropTypes.bool,
     minScrollSize: React.PropTypes.number
 };
 
 ScrollBar.defaultProps = {
     type : 'vertical',
+    ownerDocument: document,
     smoothScrolling: false
 }
 export default ScrollBar;

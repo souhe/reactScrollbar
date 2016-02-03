@@ -12,17 +12,37 @@ var webpackProductionConf = require('./webpack.production.config.js');
 var webpackExamplesConf = require('./webpackExamples.config.js');
 
 gulp.task('build', function() {
-    return gulp.src('src/js/scrollArea.jsx')
+    return gulp.src('src/js/scrollAreaWithCss.js')
         .pipe(webpack(webpackDevConf))
         .pipe(concat('scrollArea.js'))
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('production', function() {
-    return gulp.src('src/js/scrollArea.jsx')
+gulp.task('build-nocss', function() {
+    return gulp.src('src/js/scrollAreaWithoutCss.js')
+        .pipe(webpack(webpackDevConf))
+        .pipe(concat('no-css.js'))
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('build-production', function() {
+    return gulp.src('src/js/scrollAreaWithCss.js')
         .pipe(webpack(webpackProductionConf))
         .pipe(concat('scrollArea.js'))
         .pipe(gulp.dest('dist'));
+});
+
+gulp.task('build-production-nocss', function() {
+    return gulp.src('src/js/scrollAreaWithoutCss.js')
+        .pipe(webpack(webpackProductionConf))
+        .pipe(concat('no-css.js'))
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('less', function(){
+    return gulp.src('./src/less/scrollArea.less')
+        .pipe(less())
+        .pipe(gulp.dest('./dist/css/'));
 });
 
 var folders = ['basic', 'changingChildren'];
@@ -54,7 +74,11 @@ gulp.task('less-examples', function(){
 });
 
 gulp.task('default', function(callback){
-    runSequence('build', ['build-examples', 'less-examples'], callback);
+    runSequence('build', 'build-nocss', 'less', ['build-examples', 'less-examples'], callback);
+});
+
+gulp.task('production', function(callback){
+    runSequence('build-production', 'build-production-nocss', 'less', callback);
 });
 
 gulp.task('watch', function() {

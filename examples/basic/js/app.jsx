@@ -1,5 +1,6 @@
 import React from 'react'
-import ScrollArea from '../../../src/js/scrollArea';
+import ScrollArea from 'react-scrollbar';
+
 class App extends React.Component{
     constructor(props){
         super(props);
@@ -11,6 +12,10 @@ class App extends React.Component{
 
     handleAddClick(){
         this.setState({itemsCount: this.state.itemsCount + 10});
+    }
+
+    handleScroll(scrollData){
+      console.log(scrollData);
     }
 
     render() {
@@ -33,6 +38,7 @@ class App extends React.Component{
                   horizontalContainerStyle={scrollBarStyles}
                   smoothScrolling= {true}
                   minScrollSize={40}
+                  onScroll={this.handleScroll}
                   >
 
                     {itemElements}

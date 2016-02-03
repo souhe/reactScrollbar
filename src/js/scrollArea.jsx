@@ -1,4 +1,3 @@
-import '../less/scrollbar.less';
 import React from 'react';
 import ScrollBar from './scrollBar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
@@ -66,13 +65,13 @@ export default class ScrollArea extends React.Component{
     }
 
     componentDidMount(){
-        window.addEventListener("resize", this.bindedHandleWindowResize);
-        this.lineHeightPx = lineHeight(findDOMNode(this.content));
+        this.props.contentWindow.addEventListener("resize", this.bindedHandleWindowResize);
+        this.lineHeightPx = lineHeight(findDOMNode(this.refs.content));
         this.setSizesToState();
     }
 
     componentWillUnmount(){
-        window.removeEventListener("resize", this.bindedHandleWindowResize);
+        this.props.contentWindow.removeEventListener("resize", this.bindedHandleWindowResize);
     }
 
     componentDidUpdate(){
@@ -80,12 +79,13 @@ export default class ScrollArea extends React.Component{
     }
 
     render(){
-        let {children, className, contentClassName} = this.props
+        let {children, className, contentClassName, ownerDocument} = this.props
         let withMotion = this.props.smoothScrolling && 
             (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api || this.state.eventType === eventTypes.touchEnd);
-        
+
         let scrollbarY = this.canScrollY()? (
             <ScrollBar
+				ownerDocument={ownerDocument}
                 realSize={this.state.realHeight}
                 containerSize={this.state.containerHeight}
                 position={-this.state.topPosition}
@@ -98,7 +98,8 @@ export default class ScrollArea extends React.Component{
         ): null;
 
         let scrollbarX = this.canScrollX()? (
-            <ScrollBar
+            <
+				ownerDocument={ownerDocument}
                 realSize={this.state.realWidth}
                 containerSize={this.state.containerWidth}
                 position={-this.state.leftPosition}
@@ -132,20 +133,20 @@ export default class ScrollArea extends React.Component{
                     <div ref={x => this.wrapper = x} style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
                         <div ref={x => this.content = x}
                             style={style}
-                            className={contentClasses}
-                            onTouchStart={this.handleTouchStart.bind(this)}
+                    className={contentClasses}
+                    onTouchStart={this.handleTouchStart.bind(this)}
                             onTouchMove={this.handleTouchMove.bind(this)}
                             onTouchEnd={this.handleTouchEnd.bind(this)}>
-                            {children}
-                        </div>
-                        {scrollbarY}
-                        {scrollbarX}
-                    </div>
+                    {children}
+                </div>
+                {scrollbarY}
+                {scrollbarX}
+            </div>
                 }
             </Motion>
         );
     }
-    
+
     setStateFromEvent(newState, eventType){
         this.setState({...newState, eventType});
     }
@@ -185,7 +186,7 @@ export default class ScrollArea extends React.Component{
             this.setStateFromEvent(this.composeNewState(-deltaX, -deltaY));
         }
     }
-    
+
     handleTouchEnd(e){
         let {deltaX: lastDeltaX, deltaY: lastDeltaY, timestamp: lastTimestamp} = this.eventPreviousValues;        
         
@@ -198,7 +199,7 @@ export default class ScrollArea extends React.Component{
             deltaY: 0,
             deltaX: 0
         };      
-    }
+        }
     
     handleScrollbarMove(deltaY, deltaX){
          this.setStateFromEvent(this.composeNewState(deltaX, deltaY));
@@ -221,7 +222,7 @@ export default class ScrollArea extends React.Component{
 
         deltaY = deltaY * this.props.speed;
         deltaX = deltaX * this.props.speed;
-        
+
         let newState = this.composeNewState(-deltaX, -deltaY);
 
         if(this.state.topPosition !== newState.topPosition || this.state.leftPosition !== newState.leftPosition){
@@ -229,14 +230,14 @@ export default class ScrollArea extends React.Component{
         }
 
         this.setStateFromEvent(newState, eventTypes.wheel);
-    }
-    
+        }
+
     handleWindowResize(){
         let newState = this.computeSizes();
         newState = this.getModifiedPositionsIfNeeded(newState);
         this.setStateFromEvent(newState);
-    }
-    
+        }
+
     composeNewState(deltaX, deltaY){
         let newState = this.computeSizes();
         
@@ -246,8 +247,8 @@ export default class ScrollArea extends React.Component{
         if(this.canScrollX(newState)){
             newState.leftPosition = this.computeLeftPosition(deltaX, newState);
         }
-        
-        return newState;
+
+        this.setState(newState);
     }
 
     computeTopPosition(deltaY, sizes){
@@ -366,6 +367,9 @@ ScrollArea.propTypes = {
     horizontal: React.PropTypes.bool,
     horizontalContainerStyle: React.PropTypes.object,
     horizontalScrollbarStyle: React.PropTypes.object,
+    onScroll: React.PropTypes.func,
+    contentWindow: React.PropTypes.any,
+    ownerDocument: React.PropTypes.any
     smoothScrolling: React.PropTypes.bool,
     minScrollSize: React.PropTypes.number
 };
@@ -375,4 +379,6 @@ ScrollArea.defaultProps = {
     vertical: true,
     horizontal: true,
     smoothScrolling: false
+    contentWindow: window,
+    ownerDocument: document
 };

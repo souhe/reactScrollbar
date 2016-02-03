@@ -47,6 +47,15 @@ For **React 0.13** you need to wrap `<ScrollArea>` child into a function.
 </ScrollArea>
 ```
 
+#### Version without boundled css styles
+If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line. 
+
+```js
+    var ScrollArea = require('react-scrollbar/no-css');
+```
+Then **include scrollArea.css** file into your project.
+
+
 ### Run the example app
 
 ```bash
@@ -75,12 +84,23 @@ then open [http://localhost:8003](http://localhost:80003).
         vertical={Boolean}
         verticalContainerStyle={Object}
         verticalScrollbarStyle={Object}
+        onScroll={(value) => {}}
     >
 ```
 
 #### speed
 Scroll speed applied to mouse wheel event.
 **Default: 1**
+
+#### onScroll
+`onScroll(value: Object)` event which can notify the parent component when the container scrolls.
+- `value: Object` - informations about current position
+ - `value.leftPosition: Number` - content left position (distance in pixels from the left side of container)
+ - `value.topPosition: Number` - content top position (distance in pixels from the top of container)
+ - `value.containerHeight: Number` - container height
+ - `value.containerWidth: Number` - container width
+ - `value.realHeight: Number` - real content height
+ - `value.realWidth: Number` - real content width
 
 #### className
 CSS class names added to main scroll area component.
@@ -113,6 +133,14 @@ Inline styles applied to vertical scrollbar's container.
 
 #### verticalScrollbarStyle
 Inline styles applied to vertical scrollbar.
+
+#### contentWindow
+You can override window to make scrollarea works inside iframe.
+**Default: window**
+
+#### ownerDocument
+You can override document to make scrollarea works inside iframe.
+**Default: document**
 
 ### Context
 In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:
