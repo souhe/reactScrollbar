@@ -1,4 +1,3 @@
-import '../less/scrollbar.less';
 import React from 'react';
 import Scrollbar from './scrollBar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero} from './utils';

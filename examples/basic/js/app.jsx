@@ -1,5 +1,6 @@
 import React from 'react'
-import ScrollArea from '../../../src/js/scrollArea';
+import ScrollArea from 'react-scrollbar';
+
 class App extends React.Component{
     constructor(props){
         super(props);

@@ -47,6 +47,15 @@ For **React 0.13** you need to wrap `<ScrollArea>` child into a function.
 </ScrollArea>
 ```
 
+#### Version without boundled css styles
+If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line. 
+
+```js
+    var ScrollArea = require('react-scrollbar/no-css');
+```
+Then **include scrollArea.css** file into your project.
+
+
 ### Run the example app
 
 ```bash

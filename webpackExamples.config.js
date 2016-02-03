@@ -1,7 +1,11 @@
 module.exports = {
     resolve: {
         modulesDirectories: ['node_modules', 'bower_components'],
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.js', '.jsx'],
+        alias: {
+            'react-scrollbar/no-css': '../../../src/js/scrollAreaWithoutCss.js',
+            'react-scrollbar': '../../../src/js/scrollAreaWithCss.js'
+        }
     },
     module: {
         loaders: [
