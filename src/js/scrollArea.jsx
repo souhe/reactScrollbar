@@ -336,11 +336,13 @@ export default class ScrollArea extends React.Component{
     }
 
     canScrollY(state = this.state){
-        return this.props.vertical;
+        let scrollableY = state.realHeight > state.containerHeight;
+        return scrollableY && this.props.vertical;
     }
 
     canScrollX(state = this.state){
-        return this.props.horizontal;
+        let scrollableX = state.realWidth > state.containerWidth;
+        return scrollableX && this.props.horizontal;
     }
 
     getModifiedPositionsIfNeeded(newState){
