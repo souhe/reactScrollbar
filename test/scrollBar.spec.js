@@ -129,25 +129,25 @@ describe('ScrollBar component', () => {
         expect(instance.state.scrollSize).toBe(minScrollBarSize);   
     });
     
-    it('Calculate percentagePosition should work properly for realSize: 300, containerSize: 100, position: 0', () => {
+    it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: 0', () => {
         let {instance} = setupScrollBar();
         
         expect(instance.calculateFractionalPosition(300, 100, 0)).toEqual(0);
     });
     
-    it('Calculate percentagePosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
+    it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
         let {instance} = setupScrollBar();
         
         expect(instance.calculateFractionalPosition(300, 100, -200)).toEqual(1);
     });
     
-    it('Calculate percentagePosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
+    it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
         let {instance} = setupScrollBar();
         
         expect(instance.calculateFractionalPosition(300, 100, -100)).toEqual(0.5);
     });
     
-    it('Calculate percentagePosition should work properly for realSize: 160, containerSize: 80, position: -20', () => {
+    it('Method calculateFractionalPosition should work properly for realSize: 160, containerSize: 80, position: -20', () => {
         let {instance} = setupScrollBar();
         
         expect(instance.calculateFractionalPosition(160, 80, -20)).toEqual(0.25);
