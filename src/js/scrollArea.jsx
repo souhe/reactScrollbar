@@ -65,13 +65,17 @@ export default class ScrollArea extends React.Component{
     }
 
     componentDidMount(){
-        this.props.contentWindow.addEventListener("resize", this.bindedHandleWindowResize);
+        if(this.props.contentWindow){
+            this.props.contentWindow.addEventListener("resize", this.bindedHandleWindowResize);
+        }
         this.lineHeightPx = lineHeight(findDOMNode(this.content));
         this.setSizesToState();
     }
 
     componentWillUnmount(){
-        this.props.contentWindow.removeEventListener("resize", this.bindedHandleWindowResize);
+        if(this.props.contentWindow){
+            this.props.contentWindow.removeEventListener("resize", this.bindedHandleWindowResize);
+        }
     }
 
     componentDidUpdate(){
@@ -382,6 +386,6 @@ ScrollArea.defaultProps = {
     vertical: true,
     horizontal: true,
     smoothScrolling: false,
-    contentWindow: window,
-    ownerDocument: document
+    contentWindow: (typeof window === "object") ? window : undefined,
+    ownerDocument: (typeof document === "object") ? document : undefined
 };

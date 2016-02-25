@@ -23,8 +23,10 @@ class ScrollBar extends React.Component {
     }
 
     componentDidMount(){
-        this.props.ownerDocument.addEventListener("mousemove", this.bindedHandleMouseMove);
-        this.props.ownerDocument.addEventListener("mouseup", this.bindedHandleMouseUp);
+        if (this.props.ownerDocument) {
+            this.props.ownerDocument.addEventListener("mousemove", this.bindedHandleMouseMove);
+            this.props.ownerDocument.addEventListener("mouseup", this.bindedHandleMouseUp);
+        }
     }
 
     componentWillReceiveProps(nextProps){
@@ -32,8 +34,10 @@ class ScrollBar extends React.Component {
     }
 
     componentWillUnmount(){
-        this.props.ownerDocument.removeEventListener("mousemove", this.bindedHandleMouseMove);
-        this.props.ownerDocument.removeEventListener("mouseup", this.bindedHandleMouseUp);
+        if (this.props.ownerDocument) {
+            this.props.ownerDocument.removeEventListener("mousemove", this.bindedHandleMouseMove);
+            this.props.ownerDocument.removeEventListener("mouseup", this.bindedHandleMouseUp);
+        }
     }
 
     calculateFractionalPosition(realContentSize, containerSize, contentPosition){
@@ -138,7 +142,6 @@ ScrollBar.propTypes = {
 
 ScrollBar.defaultProps = {
     type : 'vertical',
-    ownerDocument: document,
     smoothScrolling: false
 };
 export default ScrollBar;
