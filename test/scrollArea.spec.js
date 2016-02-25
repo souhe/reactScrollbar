@@ -8,17 +8,28 @@ import TestUtils from 'react-addons-test-utils';
 import ScrollArea from '../src/js/scrollArea';
 import Scrollbar from '../src/js/scrollBar';
 
-function setup(props){
+function setup(props, sizes){
     let renderer = TestUtils.createRenderer();
     renderer.render(<ScrollArea {...props}><p>content</p></ScrollArea>);
     let instance = getRendererComponentInstance(renderer);
+    
+    if(sizes){
+        instance.computeSizes = () => ({
+            realHeight: 300,
+            containerHeight: 100,
+            realWidth: 300,
+            containerWidth: 100
+        });
+        instance.setSizesToState();
+    }
+        
     let output = renderer.getRenderOutput();
 
     let wrapper = output.props.children();
 
     let content = wrapper.props.children[0];
     let scrollbars = wrapper.props.children.filter(element => element && element.type == Scrollbar);
-    
+
     return {
         wrapper,
         content,
@@ -30,15 +41,12 @@ function setup(props){
 }
 
 function setupComponentWithMockedSizes(props) {
-    let component = setup(props);
-    component.instance.computeSizes = () => ({
+    let component = setup(props, {
         realHeight: 300,
         containerHeight: 100,
         realWidth: 300,
         containerWidth: 100
     });
-    
-    component.instance.setSizesToState();
     
     return component;
 }
@@ -49,7 +57,7 @@ function getRendererComponentInstance(renderer){
 
 describe('ScrolLArea component', () => {
     it('Should render children and both scrollbars', () => {      
-        let {scrollbars, content} = setup();
+        let {scrollbars, content} = setupComponentWithMockedSizes();
 
         expect(scrollbars.length).toBe(2);
         expect(content).toEqualJSX(
@@ -64,7 +72,7 @@ describe('ScrolLArea component', () => {
     });
    
     it('Could render only vertical scrollbar', () => {
-        let {scrollbars} = setup({vertical: true, horizontal: false});
+        let {scrollbars} = setupComponentWithMockedSizes({vertical: true, horizontal: false});
         let scrollbar = scrollbars[0];
         
         expect(scrollbars.length).toBe(1);
@@ -72,7 +80,7 @@ describe('ScrolLArea component', () => {
     });
    
     it('Could render only horizontal scrollbar', () => {
-        let {scrollbars} = setup({vertical: false, horizontal: true});
+        let {scrollbars} = setupComponentWithMockedSizes({vertical: false, horizontal: true});
         let scrollbar = scrollbars[0];
         
         expect(scrollbars.length).toBe(1);
@@ -86,7 +94,7 @@ describe('ScrolLArea component', () => {
     });
    
     it('Should have proper scrollbars styles', () => {
-        let {content, scrollbars} = setup({
+        let {content, scrollbars} = setupComponentWithMockedSizes({
             vertical: true,
             verticalScrollbarStyle: {test: 'verticalScrollbarStyle'},
             verticalContainerStyle: {test: 'verticalContainerStyle'},
