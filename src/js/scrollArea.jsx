@@ -310,27 +310,19 @@ export default class ScrollArea extends React.Component{
     }
 
     scrollTop(){
-        if(this.canScrollY()){
-            this.setStateFromEvent({topPosition: 0}, eventTypes.api);
-        }
+        this.scrollYTo(0);
     }
 
     scrollBottom(){
-        if(this.canScrollY()){
-            this.setStateFromEvent({topPosition: -(this.state.realHeight - this.state.containerHeight)}, eventTypes.api);
-        }
+        this.scrollYTo((this.state.realHeight - this.state.containerHeight));
     }
     
     scrollLeft(){
-        if(this.canScrollX()){
-            this.setStateFromEvent({leftPosition: 0}, eventTypes.api);
-        }
+        this.scrollXTo(0);
     }
 
     scrollRight(){
-        if(this.canScrollX()){
-            this.setStateFromEvent({leftPosition: -(this.state.realWidth - this.state.containerWidth)}, eventTypes.api);
-        }
+        this.scrollXTo((this.state.realWidth - this.state.containerWidth));
     }
 
     scrollYTo(topPosition){
