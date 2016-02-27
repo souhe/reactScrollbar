@@ -14,12 +14,7 @@ function setup(props, sizes){
     let instance = getRendererComponentInstance(renderer);
     
     if(sizes){
-        instance.computeSizes = () => ({
-            realHeight: 300,
-            containerHeight: 100,
-            realWidth: 300,
-            containerWidth: 100
-        });
+        instance.computeSizes = () => sizes
         instance.setSizesToState();
     }
         
@@ -192,5 +187,105 @@ describe('ScrolLArea component', () => {
         }        
         
         expect(instance.state.leftPosition).toBe(-200);
+    });
+    
+    it('scrollBottom() method should work when content is smaller then container', () => {
+        let {instance} = setup({}, {
+            realHeight: 30,
+            containerHeight: 100,
+            realWidth: 30,
+            containerWidth: 100
+        });
+        
+        instance.scrollBottom();        
+        expect(instance.state.topPosition).toBe(0);        
+    });
+    
+     
+    it('scrollBottom() method should scroll to bottom', () => {
+        let {instance} = setup({}, {
+            realHeight: 200,
+            containerHeight: 100,
+            realWidth: 200,
+            containerWidth: 100
+        });
+        
+        instance.scrollBottom();        
+        expect(instance.state.topPosition).toBe(-100);        
+    });
+    
+    it('scrollBottom() should be imposible when there is disabled vertical scroll', () => {
+        let {instance} = setup({vertical: false}, {
+            realHeight: 200,
+            containerHeight: 100,
+            realWidth: 200,
+            containerWidth: 100
+        });
+        
+        instance.scrollBottom();        
+        expect(instance.state.topPosition).toBe(0);        
+    });
+    
+    it('scrollRight() method should work when content is smaller then container', () => {
+        let {instance} = setup({}, {
+            realHeight: 30,
+            containerHeight: 100,
+            realWidth: 30,
+            containerWidth: 100
+        });
+        
+        instance.scrollRight();        
+        expect(instance.state.topPosition).toBe(0);        
+    });
+    
+     
+    it('scrollRight() method should scroll to right', () => {
+        let {instance} = setup({}, {
+            realHeight: 200,
+            containerHeight: 100,
+            realWidth: 200,
+            containerWidth: 100
+        });
+        
+        instance.scrollRight();        
+        expect(instance.state.leftPosition).toBe(-100);        
+    });
+    
+    it('scrollRight() should be imposible when there is disabled horizontal scroll', () => {
+        let {instance} = setup({horizontal: false}, {
+            realHeight: 200,
+            containerHeight: 100,
+            realWidth: 200,
+            containerWidth: 100
+        });
+        
+        instance.scrollRight();        
+        expect(instance.state.topPosition).toBe(0);        
+    });
+    
+    it('scrollLeft() method should scroll to left', () => {
+        let {instance} = setup({}, {
+            realHeight: 200,
+            containerHeight: 100,
+            realWidth: 200,
+            containerWidth: 100
+        });        
+        instance.scrollXTo(50);
+        
+        instance.scrollLeft();        
+        expect(instance.state.leftPosition).toBe(0);        
+    });
+    
+    it('scrollTop() method should scroll to top', () => {
+        let {instance} = setup({}, {
+            realHeight: 200,
+            containerHeight: 100,
+            realWidth: 200,
+            containerWidth: 100
+        });        
+        instance.scrollYTo(50);
+        
+        instance.scrollTop();        
+        expect(instance.state.topPosition).toBe(0);        
     });
 });

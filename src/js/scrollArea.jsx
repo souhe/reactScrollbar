@@ -310,29 +310,41 @@ export default class ScrollArea extends React.Component{
     }
 
     scrollTop(){
-        this.setStateFromEvent({topPosition: 0}, eventTypes.api);
+        if(this.canScrollY()){
+            this.setStateFromEvent({topPosition: 0}, eventTypes.api);
+        }
     }
 
     scrollBottom(){
-        this.setStateFromEvent({topPosition: -(this.state.realHeight - this.state.containerHeight)}, eventTypes.api);
+        if(this.canScrollY()){
+            this.setStateFromEvent({topPosition: -(this.state.realHeight - this.state.containerHeight)}, eventTypes.api);
+        }
     }
     
     scrollLeft(){
-        this.setStateFromEvent({leftPosition: 0}, eventTypes.api);
+        if(this.canScrollX()){
+            this.setStateFromEvent({leftPosition: 0}, eventTypes.api);
+        }
     }
 
     scrollRight(){
-        this.setStateFromEvent({leftPosition: -(this.state.realWidth - this.state.containerWidth)}, eventTypes.api);
+        if(this.canScrollX()){
+            this.setStateFromEvent({leftPosition: -(this.state.realWidth - this.state.containerWidth)}, eventTypes.api);
+        }
     }
 
     scrollYTo(topPosition){
-        let position = this.normalizeTopPosition(-topPosition, this.computeSizes());
-        this.setStateFromEvent({topPosition: position}, eventTypes.api);
+        if(this.canScrollY()){
+            let position = this.normalizeTopPosition(-topPosition, this.computeSizes());
+            this.setStateFromEvent({topPosition: position}, eventTypes.api);
+        }
     }
     
     scrollXTo(leftPosition){
-        let position = this.normalizeLeftPosition(-leftPosition, this.computeSizes());
-        this.setStateFromEvent({leftPosition: position}, eventTypes.api);
+        if(this.canScrollX()){
+            let position = this.normalizeLeftPosition(-leftPosition, this.computeSizes());
+            this.setStateFromEvent({leftPosition: position}, eventTypes.api);
+        }
     }
 
     canScrollY(state = this.state){
