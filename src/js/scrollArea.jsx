@@ -225,6 +225,10 @@ export default class ScrollArea extends React.Component{
     handleWheel(e){
         let deltaY = e.deltaY;
         let deltaX = e.deltaX;
+        
+        if(this.props.swapWheelAxes){
+            [deltaY, deltaX] = [deltaX, deltaY];
+        }
 
         /*
          * WheelEvent.deltaMode can differ between browsers and must be normalized
@@ -394,7 +398,8 @@ ScrollArea.propTypes = {
     contentWindow: React.PropTypes.any,
     ownerDocument: React.PropTypes.any,
     smoothScrolling: React.PropTypes.bool,
-    minScrollSize: React.PropTypes.number
+    minScrollSize: React.PropTypes.number,
+    swapWheelAxes: React.PropTypes.bool
 };
 
 ScrollArea.defaultProps = {
@@ -402,6 +407,7 @@ ScrollArea.defaultProps = {
     vertical: true,
     horizontal: true,
     smoothScrolling: false,
+    swapWheelAxes: false,
     contentWindow: (typeof window === "object") ? window : undefined,
     ownerDocument: (typeof document === "object") ? document : undefined
 };

@@ -189,6 +189,28 @@ describe('ScrolLArea component', () => {
         expect(instance.state.leftPosition).toBe(-200);
     });
     
+    it('handleWheel method should scroll down on scrollRight wheel event when revertWheelAxes prop is set to true', () => {
+        let {instance} = setupComponentWithMockedSizes({
+            swapWheelAxes: true
+        });  
+        
+        let e = {deltaY:0, deltaX: 20, preventDefault: () => {}};      
+        instance.handleWheel(e);
+        
+        expect(instance.state.topPosition).toBe(-20);
+    });
+    
+    it('handleWheel method should scroll down on scrollRight wheel event when revertWheelAxes prop is set to true', () => {
+        let {instance} = setupComponentWithMockedSizes({
+            swapWheelAxes: true
+        });  
+        
+        let e = {deltaY:20, deltaX: 0, preventDefault: () => {}};      
+        instance.handleWheel(e);
+        
+        expect(instance.state.leftPosition).toBe(-20);
+    });
+    
     it('scrollBottom() method should work when content is smaller then container', () => {
         let {instance} = setup({}, {
             realHeight: 30,
