@@ -65,34 +65,34 @@ describe('ScrollBar component', () => {
     it('Should propagate onMove event after move vertical scrollbar', () => {
         let handleMoveSpy = expect.createSpy();
         let {instance} = setupScrollBar({
-           realSize: 400, 
+           realSize: 200, 
            containerSize: 100,
            onMove: handleMoveSpy
        });
-       let mouseDoewnEvent = {clientY: 0, preventDefault: () => {}};
+       let mouseDoewnEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientY: 25, preventDefault: () => {}};
        instance.handleMouseDown(mouseDoewnEvent);
        instance.handleMouseMoveForVertical(moveEvent);
        
        expect(handleMoveSpy.calls.length).toEqual(1);
-       expect(handleMoveSpy.calls[0].arguments).toEqual([-100 , 0]);
+       expect(handleMoveSpy.calls[0].arguments).toEqual([-50 , 0]);
     });
     
     it('Should propagate onMove event after move horizontal scrollbar', () => {
         let handleMoveSpy = expect.createSpy();
         let {instance} = setupScrollBar({
-           realSize: 400, 
+           realSize: 200, 
            containerSize: 100,
            onMove: handleMoveSpy,
            type: 'horizontal'
        });
-       let mouseDoewnEvent = {clientX: 0, preventDefault: () => {}};
+       let mouseDoewnEvent = {clientX: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientX: 25, preventDefault: () => {}};
        instance.handleMouseDown(mouseDoewnEvent);
        instance.handleMouseMoveForHorizontal(moveEvent);
        
        expect(handleMoveSpy.calls.length).toEqual(1);
-       expect(handleMoveSpy.calls[0].arguments).toEqual([0, -100]);
+       expect(handleMoveSpy.calls[0].arguments).toEqual([0, -50]);
     });
     
     it('Should propagate onMove event multiple times', () => {
@@ -102,7 +102,7 @@ describe('ScrollBar component', () => {
            containerSize: 100,
            onMove: handleMoveSpy
        });
-       let mouseDoewnEvent = {clientY: 0, preventDefault: () => {}};
+       let mouseDoewnEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientY: 10, preventDefault: () => {}};
        instance.handleMouseDown(mouseDoewnEvent);
        instance.handleMouseMoveForVertical(moveEvent);
@@ -163,5 +163,91 @@ describe('ScrollBar component', () => {
         });    
         
         expect(instance.state.position).toBe(90);
+    });
+    
+    it('vertical scrollBar container click should move scrollBar', () => {
+        let handlePositionChangeSpy = expect.createSpy();
+        let {instance} = setupScrollBar({
+            position: 0,
+            realSize: 500, 
+            containerSize: 100,
+            type: 'vertical',
+            onPositionChange: handlePositionChangeSpy
+       });
+       let mouseDownEvent = {clientY: 50, preventDefault: () => {}};
+       instance.scrollBarContainer = {
+           getBoundingClientRect: () => ({
+               top: 0, left: 0
+           })
+       };
+       instance.handleScrollBarContainerClick(mouseDownEvent);
+       
+       expect(handlePositionChangeSpy.calls.length).toEqual(1);
+       expect(handlePositionChangeSpy.calls[0].arguments).toEqual([200]); 
+    });
+    
+    it('vertical scrollBar container click should move scrollBar when minScrollbar size is set', () => {
+        let handlePositionChangeSpy = expect.createSpy();
+        let {instance} = setupScrollBar({
+            position: 0,
+            realSize: 1000, 
+            containerSize: 100,
+            type: 'vertical',
+            onPositionChange: handlePositionChangeSpy,
+            minScrollBarSize: 30
+       });
+       let mouseDownEvent = {clientY: 25, preventDefault: () => {}};
+       instance.scrollBarContainer = {
+           getBoundingClientRect: () => ({
+               top: 0, left: 0
+           })
+       };
+       instance.handleScrollBarContainerClick(mouseDownEvent);
+       
+       expect(handlePositionChangeSpy.calls.length).toEqual(1);
+       expect(handlePositionChangeSpy.calls[0].arguments).toEqual([200]); 
+    });
+    
+    it('horizontal scrollBar container click should move scrollBar', () => {
+        let handlePositionChangeSpy = expect.createSpy();
+        let {instance} = setupScrollBar({
+            position: 0,
+            realSize: 500, 
+            containerSize: 100,
+            type: 'horizontal',
+            onPositionChange: handlePositionChangeSpy
+       });
+       let mouseDownEvent = {clientX: 50, preventDefault: () => {}};
+       instance.scrollBarContainer = {
+           getBoundingClientRect: () => ({
+               top: 0, left: 0
+           })
+       };
+       instance.handleScrollBarContainerClick(mouseDownEvent);
+       
+       expect(handlePositionChangeSpy.calls.length).toEqual(1);
+       expect(handlePositionChangeSpy.calls[0].arguments).toEqual([200]); 
+    });
+    
+    it('horizontal scrollBar container click should move scrollBar when minScrollbar size is set', () => {
+        let handlePositionChangeSpy = expect.createSpy();
+        let {instance} = setupScrollBar({
+            position: 0,
+            realSize: 1000, 
+            containerSize: 100,
+            type: 'horizontal',
+            onPositionChange: handlePositionChangeSpy,
+            minScrollBarSize: 30
+       });
+       let mouseDownEvent = {clientX: 25, preventDefault: () => {}};
+       instance.scrollBarContainer = {
+           getBoundingClientRect: () => ({
+               top: 0, left: 0
+           })
+       };
+       instance.handleScrollBarContainerClick(mouseDownEvent);
+       
+       expect(handlePositionChangeSpy.calls.length).toEqual(1);
+       expect(handlePositionChangeSpy.calls[0].arguments).toEqual([200]); 
     });
 });

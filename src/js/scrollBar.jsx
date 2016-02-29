@@ -71,7 +71,11 @@ class ScrollBar extends React.Component {
         return (
             <Motion style={{...scrollbarStyle, ...springifiedScrollStyles}}>
                 { style => 
-                    <div className={scrollbarClasses} style={containerStyle} >
+                    <div className={scrollbarClasses} 
+                        style={containerStyle} 
+                        onMouseDown={this.handleScrollBarContainerClick.bind(this)}
+                        ref={ x => { this.scrollBarContainer = x}}>
+                        
                         <div className="scrollbar"
                             style={style}
                             onMouseDown={this.handleMouseDown.bind(this)}
@@ -82,9 +86,23 @@ class ScrollBar extends React.Component {
             </Motion>
         );
     }
+    
+    handleScrollBarContainerClick(e) {
+        e.preventDefault();        
+        let multiplier = this.computeMultiplier();
+        let clientPosition = this.isVertical() ? e.clientY : e.clientX;
+        let { top, left } = this.scrollBarContainer.getBoundingClientRect();
+        let clientScrollPosition = this.isVertical() ? top : left;        
+        
+        let position = clientPosition - clientScrollPosition;
+        let proportionalToPageScrollSize = this.props.containerSize * this.props.containerSize / this.props.realSize;
+        
+        this.setState({isDragging: true, lastClientPosition: clientPosition });
+        this.props.onPositionChange((position - proportionalToPageScrollSize / 2) / multiplier);
+    }
 
     handleMouseMoveForHorizontal(e){
-        let multiplier = this.props.containerSize / this.props.realSize;
+        let multiplier = this.computeMultiplier();
         if(this.state.isDragging){
             e.preventDefault();
             let deltaX = this.state.lastClientPosition - e.clientX;
@@ -94,7 +112,7 @@ class ScrollBar extends React.Component {
     }
 
     handleMouseMoveForVertical(e){
-        let multiplier = this.props.containerSize / this.props.realSize;
+        let multiplier = this.computeMultiplier();
         if(this.state.isDragging){
             e.preventDefault();
             let deltaY = this.state.lastClientPosition - e.clientY;
@@ -104,7 +122,8 @@ class ScrollBar extends React.Component {
     }
 
     handleMouseDown(e){
-        let lastClientPosition = this.props.type === 'vertical'? e.clientY: e.clientX
+        e.stopPropagation();
+        let lastClientPosition = this.isVertical() ? e.clientY: e.clientX
         this.setState({isDragging: true, lastClientPosition: lastClientPosition });
     }
 
@@ -125,10 +144,19 @@ class ScrollBar extends React.Component {
             };
         }
     }
+    
+    computeMultiplier(){
+        return (this.props.containerSize) / this.props.realSize;
+    }
+    
+    isVertical(){
+       return this.props.type === 'vertical';
+    }
 }
 
 ScrollBar.propTypes = {
     onMove: React.PropTypes.func,
+    onPositionChange: React.PropTypes.func,
     realSize: React.PropTypes.number,
     containerSize: React.PropTypes.number,
     position: React.PropTypes.number,

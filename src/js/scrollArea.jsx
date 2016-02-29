@@ -94,6 +94,7 @@ export default class ScrollArea extends React.Component{
                 containerSize={this.state.containerHeight}
                 position={-this.state.topPosition}
                 onMove={this.handleScrollbarMove.bind(this)}
+                onPositionChange={this.handleScrollbarYPositionChange.bind(this)}
                 containerStyle={this.props.verticalContainerStyle}
                 scrollbarStyle={this.props.verticalScrollbarStyle}
                 smoothScrolling={withMotion}
@@ -108,6 +109,7 @@ export default class ScrollArea extends React.Component{
                 containerSize={this.state.containerWidth}
                 position={-this.state.leftPosition}
                 onMove={this.handleScrollbarMove.bind(this)}
+                onPositionChange={this.handleScrollbarXPositionChange.bind(this)}
                 containerStyle={this.props.horizontalContainerStyle}
                 scrollbarStyle={this.props.horizontalScrollbarStyle}
                 smoothScrolling={withMotion}
@@ -210,6 +212,14 @@ export default class ScrollArea extends React.Component{
     
     handleScrollbarMove(deltaY, deltaX){
          this.setStateFromEvent(this.composeNewState(deltaX, deltaY));   
+    }
+    
+    handleScrollbarXPositionChange(position){
+        this.scrollXTo(position);
+    }
+    
+    handleScrollbarYPositionChange(position){
+        this.scrollYTo(position);
     }
 
     handleWheel(e){
