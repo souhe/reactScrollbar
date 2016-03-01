@@ -103,6 +103,7 @@ class ScrollBar extends React.Component {
 
     handleMouseMoveForHorizontal(e){
         let multiplier = this.computeMultiplier();
+        
         if(this.state.isDragging){
             e.preventDefault();
             let deltaX = this.state.lastClientPosition - e.clientX;
@@ -113,6 +114,7 @@ class ScrollBar extends React.Component {
 
     handleMouseMoveForVertical(e){
         let multiplier = this.computeMultiplier();
+        
         if(this.state.isDragging){
             e.preventDefault();
             let deltaY = this.state.lastClientPosition - e.clientY;
@@ -122,12 +124,14 @@ class ScrollBar extends React.Component {
     }
 
     handleMouseDown(e){
+        e.preventDefault();
         e.stopPropagation();
-        let lastClientPosition = this.isVertical() ? e.clientY: e.clientX
+        let lastClientPosition = this.isVertical() ? e.clientY: e.clientX;
         this.setState({isDragging: true, lastClientPosition: lastClientPosition });
     }
 
     handleMouseUp(e){
+        e.preventDefault();
         this.setState({isDragging: false });
     }
 
