@@ -12,28 +12,28 @@ var webpackProductionConf = require('./webpack.production.config.js');
 var webpackExamplesConf = require('./webpackExamples.config.js');
 
 gulp.task('build', function() {
-    return gulp.src('src/js/scrollAreaWithCss.js')
+    return gulp.src('src/js/ScrollAreaWithCss.js')
         .pipe(webpack(webpackDevConf))
         .pipe(concat('scrollArea.js'))
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build-nocss', function() {
-    return gulp.src('src/js/scrollAreaWithoutCss.js')
+    return gulp.src('src/js/ScrollAreaWithoutCss.js')
         .pipe(webpack(webpackDevConf))
         .pipe(concat('no-css.js'))
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build-production', function() {
-    return gulp.src('src/js/scrollAreaWithCss.js')
+    return gulp.src('src/js/ScrollAreaWithCss.js')
         .pipe(webpack(webpackProductionConf))
         .pipe(concat('scrollArea.js'))
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build-production-nocss', function() {
-    return gulp.src('src/js/scrollAreaWithoutCss.js')
+    return gulp.src('src/js/ScrollAreaWithoutCss.js')
         .pipe(webpack(webpackProductionConf))
         .pipe(concat('no-css.js'))
         .pipe(gulp.dest('dist'));

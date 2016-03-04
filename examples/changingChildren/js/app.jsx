@@ -1,13 +1,12 @@
 import React from 'react'
-import ScrollArea from '../../../src/js/scrollArea';
-
+import ScrollArea from 'react-scrollbar';
 
 class App extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
-            itemsCount : 12
+            itemsCount : 24
         };
     }
 

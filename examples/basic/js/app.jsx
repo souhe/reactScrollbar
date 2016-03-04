@@ -10,10 +10,6 @@ class App extends React.Component{
         };
     }
 
-    handleAddClick(){
-        this.setState({itemsCount: this.state.itemsCount + 10});
-    }
-
     handleScroll(scrollData){
       console.log(scrollData);
     }
@@ -25,17 +21,17 @@ class App extends React.Component{
             itemElements.push(<div className="item" key={i}>item {i}</div>);
         }
 
-        let scrollBarStyles = {borderRadius: 5};
+        let scrollbarStyles = {borderRadius: 5};
 
         return (
             <div>
                 <ScrollArea
                   className="area"
                   contentClassName="content"
-                  verticalScrollbarStyle={scrollBarStyles}
-                  verticalContainerStyle={scrollBarStyles}
-                  horizontalScrollbarStyle={scrollBarStyles}
-                  horizontalContainerStyle={scrollBarStyles}
+                  verticalScrollbarStyle={scrollbarStyles}
+                  verticalContainerStyle={scrollbarStyles}
+                  horizontalScrollbarStyle={scrollbarStyles}
+                  horizontalContainerStyle={scrollbarStyles}
                   smoothScrolling= {true}
                   minScrollSize={40}
                   onScroll={this.handleScroll}

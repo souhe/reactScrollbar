@@ -74,7 +74,7 @@ class ScrollBar extends React.Component {
                     <div className={scrollbarClasses} 
                         style={containerStyle} 
                         onMouseDown={this.handleScrollBarContainerClick.bind(this)}
-                        ref={ x => { this.scrollBarContainer = x}}>
+                        ref={ x => { this.scrollbarContainer = x}}>
                         
                         <div className="scrollbar"
                             style={style}
@@ -91,7 +91,7 @@ class ScrollBar extends React.Component {
         e.preventDefault();        
         let multiplier = this.computeMultiplier();
         let clientPosition = this.isVertical() ? e.clientY : e.clientX;
-        let { top, left } = this.scrollBarContainer.getBoundingClientRect();
+        let { top, left } = this.scrollbarContainer.getBoundingClientRect();
         let clientScrollPosition = this.isVertical() ? top : left;        
         
         let position = clientPosition - clientScrollPosition;

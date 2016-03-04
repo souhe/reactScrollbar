@@ -5,10 +5,10 @@ expect.extend(expectJSX);
 import React, { Component } from 'react';
 import {render} from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
-import ScrollArea from '../src/js/scrollArea';
-import Scrollbar from '../src/js/scrollBar';
+import ScrollArea from '../src/js/ScrollArea';
+import Scrollbar from '../src/js/Scrollbar';
 
-function setupScrollBar(props){
+function setupScrollbar(props){
     let renderer = TestUtils.createRenderer();
     renderer.render(<Scrollbar {...props}/>);
     let instance = getRendererComponentInstance(renderer);
@@ -32,19 +32,19 @@ function getRendererComponentInstance(renderer){
 
 describe('ScrollBar component', () => {
     it('Vertical should have proper class', () => {
-        let {wrapper} = setupScrollBar({type: 'vertical'});
+        let {wrapper} = setupScrollbar({type: 'vertical'});
         
         expect(wrapper.props.className).toInclude('vertical');
     });
     
     it('Horizontal should have proper class', () => {
-        let {wrapper} = setupScrollBar({type: 'horizontal'});
+        let {wrapper} = setupScrollbar({type: 'horizontal'});
         
         expect(wrapper.props.className).toInclude('horizontal');
     });
     
     it('ScrollBar should be in proper position', () => {
-       let {instance} = setupScrollBar({
+       let {instance} = setupScrollbar({
            realSize: 400, 
            containerSize: 100, 
            position: -20
@@ -54,7 +54,7 @@ describe('ScrollBar component', () => {
     });
     
     it('ScrollBar should have proper size', () => {
-       let { instance } = setupScrollBar({
+       let { instance } = setupScrollbar({
            realSize: 400, 
            containerSize: 100
        });
@@ -64,7 +64,7 @@ describe('ScrollBar component', () => {
     
     it('Should propagate onMove event after move vertical scrollbar', () => {
         let handleMoveSpy = expect.createSpy();
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
            realSize: 200, 
            containerSize: 100,
            onMove: handleMoveSpy
@@ -80,7 +80,7 @@ describe('ScrollBar component', () => {
     
     it('Should propagate onMove event after move horizontal scrollbar', () => {
         let handleMoveSpy = expect.createSpy();
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
            realSize: 200, 
            containerSize: 100,
            onMove: handleMoveSpy,
@@ -97,7 +97,7 @@ describe('ScrollBar component', () => {
     
     it('Should propagate onMove event multiple times', () => {
         let handleMoveSpy = expect.createSpy();
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
            realSize: 400, 
            containerSize: 100,
            onMove: handleMoveSpy
@@ -119,7 +119,7 @@ describe('ScrollBar component', () => {
     
     it('Should be possible to set min scrollbar size', () => {
         let minScrollBarSize = 10;
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
             realSize: 10000, 
             containerSize: 100,
             type: 'vertical',
@@ -130,31 +130,31 @@ describe('ScrollBar component', () => {
     });
     
     it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: 0', () => {
-        let {instance} = setupScrollBar();
+        let {instance} = setupScrollbar();
         
         expect(instance.calculateFractionalPosition(300, 100, 0)).toEqual(0);
     });
     
     it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
-        let {instance} = setupScrollBar();
+        let {instance} = setupScrollbar();
         
         expect(instance.calculateFractionalPosition(300, 100, -200)).toEqual(1);
     });
     
     it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
-        let {instance} = setupScrollBar();
+        let {instance} = setupScrollbar();
         
         expect(instance.calculateFractionalPosition(300, 100, -100)).toEqual(0.5);
     });
     
     it('Method calculateFractionalPosition should work properly for realSize: 160, containerSize: 80, position: -20', () => {
-        let {instance} = setupScrollBar();
+        let {instance} = setupScrollbar();
         
         expect(instance.calculateFractionalPosition(160, 80, -20)).toEqual(0.25);
     });
     
     it('Position of scrollbar should be proper when minScrollBarSize is set', () => {
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
             position: -9900, 
             realSize: 10000,
             containerSize: 100,
@@ -165,9 +165,9 @@ describe('ScrollBar component', () => {
         expect(instance.state.position).toBe(90);
     });
     
-    it('vertical scrollBar container click should move scrollBar', () => {
+    it('vertical scrollbar container click should move scrollbar', () => {
         let handlePositionChangeSpy = expect.createSpy();
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
             position: 0,
             realSize: 500, 
             containerSize: 100,
@@ -175,7 +175,7 @@ describe('ScrollBar component', () => {
             onPositionChange: handlePositionChangeSpy
        });
        let mouseDownEvent = {clientY: 50, preventDefault: () => {}};
-       instance.scrollBarContainer = {
+       instance.scrollbarContainer = {
            getBoundingClientRect: () => ({
                top: 0, left: 0
            })
@@ -186,9 +186,9 @@ describe('ScrollBar component', () => {
        expect(handlePositionChangeSpy.calls[0].arguments).toEqual([200]); 
     });
     
-    it('vertical scrollBar container click should move scrollBar when minScrollbar size is set', () => {
+    it('vertical scrollbar container click should move scrollbar when minScrollbar size is set', () => {
         let handlePositionChangeSpy = expect.createSpy();
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
             position: 0,
             realSize: 1000, 
             containerSize: 100,
@@ -197,7 +197,7 @@ describe('ScrollBar component', () => {
             minScrollBarSize: 30
        });
        let mouseDownEvent = {clientY: 25, preventDefault: () => {}};
-       instance.scrollBarContainer = {
+       instance.scrollbarContainer = {
            getBoundingClientRect: () => ({
                top: 0, left: 0
            })
@@ -208,9 +208,9 @@ describe('ScrollBar component', () => {
        expect(handlePositionChangeSpy.calls[0].arguments).toEqual([200]); 
     });
     
-    it('horizontal scrollBar container click should move scrollBar', () => {
+    it('horizontal scrollbar container click should move scrollbar', () => {
         let handlePositionChangeSpy = expect.createSpy();
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
             position: 0,
             realSize: 500, 
             containerSize: 100,
@@ -218,7 +218,7 @@ describe('ScrollBar component', () => {
             onPositionChange: handlePositionChangeSpy
        });
        let mouseDownEvent = {clientX: 50, preventDefault: () => {}};
-       instance.scrollBarContainer = {
+       instance.scrollbarContainer = {
            getBoundingClientRect: () => ({
                top: 0, left: 0
            })
@@ -229,9 +229,9 @@ describe('ScrollBar component', () => {
        expect(handlePositionChangeSpy.calls[0].arguments).toEqual([200]); 
     });
     
-    it('horizontal scrollBar container click should move scrollBar when minScrollbar size is set', () => {
+    it('horizontal scrollbar container click should move scrollbar when minScrollbar size is set', () => {
         let handlePositionChangeSpy = expect.createSpy();
-        let {instance} = setupScrollBar({
+        let {instance} = setupScrollbar({
             position: 0,
             realSize: 1000, 
             containerSize: 100,
@@ -240,7 +240,7 @@ describe('ScrollBar component', () => {
             minScrollBarSize: 30
        });
        let mouseDownEvent = {clientX: 25, preventDefault: () => {}};
-       instance.scrollBarContainer = {
+       instance.scrollbarContainer = {
            getBoundingClientRect: () => ({
                top: 0, left: 0
            })

@@ -1,5 +1,5 @@
 import React from 'react';
-import ScrollBar from './scrollBar';
+import ScrollBar from './Scrollbar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
 import lineHeight from 'line-height';
 import {Motion, spring} from 'react-motion';

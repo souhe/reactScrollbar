@@ -1,4 +1,4 @@
 import '../less/scrollArea.less';
-import ScrollArea from './scrollArea.jsx';
+import ScrollArea from './ScrollArea.jsx';
 
 export default ScrollArea;
