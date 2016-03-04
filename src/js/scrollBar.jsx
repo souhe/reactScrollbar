@@ -42,9 +42,8 @@ class ScrollBar extends React.Component {
 
     calculateFractionalPosition(realContentSize, containerSize, contentPosition){
         let relativeSize = realContentSize - containerSize;
-        let positivePosition = Math.abs(contentPosition);
         
-        return 1 - ((relativeSize - positivePosition) / relativeSize);
+        return 1 - ((relativeSize - contentPosition) / relativeSize);
     }
 
     calculateState(props){

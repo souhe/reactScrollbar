@@ -92,7 +92,7 @@ export default class ScrollArea extends React.Component{
 				ownerDocument={ownerDocument}
                 realSize={this.state.realHeight}
                 containerSize={this.state.containerHeight}
-                position={-this.state.topPosition}
+                position={this.state.topPosition}
                 onMove={this.handleScrollbarMove.bind(this)}
                 onPositionChange={this.handleScrollbarYPositionChange.bind(this)}
                 containerStyle={this.props.verticalContainerStyle}
@@ -107,7 +107,7 @@ export default class ScrollArea extends React.Component{
 				ownerDocument={ownerDocument}
                 realSize={this.state.realWidth}
                 containerSize={this.state.containerWidth}
-                position={-this.state.leftPosition}
+                position={this.state.leftPosition}
                 onMove={this.handleScrollbarMove.bind(this)}
                 onPositionChange={this.handleScrollbarXPositionChange.bind(this)}
                 containerStyle={this.props.horizontalContainerStyle}
@@ -128,8 +128,8 @@ export default class ScrollArea extends React.Component{
         let contentClasses = 'scrollarea-content ' + (contentClassName || '');
         
         let contentStyle = {
-            marginTop: this.state.topPosition,
-            marginLeft: this.state.leftPosition
+            marginTop: -this.state.topPosition,
+            marginLeft: -this.state.leftPosition
         };
         let springifiedContentStyle = withMotion ? modifyObjValues(contentStyle, x => spring(x)) : contentStyle;
         
@@ -273,29 +273,29 @@ export default class ScrollArea extends React.Component{
     }
 
     computeTopPosition(deltaY, sizes){
-        let newTopPosition = this.state.topPosition + deltaY;
+        let newTopPosition = this.state.topPosition - deltaY;
         return this.normalizeTopPosition(newTopPosition, sizes);
     }
 
     computeLeftPosition(deltaX, sizes){
-        let newLeftPosition = this.state.leftPosition + deltaX;
+        let newLeftPosition = this.state.leftPosition - deltaX;
         return this.normalizeLeftPosition(newLeftPosition, sizes);
     }
     
     normalizeTopPosition(newTopPosition, sizes){    
-        if(-newTopPosition > sizes.realHeight - sizes.containerHeight){
-            newTopPosition = -(sizes.realHeight - sizes.containerHeight);
+        if(newTopPosition > sizes.realHeight - sizes.containerHeight){
+            newTopPosition = sizes.realHeight - sizes.containerHeight;
         }
-        if(newTopPosition > 0){
+        if(newTopPosition < 0){
             newTopPosition = 0;
         }
         return newTopPosition;
     }
     
     normalizeLeftPosition(newLeftPosition, sizes){
-        if(-newLeftPosition > sizes.realWidth - sizes.containerWidth){
-            newLeftPosition = -(sizes.realWidth - sizes.containerWidth);
-        } else if(newLeftPosition > 0){
+        if(newLeftPosition > sizes.realWidth - sizes.containerWidth){
+            newLeftPosition = sizes.realWidth - sizes.containerWidth;
+        } else if(newLeftPosition < 0){
             newLeftPosition = 0;
         }
 
@@ -341,14 +341,14 @@ export default class ScrollArea extends React.Component{
 
     scrollYTo(topPosition){
         if(this.canScrollY()){
-            let position = this.normalizeTopPosition(-topPosition, this.computeSizes());
+            let position = this.normalizeTopPosition(topPosition, this.computeSizes());
             this.setStateFromEvent({topPosition: position}, eventTypes.api);
         }
     }
     
     scrollXTo(leftPosition){
         if(this.canScrollX()){
-            let position = this.normalizeLeftPosition(-leftPosition, this.computeSizes());
+            let position = this.normalizeLeftPosition(leftPosition, this.computeSizes());
             this.setStateFromEvent({leftPosition: position}, eventTypes.api);
         }
     }
@@ -363,15 +363,16 @@ export default class ScrollArea extends React.Component{
         return scrollableX && this.props.horizontal;
     }
 
-    getModifiedPositionsIfNeeded(newState){
+    getModifiedPositionsIfNeeded(newState){ //TODO: create tests for that method
         let bottomPosition = newState.realHeight - newState.containerHeight;
-        if(-this.state.topPosition >= bottomPosition){
-            newState.topPosition = this.canScrollY(newState)? -positiveOrZero(bottomPosition): 0;
+        console.log(this.state.topPosition, bottomPosition);
+        if(this.state.topPosition >= bottomPosition){
+            newState.topPosition = this.canScrollY(newState) ? positiveOrZero(bottomPosition) : 0;
         }
 
         let rightPosition = newState.realWidth - newState.containerWidth;
-        if(-this.state.leftPosition >= rightPosition){
-            newState.leftPosition = this.canScrollX(newState)? -positiveOrZero(rightPosition): 0;
+        if(this.state.leftPosition >= rightPosition){
+            newState.leftPosition = this.canScrollX(newState) ? positiveOrZero(rightPosition) : 0;
         }
 
         return newState;

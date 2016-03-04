@@ -47,7 +47,7 @@ describe('ScrollBar component', () => {
        let {instance} = setupScrollbar({
            realSize: 400, 
            containerSize: 100, 
-           position: -20
+           position: 20
        });
                  
        expect(instance.state.position).toBe(5);    
@@ -135,27 +135,27 @@ describe('ScrollBar component', () => {
         expect(instance.calculateFractionalPosition(300, 100, 0)).toEqual(0);
     });
     
-    it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
+    it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: 200', () => {
         let {instance} = setupScrollbar();
         
-        expect(instance.calculateFractionalPosition(300, 100, -200)).toEqual(1);
+        expect(instance.calculateFractionalPosition(300, 100, 200)).toEqual(1);
     });
     
-    it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: -200', () => {
+    it('Method calculateFractionalPosition should work properly for realSize: 300, containerSize: 100, position: 200', () => {
         let {instance} = setupScrollbar();
         
-        expect(instance.calculateFractionalPosition(300, 100, -100)).toEqual(0.5);
+        expect(instance.calculateFractionalPosition(300, 100, 100)).toEqual(0.5);
     });
     
-    it('Method calculateFractionalPosition should work properly for realSize: 160, containerSize: 80, position: -20', () => {
+    it('Method calculateFractionalPosition should work properly for realSize: 160, containerSize: 80, position: 20', () => {
         let {instance} = setupScrollbar();
         
-        expect(instance.calculateFractionalPosition(160, 80, -20)).toEqual(0.25);
+        expect(instance.calculateFractionalPosition(160, 80, 20)).toEqual(0.25);
     });
     
     it('Position of scrollbar should be proper when minScrollBarSize is set', () => {
         let {instance} = setupScrollbar({
-            position: -9900, 
+            position: 9900, 
             realSize: 10000,
             containerSize: 100,
             type: 'vertical',

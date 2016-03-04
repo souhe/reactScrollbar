@@ -113,12 +113,12 @@ describe('ScrolLArea component', () => {
         let sizes = {realHeight: 30, containerHeight: 20};
        
         expect(normalizeTopPosition(0, sizes)).toBe(0);
-        expect(normalizeTopPosition(-5, sizes)).toBe(-5);
-        expect(normalizeTopPosition(-10, sizes)).toBe(-10);
-        expect(normalizeTopPosition(-11, sizes)).toBe(-10);
-        expect(normalizeTopPosition(1, sizes)).toBe(0);
-        expect(normalizeTopPosition(60, sizes)).toBe(0);
-        expect(normalizeTopPosition(-100, sizes)).toBe(-10);
+        expect(normalizeTopPosition(5, sizes)).toBe(5);
+        expect(normalizeTopPosition(10, sizes)).toBe(10);
+        expect(normalizeTopPosition(11, sizes)).toBe(10);
+        expect(normalizeTopPosition(-1, sizes)).toBe(0);
+        expect(normalizeTopPosition(-60, sizes)).toBe(0);
+        expect(normalizeTopPosition(100, sizes)).toBe(10);
     });
     
     it('normalizeLeftPosition() shoud returns proper value', () => {
@@ -127,12 +127,12 @@ describe('ScrolLArea component', () => {
         let sizes = {realWidth: 30, containerWidth: 20};
         
         expect(normalizeLeftPosition(0, sizes)).toBe(0);
-        expect(normalizeLeftPosition(-5, sizes)).toBe(-5);
-        expect(normalizeLeftPosition(-10, sizes)).toBe(-10);
-        expect(normalizeLeftPosition(-11, sizes)).toBe(-10);
-        expect(normalizeLeftPosition(1, sizes)).toBe(0);
-        expect(normalizeLeftPosition(60, sizes)).toBe(0);
-        expect(normalizeLeftPosition(-100, sizes)).toBe(-10);
+        expect(normalizeLeftPosition(5, sizes)).toBe(5);
+        expect(normalizeLeftPosition(10, sizes)).toBe(10);
+        expect(normalizeLeftPosition(11, sizes)).toBe(10);
+        expect(normalizeLeftPosition(-1, sizes)).toBe(0);
+        expect(normalizeLeftPosition(-60, sizes)).toBe(0);
+        expect(normalizeLeftPosition(100, sizes)).toBe(10);
     });
     
     it('handleWheel method work properly when scrolling down', () => {
@@ -140,7 +140,7 @@ describe('ScrolLArea component', () => {
         let e = {deltaY:20, deltaX: 0, preventDefault: () => {}};      
         instance.handleWheel(e);
         
-        expect(instance.state.topPosition).toBe(-20);
+        expect(instance.state.topPosition).toBe(20);
     });
     
     it('handleWheel method work properly when scrolling up and actual topPosition is 0', () => {
@@ -159,7 +159,7 @@ describe('ScrolLArea component', () => {
             instance.handleWheel(e);
         }        
         
-        expect(instance.state.topPosition).toBe(-200);
+        expect(instance.state.topPosition).toBe(200);
     });
     
     it('handleWheel method work properly when scrolling right', () => {
@@ -167,7 +167,7 @@ describe('ScrolLArea component', () => {
         let e = {deltaY:0, deltaX: 20, preventDefault: () => {}};  
         instance.handleWheel(e);
 
-        expect(instance.state.leftPosition).toBe(-20);
+        expect(instance.state.leftPosition).toBe(20);
     });
     
     it('handleWheel method work properly when scrolling left and actual leftPosition is 0', () => {
@@ -186,7 +186,7 @@ describe('ScrolLArea component', () => {
             instance.handleWheel(e);
         }        
         
-        expect(instance.state.leftPosition).toBe(-200);
+        expect(instance.state.leftPosition).toBe(200);
     });
     
     it('handleWheel method should scroll down on scrollRight wheel event when revertWheelAxes prop is set to true', () => {
@@ -197,7 +197,7 @@ describe('ScrolLArea component', () => {
         let e = {deltaY:0, deltaX: 20, preventDefault: () => {}};      
         instance.handleWheel(e);
         
-        expect(instance.state.topPosition).toBe(-20);
+        expect(instance.state.topPosition).toBe(20);
     });
     
     it('handleWheel method should scroll down on scrollRight wheel event when revertWheelAxes prop is set to true', () => {
@@ -208,7 +208,7 @@ describe('ScrolLArea component', () => {
         let e = {deltaY:20, deltaX: 0, preventDefault: () => {}};      
         instance.handleWheel(e);
         
-        expect(instance.state.leftPosition).toBe(-20);
+        expect(instance.state.leftPosition).toBe(20);
     });
     
     it('scrollBottom() method should work when content is smaller then container', () => {
@@ -233,7 +233,7 @@ describe('ScrolLArea component', () => {
         });
         
         instance.scrollBottom();        
-        expect(instance.state.topPosition).toBe(-100);        
+        expect(instance.state.topPosition).toBe(100);        
     });
     
     it('scrollBottom() should be imposible when there is disabled vertical scroll', () => {
@@ -270,7 +270,7 @@ describe('ScrolLArea component', () => {
         });
         
         instance.scrollRight();        
-        expect(instance.state.leftPosition).toBe(-100);        
+        expect(instance.state.leftPosition).toBe(100);        
     });
     
     it('scrollRight() should be imposible when there is disabled horizontal scroll', () => {
