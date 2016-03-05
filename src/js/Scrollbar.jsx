@@ -26,7 +26,7 @@ class ScrollBar extends React.Component {
         if (this.props.ownerDocument) {
             this.props.ownerDocument.addEventListener("mousemove", this.bindedHandleMouseMove);
             this.props.ownerDocument.addEventListener("mouseup", this.bindedHandleMouseUp);
-        }
+        } 
     }
 
     componentWillReceiveProps(nextProps){
