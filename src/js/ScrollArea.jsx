@@ -363,9 +363,8 @@ export default class ScrollArea extends React.Component{
         return scrollableX && this.props.horizontal;
     }
 
-    getModifiedPositionsIfNeeded(newState){ //TODO: create tests for that method
+    getModifiedPositionsIfNeeded(newState){
         let bottomPosition = newState.realHeight - newState.containerHeight;
-        console.log(this.state.topPosition, bottomPosition);
         if(this.state.topPosition >= bottomPosition){
             newState.topPosition = this.canScrollY(newState) ? positiveOrZero(bottomPosition) : 0;
         }

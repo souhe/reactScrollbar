@@ -13,6 +13,16 @@ npm install react-scrollbar --save
 
 React Scrollbar requires **React 0.13 or later**
 
+Features:
+ - built with and for `React`
+ - horizontal and vertical scrollbars
+ - touch support
+ - scrollbar dragging and clicking
+ - smooth scrolling
+ - universal app support
+ - customizable styles
+ - and more...
+
 ## Usage examples
 
 #### React 0.14
@@ -47,7 +57,7 @@ For **React 0.13** you need to wrap `<ScrollArea>` child into a function.
 </ScrollArea>
 ```
 
-#### Version without boundled css styles
+#### Version without boundled css styles ####
 If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line. 
 
 ```js
@@ -67,6 +77,9 @@ gulp watch
 
 then open [http://localhost:8003](http://localhost:80003).
 
+### Using in universal app
+`ScrollArea` component has now full universal app support. It's only one requirement: you have to use `react-scrollbar` in no-css version and then include css file into your project manually (see [Version without boundled css styles][]). It's because of issue in webpack style-loader which is used to bundle css styles into main js file.
+
 ## API
 
 ### Props
@@ -85,6 +98,11 @@ then open [http://localhost:8003](http://localhost:80003).
         verticalContainerStyle={Object}
         verticalScrollbarStyle={Object}
         onScroll={(value) => {}}
+        contentWindow={Object}
+        ownerDocument={Object}
+        smoothScrolling={Boolean}
+        minScrollSize={Number}
+        swapWheelAxes={Boolean}
     >
 ```
 
@@ -142,6 +160,18 @@ You can override window to make scrollarea works inside iframe.
 You can override document to make scrollarea works inside iframe.
 **Default: document**
 
+#### smoothScrolling
+When set to true, smooth scrolling for both scrollbars is enabled. 
+**Default: false**
+
+#### minScrollSize
+Using this prop it's possible to set minimal size in px for both scrollbars.
+
+#### swapWheelAxes
+After set to true, mouse wheel event has swapped directions. So normal scrolling moves horizontal scrollbar and scrolling with SHIFT key moves vertical scrollbar. It could be useful for applications with horizontal layout.
+**Default: false**
+
+
 ### Context
 In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:
 
@@ -183,8 +213,8 @@ It allows to scroll to the top of `ScrollArea` component.
 #### `scrollBottom()`
 It allows to scroll to the bottom of `ScrollArea` component.
 
-#### `scrollXTo(topPosition)`
-It moves vertical scrollbar to `topPosition`. 
+#### `scrollYTo(topPosition)`
+It moves vertical scrollbar. `topPosition` is a distance between the top of `scrollArea` container and the top of `scrollArea` content.  
 
 #### `scrollLeft()`
 It allows to scroll to the left of `ScrollArea` component.
@@ -192,8 +222,8 @@ It allows to scroll to the left of `ScrollArea` component.
 #### `scrollRight()`
 It allows to scroll to the right of `ScrollArea` component.
 
-#### `scrollYTo(leftPosition)`
-It moves horizontal scrollbar to `leftPosition`. 
+#### `scrollXTo(leftPosition)`
+It moves horizontal scrollbar. `leftPosition` is a distance between left edge of `scrollArea` container and left edge of `scrollArea` content.  
 
 # Change log
 Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. 
