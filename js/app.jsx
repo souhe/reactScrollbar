@@ -20,7 +20,10 @@ class App extends React.Component{
 
         return (
             <div>
-                <ScrollArea className="area" contentClassName="content">
+                <ScrollArea 
+                    className="area" 
+                    contentClassName="content"
+                    smoothScrolling={true}>
 
                     {itemElements}
 
