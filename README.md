@@ -227,3 +227,6 @@ It moves horizontal scrollbar. `leftPosition` is a distance between left edge of
 
 # Change log
 Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. 
+
+# License
+MIT
