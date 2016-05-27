@@ -246,7 +246,8 @@ export default class ScrollArea extends React.Component{
 
         let newState = this.composeNewState(-deltaX, -deltaY);
 
-        if(this.state.topPosition !== newState.topPosition || this.state.leftPosition !== newState.leftPosition){
+        if((newState.topPosition && this.state.topPosition !== newState.topPosition) ||
+           (newState.leftPosition && this.state.leftPosition !== newState.leftPosition)) {
             e.preventDefault();
         }
 
