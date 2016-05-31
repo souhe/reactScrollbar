@@ -1,6 +1,6 @@
 {
-  "name": "react-scrollbar-versioned",
-  "version": "15.1.0",
+  "name": "react-scrollbar",
+  "version": "0.4.1",
   "description": "ScrollArea component for react",
   "main": "./dist/scrollArea.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:ekut/reactScrollbar.git"
+    "url": "https://github.com/souhe/reactScrollbar.git"
   },
   "keywords": [
     "react",
