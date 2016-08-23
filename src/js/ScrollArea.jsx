@@ -175,6 +175,7 @@ export default class ScrollArea extends React.Component{
 
     handleTouchMove(e){
         e.preventDefault();
+        e.stopPropagation();
         
         let {touches} = e;
         if(touches.length === 1){
@@ -250,6 +251,7 @@ export default class ScrollArea extends React.Component{
         if((newState.topPosition && this.state.topPosition !== newState.topPosition) ||
            (newState.leftPosition && this.state.leftPosition !== newState.leftPosition)) {
             e.preventDefault();
+            e.stopPropagation();
         }
 
         this.setStateFromEvent(newState, eventTypes.wheel);

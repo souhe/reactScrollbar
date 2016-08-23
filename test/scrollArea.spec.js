@@ -137,7 +137,7 @@ describe('ScrolLArea component', () => {
     
     it('handleWheel method work properly when scrolling down', () => {
         let {instance} = setupComponentWithMockedSizes();
-        let e = {deltaY:20, deltaX: 0, preventDefault: () => {}};      
+        let e = {deltaY:20, deltaX: 0, preventDefault: () => {}, stopPropagation: () => {}};      
         instance.handleWheel(e);
         
         expect(instance.state.topPosition).toBe(20);
@@ -155,7 +155,7 @@ describe('ScrolLArea component', () => {
         let {instance} = setupComponentWithMockedSizes();
         
         for(let i = 0; i < 10; i++){
-            let e = {deltaY:50, deltaX: 0, preventDefault: () => {}};      
+            let e = {deltaY:50, deltaX: 0, preventDefault: () => {}, stopPropagation: () => {}};      
             instance.handleWheel(e);
         }        
         
@@ -164,7 +164,7 @@ describe('ScrolLArea component', () => {
     
     it('handleWheel method work properly when scrolling right', () => {
         let {instance} = setupComponentWithMockedSizes();
-        let e = {deltaY:0, deltaX: 20, preventDefault: () => {}};  
+        let e = {deltaY:0, deltaX: 20, preventDefault: () => {}, stopPropagation: () => {}};  
         instance.handleWheel(e);
 
         expect(instance.state.leftPosition).toBe(20);
@@ -172,7 +172,7 @@ describe('ScrolLArea component', () => {
     
     it('handleWheel method work properly when scrolling left and actual leftPosition is 0', () => {
         let {instance} = setupComponentWithMockedSizes();
-        let e = {deltaY:0, deltaX: -10, preventDefault: () => {}};      
+        let e = {deltaY:0, deltaX: -10, preventDefault: () => {}, stopPropagation: () => {}};      
         instance.handleWheel(e);
         
         expect(instance.state.leftPosition).toBe(0);
@@ -182,7 +182,7 @@ describe('ScrolLArea component', () => {
         let {instance} = setupComponentWithMockedSizes();
         
         for(let i = 0; i < 10; i++){
-            let e = {deltaY:0, deltaX: 50, preventDefault: () => {}};      
+            let e = {deltaY:0, deltaX: 50, preventDefault: () => {}, stopPropagation: () => {}};      
             instance.handleWheel(e);
         }        
         
@@ -194,7 +194,7 @@ describe('ScrolLArea component', () => {
             swapWheelAxes: true
         });  
         
-        let e = {deltaY:0, deltaX: 20, preventDefault: () => {}};      
+        let e = {deltaY:0, deltaX: 20, preventDefault: () => {}, stopPropagation: () => {}};      
         instance.handleWheel(e);
         
         expect(instance.state.topPosition).toBe(20);
@@ -205,7 +205,7 @@ describe('ScrolLArea component', () => {
             swapWheelAxes: true
         });  
         
-        let e = {deltaY:20, deltaX: 0, preventDefault: () => {}};      
+        let e = {deltaY:20, deltaX: 0, preventDefault: () => {}, stopPropagation: () => {}};      
         instance.handleWheel(e);
         
         expect(instance.state.leftPosition).toBe(20);
