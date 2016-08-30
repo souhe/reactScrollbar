@@ -261,22 +261,23 @@ export default class ScrollArea extends React.Component{
 
     handleKeyDown(e) {
         // only handle if scroll area is in focus
-        if(document.activeElement === this.content) {
+        if(e.target.tagName.toLowerCase() !== 'input') {
             let deltaY = 0;
             let deltaX = 0;
+            let lineHeight = this.lineHeightPx ? this.lineHeightPx : 10;
 
             switch(e.keyCode) {
                 case 37: // left
-                    deltaX = this.lineHeightPx;
+                    deltaX = lineHeight;
                     break;
                 case 38: // up
-                    deltaY = this.lineHeightPx;
+                    deltaY = lineHeight;
                     break;
                 case 39: // right
-                    deltaX = -this.lineHeightPx;
+                    deltaX = -lineHeight;
                     break;
                 case 40: // down
-                    deltaY = -this.lineHeightPx;
+                    deltaY = -lineHeight;
                     break;
             }
             let newState = this.composeNewState(deltaX, deltaY);
