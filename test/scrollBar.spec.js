@@ -67,7 +67,8 @@ describe('ScrollBar component', () => {
         let {instance} = setupScrollbar({
            realSize: 200, 
            containerSize: 100,
-           onMove: handleMoveSpy
+           onMove: handleMoveSpy,
+           onClick: () => {}
        });
        let mouseDownEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientY: 25, preventDefault: () => {}};
@@ -84,7 +85,8 @@ describe('ScrollBar component', () => {
            realSize: 200, 
            containerSize: 100,
            onMove: handleMoveSpy,
-           type: 'horizontal'
+           type: 'horizontal',
+            onClick: () => {}
        });
        let mouseDownEvent = {clientX: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientX: 25, preventDefault: () => {}};
@@ -100,7 +102,8 @@ describe('ScrollBar component', () => {
         let {instance} = setupScrollbar({
            realSize: 400, 
            containerSize: 100,
-           onMove: handleMoveSpy
+           onMove: handleMoveSpy,
+            onClick: () => {}
        });
        let mouseDownEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientY: 10, preventDefault: () => {}};
@@ -123,7 +126,8 @@ describe('ScrollBar component', () => {
             realSize: 10000, 
             containerSize: 100,
             type: 'vertical',
-            minScrollSize: minScrollBarSize
+            minScrollSize: minScrollBarSize,
+            onClick: () => {}
         });     
        
         expect(instance.state.scrollSize).toBe(minScrollBarSize);   
