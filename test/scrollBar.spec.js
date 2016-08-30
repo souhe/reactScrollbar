@@ -69,9 +69,9 @@ describe('ScrollBar component', () => {
            containerSize: 100,
            onMove: handleMoveSpy
        });
-       let mouseDoewnEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
+       let mouseDownEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientY: 25, preventDefault: () => {}};
-       instance.handleMouseDown(mouseDoewnEvent);
+       instance.handleMouseDown(mouseDownEvent);
        instance.handleMouseMoveForVertical(moveEvent);
        
        expect(handleMoveSpy.calls.length).toEqual(1);
@@ -86,9 +86,9 @@ describe('ScrollBar component', () => {
            onMove: handleMoveSpy,
            type: 'horizontal'
        });
-       let mouseDoewnEvent = {clientX: 0, preventDefault: () => {}, stopPropagation: () => {}};
+       let mouseDownEvent = {clientX: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientX: 25, preventDefault: () => {}};
-       instance.handleMouseDown(mouseDoewnEvent);
+       instance.handleMouseDown(mouseDownEvent);
        instance.handleMouseMoveForHorizontal(moveEvent);
        
        expect(handleMoveSpy.calls.length).toEqual(1);
@@ -102,9 +102,9 @@ describe('ScrollBar component', () => {
            containerSize: 100,
            onMove: handleMoveSpy
        });
-       let mouseDoewnEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
+       let mouseDownEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientY: 10, preventDefault: () => {}};
-       instance.handleMouseDown(mouseDoewnEvent);
+       instance.handleMouseDown(mouseDownEvent);
        instance.handleMouseMoveForVertical(moveEvent);
        moveEvent.clientY = 20;
        instance.handleMouseMoveForVertical(moveEvent);
