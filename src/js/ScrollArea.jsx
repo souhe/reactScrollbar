@@ -9,7 +9,8 @@ const eventTypes= {
     api: 'api',
     touch: 'touch',
     touchEnd: 'touchEnd',
-    mousemove: 'mousemove'
+    mousemove: 'mousemove',
+    keypress: 'keypress'
 };
 
 export default class ScrollArea extends React.Component{
@@ -137,12 +138,13 @@ export default class ScrollArea extends React.Component{
             <Motion style={{...this.props.contentStyle, ...springifiedContentStyle}}>
                 { style => 
                     <div ref={x => this.wrapper = x} style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
-                        <div ref={x => this.content = x}
+                        <div ref={x => this.content = x} tabIndex={0}
                             style={style}
                             className={contentClasses}
                             onTouchStart={this.handleTouchStart.bind(this)}
                             onTouchMove={this.handleTouchMove.bind(this)}
-                            onTouchEnd={this.handleTouchEnd.bind(this)}>
+                            onTouchEnd={this.handleTouchEnd.bind(this)}
+                            onKeyDown={this.handleKeyDown.bind(this)}>
                     {children}
                 </div>
                 {scrollbarY}
@@ -255,6 +257,35 @@ export default class ScrollArea extends React.Component{
         }
 
         this.setStateFromEvent(newState, eventTypes.wheel);
+    }
+
+    handleKeyDown(e) {
+        // only handle if scroll area is in focus
+        if(document.activeElement === this.content) {
+            let deltaY = 0;
+            let deltaX = 0;
+
+            switch(e.keyCode) {
+                case 37: // left
+                    deltaX = this.lineHeightPx;
+                    break;
+                case 38: // up
+                    deltaY = this.lineHeightPx;
+                    break;
+                case 39: // right
+                    deltaX = -this.lineHeightPx;
+                    break;
+                case 40: // down
+                    deltaY = -this.lineHeightPx;
+                    break;
+            }
+            let newState = this.composeNewState(deltaX, deltaY);
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            this.setStateFromEvent(newState, eventTypes.keypress);
+        }
     }
 
     handleWindowResize(){
