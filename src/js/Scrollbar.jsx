@@ -11,7 +11,7 @@ class ScrollBar extends React.Component {
             scrollSize: newState.scrollSize,
             isDragging: false,
             lastClientPosition: 0
-        }
+        };
 
         if(props.type === 'vertical'){
             this.bindedHandleMouseMove = this.handleMouseMoveForVertical.bind(this);
@@ -127,6 +127,8 @@ class ScrollBar extends React.Component {
         e.stopPropagation();
         let lastClientPosition = this.isVertical() ? e.clientY: e.clientX;
         this.setState({isDragging: true, lastClientPosition: lastClientPosition });
+
+        this.props.onFocus();
     }
 
     handleMouseUp(e){
@@ -160,6 +162,7 @@ class ScrollBar extends React.Component {
 ScrollBar.propTypes = {
     onMove: React.PropTypes.func,
     onPositionChange: React.PropTypes.func,
+    onFocus: React.PropTypes.func,
     realSize: React.PropTypes.number,
     containerSize: React.PropTypes.number,
     position: React.PropTypes.number,
