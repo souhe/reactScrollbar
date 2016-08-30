@@ -27,10 +27,7 @@ module.exports = {
     module: {
         loaders: [
             { 
-                test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel', query: {
-                    optional: ['runtime'],
-                    stage: 0
-                }
+                test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel'
             },
             { 
                 test: /\.less$/, 
