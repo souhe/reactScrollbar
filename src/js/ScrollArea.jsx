@@ -141,7 +141,7 @@ export default class ScrollArea extends React.Component {
                 { style =>
                     <div ref={x => this.wrapper = x} style={this.props.style} className={classes}
                          onWheel={this.handleWheel.bind(this)}>
-                        <div ref={x => this.content = x} tabIndex={0}
+                        <div ref={x => this.content = x} tabIndex={100}
                              style={style}
                              className={contentClasses}
                              onTouchStart={this.handleTouchStart.bind(this)}
@@ -271,6 +271,12 @@ export default class ScrollArea extends React.Component {
             let lineHeight = this.lineHeightPx ? this.lineHeightPx : 10;
 
             switch (e.keyCode) {
+                case 33: // page up
+                    deltaY = lineHeight * 10;
+                    break;
+                case 34: // page down
+                    deltaY = -lineHeight * 10;
+                    break;
                 case 37: // left
                     deltaX = lineHeight;
                     break;

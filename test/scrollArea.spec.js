@@ -58,7 +58,7 @@ describe('ScrollArea component', () => {
         expect(content).toEqualJSX(
             <div ref={() => {}} 
                 style={undefined}
-                tabIndex={0}
+                tabIndex={100}
                 className="scrollarea-content "
                 onTouchStart={() => {}}
                 onTouchMove={() => {}}
@@ -229,6 +229,15 @@ describe('ScrollArea component', () => {
         instance.handleKeyDown(e);
 
         expect(instance.state.leftPosition).toBe(10);
+    });
+
+    it('handleKeyDown method works properly when pressing key page down', () => {
+        let {instance} = setupComponentWithMockedSizes();
+
+        let e = {keyCode:34, target:{tagName:'div'}, preventDefault: () => {}, stopPropagation: () => {}};
+        instance.handleKeyDown(e);
+
+        expect(instance.state.topPosition).toBe(100);
     });
 
     it('handleKeyDown method should not scroll if input element is selected', () => {
