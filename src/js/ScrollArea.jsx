@@ -290,12 +290,16 @@ export default class ScrollArea extends React.Component {
                     deltaY = -lineHeight;
                     break;
             }
-            let newState = this.composeNewState(deltaX, deltaY);
 
-            e.preventDefault();
-            e.stopPropagation();
+            // only compose new state if key code matches those above
+            if (deltaY !== 0 || deltaX !== 0) {
+                let newState = this.composeNewState(deltaX, deltaY);
 
-            this.setStateFromEvent(newState, eventTypes.keypress);
+                e.preventDefault();
+                e.stopPropagation();
+
+                this.setStateFromEvent(newState, eventTypes.keypress);
+            }
         }
     }
 
