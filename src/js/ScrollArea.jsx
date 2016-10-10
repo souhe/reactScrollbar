@@ -10,7 +10,7 @@ const eventTypes = {
     touch: 'touch',
     touchEnd: 'touchEnd',
     mousemove: 'mousemove',
-    keypress: 'keypress'
+    keyPress: 'keypress'
 };
 
 export default class ScrollArea extends React.Component {
@@ -84,9 +84,10 @@ export default class ScrollArea extends React.Component {
     }
 
     render() {
-        let {children, className, contentClassName, ownerDocument} = this.props
+        let {children, className, contentClassName, ownerDocument} = this.props;
         let withMotion = this.props.smoothScrolling &&
-            (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api || this.state.eventType === eventTypes.touchEnd);
+            (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api || this.state.eventType === eventTypes.touchEnd ||
+            this.state.eventType === eventTypes.keyPress);
 
         let scrollbarY = this.canScrollY() ? (
             <ScrollBar
@@ -272,10 +273,10 @@ export default class ScrollArea extends React.Component {
 
             switch (e.keyCode) {
                 case 33: // page up
-                    deltaY = lineHeight * 10;
+                    deltaY = this.state.containerHeight - lineHeight;
                     break;
                 case 34: // page down
-                    deltaY = -lineHeight * 10;
+                    deltaY = -this.state.containerHeight + lineHeight;
                     break;
                 case 37: // left
                     deltaX = lineHeight;
@@ -298,7 +299,7 @@ export default class ScrollArea extends React.Component {
                 e.preventDefault();
                 e.stopPropagation();
 
-                this.setStateFromEvent(newState, eventTypes.keypress);
+                this.setStateFromEvent(newState, eventTypes.keyPress);
             }
         }
     }
