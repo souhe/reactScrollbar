@@ -175,6 +175,10 @@ After set to true, mouse wheel event has swapped directions. So normal scrolling
 After set to true, mouse wheel event will not propagate. This option is specifically useful in preventing nested scroll areas from propagating scroll actions to parent scroll areas.
 **Default: false**
 
+#### focusableTabIndex
+After set to a number, scrollarea-content is rendered with a tabindex value set to the passed in. This option is specifically useful in allowing the scroll area to be focusable.
+**Default: undefined**
+
 
 ### Context
 In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:

@@ -136,19 +136,21 @@ export default class ScrollArea extends React.Component {
             marginLeft: -this.state.leftPosition
         };
         let springifiedContentStyle = withMotion ? modifyObjValues(contentStyle, x => spring(x)) : contentStyle;
+        let tabIndexProp = this.props.focusableTabIndex ? {tabIndex: this.props.focusableTabIndex} : {};
 
         return (
             <Motion style={{...this.props.contentStyle, ...springifiedContentStyle}}>
                 { style =>
                     <div ref={x => this.wrapper = x} style={this.props.style} className={classes}
                          onWheel={this.handleWheel.bind(this)}>
-                        <div ref={x => this.content = x} contentEditable="true"
+                        <div ref={x => this.content = x}
                              style={style}
                              className={contentClasses}
                              onTouchStart={this.handleTouchStart.bind(this)}
                              onTouchMove={this.handleTouchMove.bind(this)}
                              onTouchEnd={this.handleTouchEnd.bind(this)}
-                             onKeyDown={this.handleKeyDown.bind(this)}>
+                             onKeyDown={this.handleKeyDown.bind(this)}
+                             {...tabIndexProp}>
                             {children}
                         </div>
                         {scrollbarY}
@@ -458,7 +460,8 @@ ScrollArea.propTypes = {
     smoothScrolling: React.PropTypes.bool,
     minScrollSize: React.PropTypes.number,
     swapWheelAxes: React.PropTypes.bool,
-    stopScrollPropagation: React.PropTypes.bool
+    stopScrollPropagation: React.PropTypes.bool,
+    focusableTabIndex: React.PropTypes.number
 };
 
 ScrollArea.defaultProps = {
