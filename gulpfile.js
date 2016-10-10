@@ -6,6 +6,7 @@ var babel = require('gulp-babel');
 var connect = require('gulp-connect');
 var merge = require('merge-stream');
 var runSequence = require('run-sequence');
+var argv = require('yargs').argv;
 
 var webpackDevConf = require('./webpack.dev.config.js');
 var webpackProductionConf = require('./webpack.production.config.js');
@@ -82,8 +83,15 @@ gulp.task('production', function(callback){
 });
 
 gulp.task('watch', function() {
+    let root = 'examples/';
+    if (argv.example) {
+        root += argv.example;
+    } else {
+        root += 'basic';
+    }
+
     connect.server({
-       root: 'examples/basic',
+       root: root,
        livereload: true,
        port: 8003
      });
