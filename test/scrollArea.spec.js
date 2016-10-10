@@ -237,7 +237,7 @@ describe('ScrollArea component', () => {
         let e = {keyCode:34, target:{tagName:'div'}, preventDefault: () => {}, stopPropagation: () => {}};
         instance.handleKeyDown(e);
 
-        expect(instance.state.topPosition).toBe(100);
+        expect(instance.state.topPosition).toBe(instance.state.containerHeight - 10);
     });
 
     it('handleKeyDown method should not scroll if input element is selected', () => {
