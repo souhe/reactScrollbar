@@ -255,7 +255,8 @@ export default class ScrollArea extends React.Component {
         let newState = this.composeNewState(-deltaX, -deltaY);
 
         if ((newState.topPosition && this.state.topPosition !== newState.topPosition) ||
-            (newState.leftPosition && this.state.leftPosition !== newState.leftPosition)) {
+            (newState.leftPosition && this.state.leftPosition !== newState.leftPosition) ||
+            this.props.stopScrollPropagation) {
             e.preventDefault();
             e.stopPropagation();
         }
@@ -456,7 +457,8 @@ ScrollArea.propTypes = {
     ownerDocument: React.PropTypes.any,
     smoothScrolling: React.PropTypes.bool,
     minScrollSize: React.PropTypes.number,
-    swapWheelAxes: React.PropTypes.bool
+    swapWheelAxes: React.PropTypes.bool,
+    stopScrollPropagation: React.PropTypes.bool
 };
 
 ScrollArea.defaultProps = {

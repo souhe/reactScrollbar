@@ -171,6 +171,10 @@ Using this prop it's possible to set minimal size in px for both scrollbars.
 After set to true, mouse wheel event has swapped directions. So normal scrolling moves horizontal scrollbar and scrolling with SHIFT key moves vertical scrollbar. It could be useful for applications with horizontal layout.
 **Default: false**
 
+#### stopScrollPropagation
+After set to true, mouse wheel event will not propagate. This option is specifically useful in preventing nested scroll areas from propagating scroll actions to parent scroll areas.
+**Default: false**
+
 
 ### Context
 In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:

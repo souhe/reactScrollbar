@@ -64,7 +64,7 @@ gulp.task("connect", function(){
 gulp.task('less-examples', function(){
     return gulp.src('./examples/less/**/*.less')
         .pipe(less())
-        .pipe(gulp.dest('../'))
+        .pipe(gulp.dest('examples'))
         .pipe(connect.reload());
 });
 
