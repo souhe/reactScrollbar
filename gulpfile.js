@@ -6,7 +6,6 @@ var babel = require('gulp-babel');
 var connect = require('gulp-connect');
 var merge = require('merge-stream');
 var runSequence = require('run-sequence');
-var argv = require('yargs').argv;
 
 var webpackDevConf = require('./webpack.dev.config.js');
 var webpackProductionConf = require('./webpack.production.config.js');
@@ -46,16 +45,11 @@ gulp.task('less', function(){
         .pipe(gulp.dest('./dist/css/'));
 });
 
-var folders = ['basic', 'changingChildren'];
 gulp.task('build-examples', function(){
-    var tasks = folders.map(function(folder){
-        return gulp.src('examples/' + folder + '/js/main.js', {base: './'})
-            .pipe(webpack( webpackExamplesConf ))
-            .pipe(concat('main.js'))
-            .pipe(gulp.dest('examples/' + folder ));
-    });
-
-    return merge(tasks)
+    return gulp.src('examples/js/main.js', {base: './'})
+        .pipe(webpack( webpackExamplesConf ))
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest('examples'))
         .pipe(connect.reload());
 });
 
@@ -68,7 +62,7 @@ gulp.task("connect", function(){
 });
 
 gulp.task('less-examples', function(){
-    return gulp.src('./examples/**/less/**/*.less')
+    return gulp.src('./examples/less/**/*.less')
         .pipe(less())
         .pipe(gulp.dest('../'))
         .pipe(connect.reload());
@@ -83,15 +77,8 @@ gulp.task('production', function(callback){
 });
 
 gulp.task('watch', function() {
-    var root = 'examples/';
-    if (argv.example) {
-        root += argv.example;
-    } else {
-        root += 'basic';
-    }
-
     connect.server({
-       root: root,
+       root: 'examples',
        livereload: true,
        port: 8003
      });

@@ -77,16 +77,6 @@ gulp watch
 
 then open [http://localhost:8003](http://localhost:8003).
 
-#### Running other examples
-
-To test the other examples, add a `--example {foldername}` parameter:
-
-```bash
-gulp watch --example changingChildren
-```
-
-then open [http://localhost:8003](http://localhost:8003).
-
 ### Using in universal app
 `ScrollArea` component has now full universal app support. It's only one requirement: you have to use `react-scrollbar` in no-css version and then include css file into your project manually (see [this](#version-without-boundled-css-styles)). It's because of issue in webpack style-loader which is used to bundle css styles into main js file.
 
