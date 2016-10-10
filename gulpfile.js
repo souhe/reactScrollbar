@@ -83,7 +83,7 @@ gulp.task('production', function(callback){
 });
 
 gulp.task('watch', function() {
-    let root = 'examples/';
+    var root = 'examples/';
     if (argv.example) {
         root += argv.example;
     } else {
