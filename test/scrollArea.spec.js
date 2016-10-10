@@ -66,6 +66,23 @@ describe('ScrollArea component', () => {
                 <p>content</p>
             </div>);
     });
+
+    it('Should render with tabindex set', () => {
+        let {scrollbars, content} = setupComponentWithMockedSizes({focusableTabIndex: 100});
+
+        expect(scrollbars.length).toBe(2);
+        expect(content).toEqualJSX(
+            <div ref={() => {}}
+                style={undefined}
+                tabIndex={100}
+                className="scrollarea-content "
+                onTouchStart={() => {}}
+                onTouchMove={() => {}}
+                onTouchEnd={() => {}}
+                onKeyDown={() => {}}>
+                <p>content</p>
+            </div>);
+    });
    
     it('Could render only vertical scrollbar', () => {
         let {scrollbars} = setupComponentWithMockedSizes({vertical: true, horizontal: false});
