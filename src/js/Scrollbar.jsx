@@ -68,18 +68,19 @@ class ScrollBar extends React.Component {
         let scrollbarClasses = `scrollbar-container ${isDragging ? 'active' : ''} ${isVoriziontal ? 'horizontal' : ''} ${isVertical ? 'vertical' : ''}`; 
 
         return (
-            <Motion style={{...scrollbarStyle, ...springifiedScrollStyles}}>
-                { style => 
-                    <div className={scrollbarClasses} 
-                        style={containerStyle} 
+            <Motion style={springifiedScrollStyles}>
+                { style =>
+                    <div
+                        className={scrollbarClasses}
+                        style={containerStyle}
                         onMouseDown={this.handleScrollBarContainerClick.bind(this)}
-                        ref={ x => { this.scrollbarContainer = x}}>
-                        
-                        <div className="scrollbar"
-                            style={style}
+                        ref={ x => this.scrollbarContainer = x }
+                    >
+                        <div
+                            className="scrollbar"
+                            style={{ ...style, ...scrollbarStyle }}
                             onMouseDown={this.handleMouseDown.bind(this)}
-                            >
-                        </div>
+                        />
                     </div>
                 }
             </Motion>
