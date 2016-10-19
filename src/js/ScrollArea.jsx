@@ -134,20 +134,27 @@ export default class ScrollArea extends React.Component{
         let springifiedContentStyle = withMotion ? modifyObjValues(contentStyle, x => spring(x)) : contentStyle;
         
         return (
-            <Motion style={{...this.props.contentStyle, ...springifiedContentStyle}}>
-                { style => 
-                    <div ref={x => this.wrapper = x} style={this.props.style} className={classes} onWheel={this.handleWheel.bind(this)}>
-                        <div ref={x => this.content = x}
-                            style={style}
+            <Motion style={springifiedContentStyle}>
+                { style =>
+                    <div
+                        ref={x => this.wrapper = x}
+                        className={classes}
+                        style={this.props.style}
+                        onWheel={this.handleWheel.bind(this)}
+                    >
+                        <div
+                            ref={x => this.content = x}
+                            style={{ ...style, ...this.props.contentStyle }}
                             className={contentClasses}
                             onTouchStart={this.handleTouchStart.bind(this)}
                             onTouchMove={this.handleTouchMove.bind(this)}
-                            onTouchEnd={this.handleTouchEnd.bind(this)}>
-                    {children}
-                </div>
-                {scrollbarY}
-                {scrollbarX}
-            </div>
+                            onTouchEnd={this.handleTouchEnd.bind(this)}
+                        >
+                            {children}
+                        </div>
+                        {scrollbarY}
+                        {scrollbarX}
+                    </div>
                 }
             </Motion>
         );
