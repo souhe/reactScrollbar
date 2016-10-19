@@ -50,14 +50,14 @@ function getRendererComponentInstance(renderer){
     return renderer._instance? renderer._instance._instance : null;
 }
 
-describe('ScrolLArea component', () => {
-    it('Should render children and both scrollbars', () => {      
+describe('ScrollArea component', () => {
+    it('Should render children and both scrollbars', () => {
         let {scrollbars, content} = setupComponentWithMockedSizes();
 
         expect(scrollbars.length).toBe(2);
         expect(content).toEqualJSX(
-            <div ref={() => {}} 
-                style={undefined}
+            <div ref={() => {}}
+                style={{}}
                 className="scrollarea-content "
                 onTouchStart={() => {}}
                 onTouchMove={() => {}}
@@ -82,10 +82,18 @@ describe('ScrolLArea component', () => {
         expect(scrollbar.props.type).toBe('horizontal'); 
     });
    
-    it('Should change content element class when contentClassName porp is used', () => {
+    it('Should change content element class when contentClassName prop is used', () => {
         let {content} = setup({contentClassName: 'test-class'});
         
         expect(content.props.className).toInclude('test-class');
+    });
+    
+    it('Should have proper element style when contentStyle prop is used', () => {
+        let {content, instance} = setupComponentWithMockedSizes({
+            contentStyle: {test: 'contentStyle'},
+        });
+
+        expect(content.props.style).toEqual({ test: 'contentStyle' });
     });
    
     it('Should have proper scrollbars styles', () => {
