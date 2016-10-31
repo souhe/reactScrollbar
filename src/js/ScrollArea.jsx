@@ -99,6 +99,8 @@ export default class ScrollArea extends React.Component {
                 onPositionChange={this.handleScrollbarYPositionChange.bind(this)}
                 containerStyle={this.props.verticalContainerStyle}
                 scrollbarStyle={this.props.verticalScrollbarStyle}
+                className={this.props.scrollbarClassName}
+                containerClassName={this.props.containerClassName}
                 smoothScrolling={withMotion}
                 minScrollSize={this.props.minScrollSize}
                 onFocus={this.focusContent.bind(this)}
@@ -115,6 +117,8 @@ export default class ScrollArea extends React.Component {
                 onPositionChange={this.handleScrollbarXPositionChange.bind(this)}
                 containerStyle={this.props.horizontalContainerStyle}
                 scrollbarStyle={this.props.horizontalScrollbarStyle}
+                className={this.props.scrollbarClassName}
+                containerClassName={this.props.containerClassName}
                 smoothScrolling={withMotion}
                 minScrollSize={this.props.minScrollSize}
                 onFocus={this.focusContent.bind(this)}
@@ -454,6 +458,8 @@ ScrollArea.propTypes = {
     style: React.PropTypes.object,
     speed: React.PropTypes.number,
     contentClassName: React.PropTypes.string,
+    scrollbarClassName: React.PropTypes.string,
+    containerClassName: React.PropTypes.string,
     contentStyle: React.PropTypes.object,
     vertical: React.PropTypes.bool,
     verticalContainerStyle: React.PropTypes.object,
