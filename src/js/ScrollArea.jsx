@@ -136,6 +136,10 @@ export default class ScrollArea extends React.Component {
             marginLeft: -this.state.leftPosition
         };
         let springifiedContentStyle = withMotion ? modifyObjValues(contentStyle, x => spring(x)) : contentStyle;
+
+        return (
+            <Motion style={{...this.props.contentStyle, ...springifiedContentStyle}}>		
+                { style =>
                     <div ref={x => this.wrapper = x} style={this.props.style} className={classes}
                          onWheel={this.handleWheel.bind(this)}>
                         <div ref={x => this.content = x}
