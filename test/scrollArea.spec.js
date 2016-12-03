@@ -12,12 +12,12 @@ function setup(props, sizes){
     let renderer = TestUtils.createRenderer();
     renderer.render(<ScrollArea {...props}><p>content</p></ScrollArea>);
     let instance = getRendererComponentInstance(renderer);
-    
+
     if(sizes){
         instance.computeSizes = () => sizes
         instance.setSizesToState();
     }
-        
+
     let output = renderer.getRenderOutput();
 
     let wrapper = output.props.children();
@@ -50,7 +50,7 @@ function getRendererComponentInstance(renderer){
     return renderer._instance? renderer._instance._instance : null;
 }
 
-describe('ScrolLArea component', () => {
+describe('ScrollArea component', () => {
     it('Should render children and both scrollbars', () => {      
         let {scrollbars, content} = setupComponentWithMockedSizes();
 
@@ -61,7 +61,25 @@ describe('ScrolLArea component', () => {
                 className="scrollarea-content "
                 onTouchStart={() => {}}
                 onTouchMove={() => {}}
-                onTouchEnd={() => {}}>
+                onTouchEnd={() => {}}
+                onKeyDown={() => {}}>
+                <p>content</p>
+            </div>);
+    });
+
+    it('Should render with tabindex set', () => {
+        let {scrollbars, content} = setupComponentWithMockedSizes({focusableTabIndex: 100});
+
+        expect(scrollbars.length).toBe(2);
+        expect(content).toEqualJSX(
+            <div ref={() => {}}
+                style={undefined}
+                tabIndex={100}
+                className="scrollarea-content "
+                onTouchStart={() => {}}
+                onTouchMove={() => {}}
+                onTouchEnd={() => {}}
+                onKeyDown={() => {}}>
                 <p>content</p>
             </div>);
     });
@@ -71,7 +89,7 @@ describe('ScrolLArea component', () => {
         let scrollbar = scrollbars[0];
         
         expect(scrollbars.length).toBe(1);
-        expect(scrollbar.props.type).toBe('vertical'); 
+        expect(scrollbar.props.type).toBe('vertical');
     });
    
     it('Could render only horizontal scrollbar', () => {
@@ -82,7 +100,7 @@ describe('ScrolLArea component', () => {
         expect(scrollbar.props.type).toBe('horizontal'); 
     });
    
-    it('Should change content element class when contentClassName porp is used', () => {
+    it('Should change content element class when contentClassName prop is used', () => {
         let {content} = setup({contentClassName: 'test-class'});
         
         expect(content.props.className).toInclude('test-class');
@@ -107,8 +125,8 @@ describe('ScrolLArea component', () => {
         expect(horizontalScrollbar.props.scrollbarStyle).toEqual({test: 'horizontalScrollbarStyle'});
     });
    
-    it('normalizeTopPosition() shoud returns proper value', () => {
-        let {    instance} = setup();
+    it('normalizeTopPosition() should returns proper value', () => {
+        let {instance} = setup();
         let {normalizeTopPosition} = instance;
         let sizes = {realHeight: 30, containerHeight: 20};
        
@@ -121,7 +139,7 @@ describe('ScrolLArea component', () => {
         expect(normalizeTopPosition(100, sizes)).toBe(10);
     });
     
-    it('normalizeLeftPosition() shoud returns proper value', () => {
+    it('normalizeLeftPosition() should returns proper value', () => {
         let {instance} = setup();
         let {normalizeLeftPosition} = instance;
         let sizes = {realWidth: 30, containerWidth: 20};
@@ -145,7 +163,7 @@ describe('ScrolLArea component', () => {
     
     it('handleWheel method work properly when scrolling up and actual topPosition is 0', () => {
         let {instance} = setupComponentWithMockedSizes();
-        let e = {deltaY:-10, deltaX: 0, preventDefault: () => {}};      
+        let e = {deltaY:-10, deltaX: 0, preventDefault: () => {}, stopPropagation: () => {}};      
         instance.handleWheel(e);
         
         expect(instance.state.topPosition).toBe(0);
@@ -210,6 +228,42 @@ describe('ScrolLArea component', () => {
         
         expect(instance.state.leftPosition).toBe(20);
     });
+
+    it('handleKeyDown method works properly when pressing key down', () => {
+        let {instance} = setupComponentWithMockedSizes();
+
+        let e = {keyCode:40, target:{tagName:'div'}, preventDefault: () => {}, stopPropagation: () => {}};
+        instance.handleKeyDown(e);
+
+        expect(instance.state.topPosition).toBe(10);
+    });
+
+    it('handleKeyDown method works properly when pressing key right', () => {
+        let {instance} = setupComponentWithMockedSizes();
+
+        let e = {keyCode:39, target:{tagName:'div'}, preventDefault: () => {}, stopPropagation: () => {}};
+        instance.handleKeyDown(e);
+
+        expect(instance.state.leftPosition).toBe(10);
+    });
+
+    it('handleKeyDown method works properly when pressing key page down', () => {
+        let {instance} = setupComponentWithMockedSizes();
+
+        let e = {keyCode:34, target:{tagName:'div'}, preventDefault: () => {}, stopPropagation: () => {}};
+        instance.handleKeyDown(e);
+
+        expect(instance.state.topPosition).toBe(instance.state.containerHeight - 10);
+    });
+
+    it('handleKeyDown method should not scroll if input element is selected', () => {
+        let {instance} = setupComponentWithMockedSizes();
+
+        let e = {keyCode:40, target:{tagName:'input'}, preventDefault: () => {}, stopPropagation: () => {}};
+        instance.handleKeyDown(e);
+
+        expect(instance.state.topPosition).toBe(0);
+    });
     
     it('scrollBottom() method should work when content is smaller then container', () => {
         let {instance} = setup({}, {
@@ -236,7 +290,7 @@ describe('ScrolLArea component', () => {
         expect(instance.state.topPosition).toBe(100);        
     });
     
-    it('scrollBottom() should be imposible when there is disabled vertical scroll', () => {
+    it('scrollBottom() should be impossible when there is disabled vertical scroll', () => {
         let {instance} = setup({vertical: false}, {
             realHeight: 200,
             containerHeight: 100,
@@ -273,7 +327,7 @@ describe('ScrolLArea component', () => {
         expect(instance.state.leftPosition).toBe(100);        
     });
     
-    it('scrollRight() should be imposible when there is disabled horizontal scroll', () => {
+    it('scrollRight() should be impossible when there is disabled horizontal scroll', () => {
         let {instance} = setup({horizontal: false}, {
             realHeight: 200,
             containerHeight: 100,

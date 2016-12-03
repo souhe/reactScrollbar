@@ -3,8 +3,8 @@ module.exports = {
         modulesDirectories: ['node_modules', 'bower_components'],
         extensions: ['', '.js', '.jsx'],
         alias: {
-            'react-scrollbar/no-css': '../../../src/js/ScrollAreaWithoutCss.js',
-            'react-scrollbar': '../../../src/js/ScrollAreaWithCss.js'
+            'react-scrollbar/no-css': '../../src/js/ScrollAreaWithoutCss.js',
+            'react-scrollbar': '../../src/js/ScrollAreaWithCss.js'
         }
     },
     module: {
