@@ -75,7 +75,7 @@ npm install
 gulp watch
 ```
 
-then open [http://localhost:8003](http://localhost:80003).
+then open [http://localhost:8003](http://localhost:8003).
 
 ### Using in universal app
 `ScrollArea` component has now full universal app support. It's only one requirement: you have to use `react-scrollbar` in no-css version and then include css file into your project manually (see [this](#version-without-boundled-css-styles)). It's because of issue in webpack style-loader which is used to bundle css styles into main js file.
@@ -170,6 +170,14 @@ Using this prop it's possible to set minimal size in px for both scrollbars.
 #### swapWheelAxes
 After set to true, mouse wheel event has swapped directions. So normal scrolling moves horizontal scrollbar and scrolling with SHIFT key moves vertical scrollbar. It could be useful for applications with horizontal layout.
 **Default: false**
+
+#### stopScrollPropagation
+After set to true, mouse wheel event will not propagate. This option is specifically useful in preventing nested scroll areas from propagating scroll actions to parent scroll areas.
+**Default: false**
+
+#### focusableTabIndex
+After set to a number, scrollarea-content is rendered with a tabindex value set to the passed in. This option is specifically useful in allowing the scroll area to be focusable.
+**Default: undefined**
 
 
 ### Context

@@ -43,3 +43,7 @@ body .area .content .item {
 body .area ul {
   width: 700px;
 }
+.example-selector {
+  padding-bottom: 50px;
+  text-align: center;
+}

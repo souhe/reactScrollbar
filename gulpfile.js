@@ -45,16 +45,11 @@ gulp.task('less', function(){
         .pipe(gulp.dest('./dist/css/'));
 });
 
-var folders = ['basic', 'changingChildren'];
 gulp.task('build-examples', function(){
-    var tasks = folders.map(function(folder){
-        return gulp.src('examples/' + folder + '/js/main.js', {base: './'})
-            .pipe(webpack( webpackExamplesConf ))
-            .pipe(concat('main.js'))
-            .pipe(gulp.dest('examples/' + folder ));
-    });
-
-    return merge(tasks)
+    return gulp.src('examples/js/main.js', {base: './'})
+        .pipe(webpack( webpackExamplesConf ))
+        .pipe(concat('main.js'))
+        .pipe(gulp.dest('examples'))
         .pipe(connect.reload());
 });
 
@@ -67,9 +62,9 @@ gulp.task("connect", function(){
 });
 
 gulp.task('less-examples', function(){
-    return gulp.src('./examples/**/less/**/*.less')
+    return gulp.src('./examples/less/**/*.less')
         .pipe(less())
-        .pipe(gulp.dest('../'))
+        .pipe(gulp.dest('examples'))
         .pipe(connect.reload());
 });
 
@@ -83,7 +78,7 @@ gulp.task('production', function(callback){
 
 gulp.task('watch', function() {
     connect.server({
-       root: 'examples/basic',
+       root: 'examples',
        livereload: true,
        port: 8003
      });
