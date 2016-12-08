@@ -73,7 +73,7 @@ describe('ScrollArea component', () => {
         expect(scrollbars.length).toBe(2);
         expect(content).toEqualJSX(
             <div ref={() => {}}
-                style={undefined}
+                style={{}}
                 tabIndex={100}
                 className="scrollarea-content "
                 onTouchStart={() => {}}
