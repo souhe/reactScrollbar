@@ -200,8 +200,9 @@ export default class ScrollArea extends React.Component {
                 clientX,
                 timestamp: Date.now()
             };
-
-            this.setStateFromEvent(this.composeNewState(-deltaX, -deltaY));
+            this.composeNewState(-deltaX, -deltaY).then((result) => {
+                this.setStateFromEvent(result);
+            });
         }
     }
 
@@ -210,7 +211,9 @@ export default class ScrollArea extends React.Component {
         if (typeof deltaX === 'undefined') deltaX = 0;
         if (typeof deltaY === 'undefined') deltaY = 0;
         if (Date.now() - timestamp < 200) {
-            this.setStateFromEvent(this.composeNewState(-deltaX * 10, -deltaY * 10), eventTypes.touchEnd);
+            this.composeNewState(-deltaX * 10, -deltaY * 10).then((result) => {
+                this.setStateFromEvent(result, eventTypes.touchEnd);
+            });
         }
 
         this.eventPreviousValues = {
@@ -221,7 +224,9 @@ export default class ScrollArea extends React.Component {
     }
 
     handleScrollbarMove(deltaY, deltaX) {
-        this.setStateFromEvent(this.composeNewState(deltaX, deltaY));
+        this.composeNewState(deltaX, deltaY).then((result) => {
+            this.setStateFromEvent(result);
+        });
     }
 
     handleScrollbarXPositionChange(position) {
@@ -254,17 +259,17 @@ export default class ScrollArea extends React.Component {
         deltaY = deltaY * this.props.speed;
         deltaX = deltaX * this.props.speed;
 
-        let newState = this.composeNewState(-deltaX, -deltaY);
+        this.composeNewState(-deltaX, -deltaY).then((newState) => {;
+            if ((newState.topPosition && this.state.topPosition !== newState.topPosition) ||
+                (newState.leftPosition && this.state.leftPosition !== newState.leftPosition) ||
+                this.props.stopScrollPropagation) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
 
-        if ((newState.topPosition && this.state.topPosition !== newState.topPosition) ||
-            (newState.leftPosition && this.state.leftPosition !== newState.leftPosition) ||
-            this.props.stopScrollPropagation) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        this.setStateFromEvent(newState, eventTypes.wheel);
-        this.focusContent();
+            this.setStateFromEvent(newState, eventTypes.wheel);
+            this.focusContent();
+        });
     }
 
     handleKeyDown(e) {
@@ -297,35 +302,41 @@ export default class ScrollArea extends React.Component {
 
             // only compose new state if key code matches those above
             if (deltaY !== 0 || deltaX !== 0) {
-                let newState = this.composeNewState(deltaX, deltaY);
+            this.composeNewState(deltaX, deltaY).then((newState) => {;
 
                 e.preventDefault();
                 e.stopPropagation();
 
                 this.setStateFromEvent(newState, eventTypes.keyPress);
+            });
             }
         }
     }
 
     handleWindowResize() {
-        let newState = this.computeSizes();
-        newState = this.getModifiedPositionsIfNeeded(newState);
-        this.setStateFromEvent(newState);
+        this.computeSizes().then((sizes) => {
+            let newState = sizes;
+            newState = this.getModifiedPositionsIfNeeded(newState);
+            this.setStateFromEvent(newState);
+        });
     }
 
     composeNewState(deltaX, deltaY) {
-        let newState = this.computeSizes();
+        return this.computeSizes().then((sizes) => {
+            let newState = sizes;
 
-        if (this.canScrollY(newState)) {
-            newState.topPosition = this.computeTopPosition(deltaY, newState);
-        } else {
-          newState.topPosition = 0;
-        }
-        if (this.canScrollX(newState)) {
-            newState.leftPosition = this.computeLeftPosition(deltaX, newState);
-        }
+            if (this.canScrollY(newState)) {
+                newState.topPosition = this.computeTopPosition(deltaY, newState);
+            } else {
+              newState.topPosition = 0;
+            }
+            if (this.canScrollX(newState)) {
+                newState.leftPosition = this.computeLeftPosition(deltaX, newState);
+            }
 
-        return newState;
+            return newState;
+        });
+
     }
 
     computeTopPosition(deltaY, sizes) {
@@ -359,24 +370,30 @@ export default class ScrollArea extends React.Component {
     }
 
     computeSizes() {
-        let realHeight = this.content.offsetHeight;
-        let containerHeight = this.wrapper.offsetHeight;
-        let realWidth = this.content.offsetWidth;
-        let containerWidth = this.wrapper.offsetWidth;
-
-        return {
-            realHeight: realHeight,
-            containerHeight: containerHeight,
-            realWidth: realWidth,
-            containerWidth: containerWidth
-        };
+        const raf = window.requestAnimationFrame || window.webkitRequestAnimationFrame;
+        return new Promise((resolve) => {
+                raf(() => {
+                    let realHeight = this.content.offsetHeight;
+                    let containerHeight = this.wrapper.offsetHeight;
+                    let realWidth = this.content.offsetWidth;
+                    let containerWidth = this.wrapper.offsetWidth;
+                    
+                    resolve({
+                        realHeight: realHeight,
+                        containerHeight: containerHeight,
+                        realWidth: realWidth,
+                        containerWidth: containerWidth
+                    });
+                })
+        });
     }
 
     setSizesToState() {
-        let sizes = this.computeSizes();
-        if (sizes.realHeight !== this.state.realHeight || sizes.realWidth !== this.state.realWidth) {
-            this.setStateFromEvent(this.getModifiedPositionsIfNeeded(sizes));
-        }
+        this.computeSizes().then((sizes) => {
+            if (sizes.realHeight !== this.state.realHeight || sizes.realWidth !== this.state.realWidth) {
+                this.setStateFromEvent(this.getModifiedPositionsIfNeeded(sizes));
+            }
+        });
     }
 
     scrollTop() {
@@ -396,10 +413,12 @@ export default class ScrollArea extends React.Component {
     }
 
     scrollYTo(topPosition) {
-        if (this.canScrollY()) {
-            let position = this.normalizeTopPosition(topPosition, this.computeSizes());
-            this.setStateFromEvent({topPosition: position}, eventTypes.api);
-        }
+        this.computeSizes().then((sizes) => {
+            if (this.canScrollY()) {
+                let position = this.normalizeTopPosition(topPosition,sizes);
+                this.setStateFromEvent({topPosition: position}, eventTypes.api);
+            }
+        });
     }
 
     scrollXTo(leftPosition) {
