@@ -1,7 +1,7 @@
 import React from 'react'
 import ScrollArea from 'react-scrollbar';
 
-class App extends React.Component{
+class SimpleExample extends React.Component{
     constructor(props){
         super(props);
 
@@ -46,4 +46,4 @@ class App extends React.Component{
     }
 }
 
-export default App;
+export default SimpleExample;

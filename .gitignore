@@ -6,3 +6,4 @@
 examples/*/*.js
 examples/*/*.css
 jsconfig.json
+/.idea

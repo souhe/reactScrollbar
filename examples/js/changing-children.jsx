@@ -1,7 +1,7 @@
 import React from 'react'
 import ScrollArea from 'react-scrollbar';
 
-class App extends React.Component{
+class ChangingChildren extends React.Component{
     constructor(props){
         super(props);
 
@@ -94,4 +94,4 @@ Content.contextTypes = {
     scrollArea: React.PropTypes.object
 };
 
-export default App;
+export default ChangingChildren;

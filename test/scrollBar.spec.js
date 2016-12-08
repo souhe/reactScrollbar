@@ -103,11 +103,12 @@ describe('ScrollBar component', () => {
         let {instance} = setupScrollbar({
            realSize: 200, 
            containerSize: 100,
-           onMove: handleMoveSpy
+           onMove: handleMoveSpy,
+            onFocus: () => {}
        });
-       let mouseDoewnEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
+       let mouseDownEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientY: 25, preventDefault: () => {}};
-       instance.handleMouseDown(mouseDoewnEvent);
+       instance.handleMouseDown(mouseDownEvent);
        instance.handleMouseMoveForVertical(moveEvent);
        
        expect(handleMoveSpy.calls.length).toEqual(1);
@@ -120,11 +121,12 @@ describe('ScrollBar component', () => {
            realSize: 200, 
            containerSize: 100,
            onMove: handleMoveSpy,
-           type: 'horizontal'
+           type: 'horizontal',
+            onFocus: () => {}
        });
-       let mouseDoewnEvent = {clientX: 0, preventDefault: () => {}, stopPropagation: () => {}};
+       let mouseDownEvent = {clientX: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientX: 25, preventDefault: () => {}};
-       instance.handleMouseDown(mouseDoewnEvent);
+       instance.handleMouseDown(mouseDownEvent);
        instance.handleMouseMoveForHorizontal(moveEvent);
        
        expect(handleMoveSpy.calls.length).toEqual(1);
@@ -136,11 +138,12 @@ describe('ScrollBar component', () => {
         let {instance} = setupScrollbar({
            realSize: 400, 
            containerSize: 100,
-           onMove: handleMoveSpy
+           onMove: handleMoveSpy,
+            onFocus: () => {}
        });
-       let mouseDoewnEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
+       let mouseDownEvent = {clientY: 0, preventDefault: () => {}, stopPropagation: () => {}};
        let moveEvent = {clientY: 10, preventDefault: () => {}};
-       instance.handleMouseDown(mouseDoewnEvent);
+       instance.handleMouseDown(mouseDownEvent);
        instance.handleMouseMoveForVertical(moveEvent);
        moveEvent.clientY = 20;
        instance.handleMouseMoveForVertical(moveEvent);
@@ -159,7 +162,8 @@ describe('ScrollBar component', () => {
             realSize: 10000, 
             containerSize: 100,
             type: 'vertical',
-            minScrollSize: minScrollBarSize
+            minScrollSize: minScrollBarSize,
+            onFocus: () => {}
         });     
        
         expect(instance.state.scrollSize).toBe(minScrollBarSize);   
