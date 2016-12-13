@@ -46,8 +46,8 @@ gulp.task('less', function(){
 });
 
 gulp.task('build-examples', function(){
-    return gulp.src('examples/js/main.js', {base: './'})
-        .pipe(webpack( webpackExamplesConf ))
+    return gulp.src('examples/js/main.js')
+        .pipe(webpack(webpackExamplesConf))
         .pipe(concat('main.js'))
         .pipe(gulp.dest('examples'))
         .pipe(connect.reload());
