@@ -139,18 +139,24 @@ export default class ScrollArea extends React.Component {
         let tabIndexProp = this.props.focusableTabIndex ? {tabIndex: this.props.focusableTabIndex} : {};
 
         return (
-            <Motion style={{...this.props.contentStyle, ...springifiedContentStyle}}>
+            <Motion style={springifiedContentStyle}>
                 { style =>
-                    <div ref={x => this.wrapper = x} style={this.props.style} className={classes}
-                         onWheel={this.handleWheel.bind(this)}>
-                        <div ref={x => this.content = x}
-                             style={style}
-                             className={contentClasses}
-                             onTouchStart={this.handleTouchStart.bind(this)}
-                             onTouchMove={this.handleTouchMove.bind(this)}
-                             onTouchEnd={this.handleTouchEnd.bind(this)}
-                             onKeyDown={this.handleKeyDown.bind(this)}
-                             {...tabIndexProp}>
+                    <div
+                        ref={x => this.wrapper = x}
+                        className={classes}
+                        style={this.props.style}
+                        onWheel={this.handleWheel.bind(this)}
+                    >
+                        <div
+                            ref={x => this.content = x}
+                            style={{ ...this.props.contentStyle, ...style }}
+                            className={contentClasses}
+                            onTouchStart={this.handleTouchStart.bind(this)}
+                            onTouchMove={this.handleTouchMove.bind(this)}
+                            onTouchEnd={this.handleTouchEnd.bind(this)}
+                            onKeyDown={this.handleKeyDown.bind(this)}
+                            {...tabIndexProp}
+                        >
                             {children}
                         </div>
                         {scrollbarY}
