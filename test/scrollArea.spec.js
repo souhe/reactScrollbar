@@ -55,7 +55,7 @@ describe('ScrollArea component', () => {
         let {scrollbars, content} = setupComponentWithMockedSizes();
 
         expect(scrollbars.length).toBe(2);
-        console.log(content);
+
         expect(content).toEqualJSX(
             <div ref={() => {}}
                 style={{}}
@@ -64,7 +64,7 @@ describe('ScrollArea component', () => {
                 onTouchMove={() => {}}
                 onTouchEnd={() => {}}
                 onKeyDown={() => {}}
-                tabIndex=1
+                tabIndex={1}
             >
                 <p>content</p>
             </div>);
