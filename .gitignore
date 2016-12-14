@@ -3,7 +3,7 @@
 /bower_components/
 /.vscode/
 /npm-debug.log
-examples/*.js
-examples/*.css
+/examples/main.js
+/examples/site.css
 jsconfig.json
 /.idea
