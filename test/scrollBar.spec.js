@@ -37,10 +37,46 @@ describe('ScrollBar component', () => {
         expect(wrapper.props.className).toInclude('vertical');
     });
     
+    it('Vertical should have proper container styles', () => {
+        let {wrapper} = setupScrollbar({
+            type: 'vertical',
+            containerStyle: {test: 'containerStyle'},
+        });
+
+        expect(wrapper.props.style).toEqual({test: 'containerStyle'});
+    });
+
+    it('Vertical should have proper scrollbar styles', () => {
+        let {content} = setupScrollbar({
+            type: 'vertical',
+            scrollbarStyle: {test: 'scrollbarStyle'},
+        });
+
+        expect(content.props.style).toEqual({test: 'scrollbarStyle'});
+    });
+    
     it('Horizontal should have proper class', () => {
         let {wrapper} = setupScrollbar({type: 'horizontal'});
         
         expect(wrapper.props.className).toInclude('horizontal');
+    });
+    
+    it('Horizontal should have proper container styles', () => {
+        let {wrapper} = setupScrollbar({
+            type: 'horizontal',
+            containerStyle: {test: 'containerStyle'},
+        });
+
+        expect(wrapper.props.style).toEqual({test: 'containerStyle'});
+    });
+
+    it('Horizontal should have proper scrollbar styles', () => {
+        let {content} = setupScrollbar({
+            type: 'horizontal',
+            scrollbarStyle: {test: 'scrollbarStyle'},
+        });
+
+        expect(content.props.style).toEqual({test: 'scrollbarStyle'});
     });
     
     it('ScrollBar should be in proper position', () => {
