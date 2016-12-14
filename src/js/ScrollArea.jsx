@@ -136,7 +136,6 @@ export default class ScrollArea extends React.Component {
             marginLeft: -this.state.leftPosition
         };
         let springifiedContentStyle = withMotion ? modifyObjValues(contentStyle, x => spring(x)) : contentStyle;
-        let tabIndexProp = this.props.focusableTabIndex ? {tabIndex: this.props.focusableTabIndex} : {};
 
         return (
             <Motion style={{...this.props.contentStyle, ...springifiedContentStyle}}>
@@ -150,7 +149,8 @@ export default class ScrollArea extends React.Component {
                              onTouchMove={this.handleTouchMove.bind(this)}
                              onTouchEnd={this.handleTouchEnd.bind(this)}
                              onKeyDown={this.handleKeyDown.bind(this)}
-                             {...tabIndexProp}>
+                             tabIndex={this.props.focusableTabIndex}
+                        >
                             {children}
                         </div>
                         {scrollbarY}

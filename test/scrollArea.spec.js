@@ -14,7 +14,7 @@ function setup(props, sizes){
     let instance = getRendererComponentInstance(renderer);
 
     if(sizes){
-        instance.computeSizes = () => sizes
+        instance.computeSizes = () => sizes;
         instance.setSizesToState();
     }
 
@@ -55,6 +55,7 @@ describe('ScrollArea component', () => {
         let {scrollbars, content} = setupComponentWithMockedSizes();
 
         expect(scrollbars.length).toBe(2);
+        console.log(content);
         expect(content).toEqualJSX(
             <div ref={() => {}} 
                 style={undefined}
@@ -62,7 +63,9 @@ describe('ScrollArea component', () => {
                 onTouchStart={() => {}}
                 onTouchMove={() => {}}
                 onTouchEnd={() => {}}
-                onKeyDown={() => {}}>
+                onKeyDown={() => {}}
+                tabIndex=1
+            >
                 <p>content</p>
             </div>);
     });
@@ -79,7 +82,8 @@ describe('ScrollArea component', () => {
                 onTouchStart={() => {}}
                 onTouchMove={() => {}}
                 onTouchEnd={() => {}}
-                onKeyDown={() => {}}>
+                onKeyDown={() => {}}
+            >
                 <p>content</p>
             </div>);
     });
