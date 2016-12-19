@@ -91,6 +91,8 @@ then open [http://localhost:8003](http://localhost:8003).
         className={String}
         style={Object}
         contentClassName={String}
+        containerClassName={String}
+        scrollbarClassName={String}
         contentStyle={Object}
         horizontal={Boolean}
         horizontalContainerStyle={Object}
@@ -131,6 +133,12 @@ Inline styles applied to the main scroll area component.
 
 #### contentClassName
 CSS class names added to element with scroll area content.
+
+#### containerClassName
+CSS class name added to scrollbar container element.
+
+#### scrollbarClassName
+CSS class name added to scrollbar element.
 
 #### contentStyle
 Inline styles applied to element with scroll area content.

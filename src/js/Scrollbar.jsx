@@ -59,13 +59,13 @@ class ScrollBar extends React.Component {
     }
 
     render(){
-        let {smoothScrolling, isDragging, type, scrollbarStyle, containerStyle} = this.props;
+        let {smoothScrolling, isDragging, type, scrollbarStyle, className, containerStyle, containerClassName} = this.props;
         let isVoriziontal = type === 'horizontal';
         let isVertical = type === 'vertical';
         let scrollStyles = this.createScrollStyles();
         let springifiedScrollStyles = smoothScrolling ? modifyObjValues(scrollStyles, x => spring(x)) : scrollStyles;
 
-        let scrollbarClasses = `scrollbar-container ${isDragging ? 'active' : ''} ${isVoriziontal ? 'horizontal' : ''} ${isVertical ? 'vertical' : ''}`;
+        let scrollbarClasses = `scrollbar-container ${containerClassName || ''} ${isDragging ? 'active' : ''} ${isVoriziontal ? 'horizontal' : ''} ${isVertical ? 'vertical' : ''}`;
 
         return (
             <Motion style={springifiedScrollStyles}>
@@ -77,7 +77,7 @@ class ScrollBar extends React.Component {
                         ref={ x => this.scrollbarContainer = x }
                     >
                         <div
-                            className="scrollbar"
+                            className={`scrollbar ${className || ''}`}
                             style={{ ...scrollbarStyle, ...style }}
                             onMouseDown={this.handleMouseDown.bind(this)}
                         />
@@ -167,6 +167,8 @@ ScrollBar.propTypes = {
     realSize: React.PropTypes.number,
     containerSize: React.PropTypes.number,
     position: React.PropTypes.number,
+    className: React.PropTypes.string,
+    containerClassName: React.PropTypes.string,
     containerStyle: React.PropTypes.object,
     scrollbarStyle: React.PropTypes.object,
     type: React.PropTypes.oneOf(['vertical', 'horizontal']),
