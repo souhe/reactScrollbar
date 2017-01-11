@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import ScrollBar from './Scrollbar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
 import lineHeight from 'line-height';
@@ -12,6 +12,12 @@ const eventTypes = {
     mousemove: 'mousemove',
     keyPress: 'keypress'
 };
+
+class PureChlidren extends PureComponent {
+    render (){
+        return <div>{this.props.children}</div>;
+    }
+}
 
 export default class ScrollArea extends React.Component {
     constructor(props) {
@@ -156,7 +162,7 @@ export default class ScrollArea extends React.Component {
                             onKeyDown={this.handleKeyDown.bind(this)}
                             tabIndex={this.props.focusableTabIndex}
                         >
-                            {children}
+                            <PureChlidren>{children}</PureChlidren>
                         </div>
                         {scrollbarY}
                         {scrollbarX}
