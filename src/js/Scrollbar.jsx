@@ -133,8 +133,10 @@ class ScrollBar extends React.Component {
     }
 
     handleMouseUp(e){
-        e.preventDefault();
-        this.setState({isDragging: false });
+        if (this.state.isDragging) {
+            e.preventDefault();
+            this.setState({isDragging: false });
+        }
     }
 
     createScrollStyles(){
