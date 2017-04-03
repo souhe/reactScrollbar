@@ -1,14 +1,14 @@
 {
-  "name": "react-scrollbar",
+  "name": "react-scrollbar-patch",
   "version": "0.5.1",
-  "description": "ScrollArea component for react",
+  "description": "A patch of souhe/reactScrollbar that fixes a significant bug preventing range sliders working (issue #42).",
   "main": "./dist/scrollArea.js",
   "scripts": {
     "test": "./node_modules/.bin/karma start karma.config.js --single-run --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/souhe/reactScrollbar.git"
+    "url": "https://github.com/benkeen/reactScrollbar.git"
   },
   "keywords": [
     "react",
@@ -18,7 +18,7 @@
     "scroll",
     "scrollarea"
   ],
-  "author": "souhe",
+  "author": "benkeen",
   "license": "MIT",
   "dependencies": {
     "config": "^1.24.0",
