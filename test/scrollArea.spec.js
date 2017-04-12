@@ -59,7 +59,7 @@ describe('ScrollArea component', () => {
         expect(content).toEqualJSX(
             <div ref={() => {}}
                 style={{}}
-                className="scrollarea-content "
+                className="scrollarea-content"
                 onTouchStart={() => {}}
                 onTouchMove={() => {}}
                 onTouchEnd={() => {}}
@@ -78,7 +78,7 @@ describe('ScrollArea component', () => {
             <div ref={() => {}}
                 style={{}}
                 tabIndex={100}
-                className="scrollarea-content "
+                className="scrollarea-content"
                 onTouchStart={() => {}}
                 onTouchMove={() => {}}
                 onTouchEnd={() => {}}
@@ -116,6 +116,25 @@ describe('ScrollArea component', () => {
         });
 
         expect(content.props.style).toEqual({ test: 'contentStyle' });
+    });
+
+    it('Should have proper scrollbars classes', () => {
+        let {scrollbars} = setupComponentWithMockedSizes({
+            vertical: true,
+            verticalContainerClassName: 'verticalContainerClassName',
+            verticalScrollbarClassName: 'verticalScrollbarClassName',
+            horizontal: true,
+            horizontalContainerClassName: 'horizontalContainerClassName',
+            horizontalScrollbarClassName: 'horizontalScrollbarClassName',
+        });
+
+        let verticalScrollbar = scrollbars.filter(component => component.props.type === 'vertical')[0];
+        let horizontalScrollbar = scrollbars.filter(component => component.props.type === 'horizontal')[0];
+
+        expect(verticalScrollbar.props.containerClassName).toInclude('verticalContainerClassName');
+        expect(verticalScrollbar.props.scrollbarClassName).toInclude('verticalScrollbarClassName');
+        expect(horizontalScrollbar.props.containerClassName).toInclude('horizontalContainerClassName');
+        expect(horizontalScrollbar.props.scrollbarClassName).toInclude('horizontalScrollbarClassName');
     });
 
     it('Should have proper scrollbars styles', () => {

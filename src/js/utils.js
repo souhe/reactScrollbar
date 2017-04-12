@@ -38,7 +38,7 @@ export function modifyObjValues (obj, modifier = x => x){
     for(let key in obj){
         if(obj.hasOwnProperty(key)) modifiedObj[key] = modifier(obj[key]);
     }
-    
+
     return modifiedObj;
 }
 

@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ScrollBar from './Scrollbar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
 import lineHeight from 'line-height';
 import {Motion, spring} from 'react-motion';
+import classNames from 'classnames';
 
 const eventTypes = {
     wheel: 'wheel',
@@ -97,7 +99,9 @@ export default class ScrollArea extends React.Component {
                 position={this.state.topPosition}
                 onMove={this.handleScrollbarMove.bind(this)}
                 onPositionChange={this.handleScrollbarYPositionChange.bind(this)}
+                containerClassName={this.props.verticalContainerClassName}
                 containerStyle={this.props.verticalContainerStyle}
+                scrollbarClassName={this.props.verticalScrollbarClassName}
                 scrollbarStyle={this.props.verticalScrollbarStyle}
                 smoothScrolling={withMotion}
                 minScrollSize={this.props.minScrollSize}
@@ -113,7 +117,9 @@ export default class ScrollArea extends React.Component {
                 position={this.state.leftPosition}
                 onMove={this.handleScrollbarMove.bind(this)}
                 onPositionChange={this.handleScrollbarXPositionChange.bind(this)}
+                containerClassName={this.props.horizontalContainerClassName}
                 containerStyle={this.props.horizontalContainerStyle}
+                scrollbarClassName={this.props.horizontalScrollbarClassName}
                 scrollbarStyle={this.props.horizontalScrollbarStyle}
                 smoothScrolling={withMotion}
                 minScrollSize={this.props.minScrollSize}
@@ -128,8 +134,8 @@ export default class ScrollArea extends React.Component {
             warnAboutElementChild();
         }
 
-        let classes = 'scrollarea ' + (className || '');
-        let contentClasses = 'scrollarea-content ' + (contentClassName || '');
+        let classes = classNames('scrollarea', className);
+        let contentClasses = classNames('scrollarea-content', contentClassName);
 
         let contentStyle = {
             marginTop: -this.state.topPosition,
@@ -446,29 +452,33 @@ export default class ScrollArea extends React.Component {
 }
 
 ScrollArea.childContextTypes = {
-    scrollArea: React.PropTypes.object
+    scrollArea: PropTypes.object
 };
 
 ScrollArea.propTypes = {
-    className: React.PropTypes.string,
-    style: React.PropTypes.object,
-    speed: React.PropTypes.number,
-    contentClassName: React.PropTypes.string,
-    contentStyle: React.PropTypes.object,
-    vertical: React.PropTypes.bool,
-    verticalContainerStyle: React.PropTypes.object,
-    verticalScrollbarStyle: React.PropTypes.object,
-    horizontal: React.PropTypes.bool,
-    horizontalContainerStyle: React.PropTypes.object,
-    horizontalScrollbarStyle: React.PropTypes.object,
-    onScroll: React.PropTypes.func,
-    contentWindow: React.PropTypes.any,
-    ownerDocument: React.PropTypes.any,
-    smoothScrolling: React.PropTypes.bool,
-    minScrollSize: React.PropTypes.number,
-    swapWheelAxes: React.PropTypes.bool,
-    stopScrollPropagation: React.PropTypes.bool,
-    focusableTabIndex: React.PropTypes.number
+    className: PropTypes.string,
+    style: PropTypes.object,
+    speed: PropTypes.number,
+    contentClassName: PropTypes.string,
+    contentStyle: PropTypes.object,
+    vertical: PropTypes.bool,
+    verticalContainerClassName: PropTypes.string,
+    verticalContainerStyle: PropTypes.object,
+    verticalScrollbarClassName: PropTypes.string,
+    verticalScrollbarStyle: PropTypes.object,
+    horizontal: PropTypes.bool,
+    horizontalContainerClassName: PropTypes.string,
+    horizontalContainerStyle: PropTypes.object,
+    horizontalScrollbarClassName: PropTypes.string,
+    horizontalScrollbarStyle: PropTypes.object,
+    onScroll: PropTypes.func,
+    contentWindow: PropTypes.any,
+    ownerDocument: PropTypes.any,
+    smoothScrolling: PropTypes.bool,
+    minScrollSize: PropTypes.number,
+    swapWheelAxes: PropTypes.bool,
+    stopScrollPropagation: PropTypes.bool,
+    focusableTabIndex: PropTypes.number
 };
 
 ScrollArea.defaultProps = {
