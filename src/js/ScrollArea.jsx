@@ -3,6 +3,7 @@ import ScrollBar from './Scrollbar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
 import lineHeight from 'line-height';
 import {Motion, spring} from 'react-motion';
+import classNames from 'classnames';
 
 const eventTypes = {
     wheel: 'wheel',
@@ -97,7 +98,9 @@ export default class ScrollArea extends React.Component {
                 position={this.state.topPosition}
                 onMove={this.handleScrollbarMove.bind(this)}
                 onPositionChange={this.handleScrollbarYPositionChange.bind(this)}
+                containerClassName={this.props.verticalContainerClassName}
                 containerStyle={this.props.verticalContainerStyle}
+                scrollbarClassName={this.props.verticalScrollbarClassName}
                 scrollbarStyle={this.props.verticalScrollbarStyle}
                 smoothScrolling={withMotion}
                 minScrollSize={this.props.minScrollSize}
@@ -113,7 +116,9 @@ export default class ScrollArea extends React.Component {
                 position={this.state.leftPosition}
                 onMove={this.handleScrollbarMove.bind(this)}
                 onPositionChange={this.handleScrollbarXPositionChange.bind(this)}
+                containerClassName={this.props.horizontalContainerClassName}
                 containerStyle={this.props.horizontalContainerStyle}
+                scrollbarClassName={this.props.horizontalScrollbarClassName}
                 scrollbarStyle={this.props.horizontalScrollbarStyle}
                 smoothScrolling={withMotion}
                 minScrollSize={this.props.minScrollSize}
@@ -128,8 +133,8 @@ export default class ScrollArea extends React.Component {
             warnAboutElementChild();
         }
 
-        let classes = 'scrollarea ' + (className || '');
-        let contentClasses = 'scrollarea-content ' + (contentClassName || '');
+        let classes = classNames('scrollarea', className);
+        let contentClasses = classNames('scrollarea-content', contentClassName);
 
         let contentStyle = {
             marginTop: -this.state.topPosition,
@@ -456,10 +461,14 @@ ScrollArea.propTypes = {
     contentClassName: React.PropTypes.string,
     contentStyle: React.PropTypes.object,
     vertical: React.PropTypes.bool,
+    verticalContainerClassName: React.PropTypes.string,
     verticalContainerStyle: React.PropTypes.object,
+    verticalScrollbarClassName: React.PropTypes.string,
     verticalScrollbarStyle: React.PropTypes.object,
     horizontal: React.PropTypes.bool,
+    horizontalContainerClassName: React.PropTypes.string,
     horizontalContainerStyle: React.PropTypes.object,
+    horizontalScrollbarClassName: React.PropTypes.string,
     horizontalScrollbarStyle: React.PropTypes.object,
     onScroll: React.PropTypes.func,
     contentWindow: React.PropTypes.any,
