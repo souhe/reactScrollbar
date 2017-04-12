@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Motion, spring} from 'react-motion';
 import {modifyObjValues} from './utils';
 import classNames from 'classnames';
@@ -175,20 +176,20 @@ class ScrollBar extends React.Component {
 }
 
 ScrollBar.propTypes = {
-    onMove: React.PropTypes.func,
-    onPositionChange: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    realSize: React.PropTypes.number,
-    containerSize: React.PropTypes.number,
-    position: React.PropTypes.number,
-    containerClassName: React.PropTypes.string,
-    containerStyle: React.PropTypes.object,
-    scrollbarClassName: React.PropTypes.string,
-    scrollbarStyle: React.PropTypes.object,
-    type: React.PropTypes.oneOf(['vertical', 'horizontal']),
-    ownerDocument: React.PropTypes.any,
-    smoothScrolling: React.PropTypes.bool,
-    minScrollSize: React.PropTypes.number
+    onMove: PropTypes.func,
+    onPositionChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    realSize: PropTypes.number,
+    containerSize: PropTypes.number,
+    position: PropTypes.number,
+    containerClassName: PropTypes.string,
+    containerStyle: PropTypes.object,
+    scrollbarClassName: PropTypes.string,
+    scrollbarStyle: PropTypes.object,
+    type: PropTypes.oneOf(['vertical', 'horizontal']),
+    ownerDocument: PropTypes.any,
+    smoothScrolling: PropTypes.bool,
+    minScrollSize: PropTypes.number
 };
 
 ScrollBar.defaultProps = {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ScrollBar from './Scrollbar';
 import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
 import lineHeight from 'line-height';
@@ -451,33 +452,33 @@ export default class ScrollArea extends React.Component {
 }
 
 ScrollArea.childContextTypes = {
-    scrollArea: React.PropTypes.object
+    scrollArea: PropTypes.object
 };
 
 ScrollArea.propTypes = {
-    className: React.PropTypes.string,
-    style: React.PropTypes.object,
-    speed: React.PropTypes.number,
-    contentClassName: React.PropTypes.string,
-    contentStyle: React.PropTypes.object,
-    vertical: React.PropTypes.bool,
-    verticalContainerClassName: React.PropTypes.string,
-    verticalContainerStyle: React.PropTypes.object,
-    verticalScrollbarClassName: React.PropTypes.string,
-    verticalScrollbarStyle: React.PropTypes.object,
-    horizontal: React.PropTypes.bool,
-    horizontalContainerClassName: React.PropTypes.string,
-    horizontalContainerStyle: React.PropTypes.object,
-    horizontalScrollbarClassName: React.PropTypes.string,
-    horizontalScrollbarStyle: React.PropTypes.object,
-    onScroll: React.PropTypes.func,
-    contentWindow: React.PropTypes.any,
-    ownerDocument: React.PropTypes.any,
-    smoothScrolling: React.PropTypes.bool,
-    minScrollSize: React.PropTypes.number,
-    swapWheelAxes: React.PropTypes.bool,
-    stopScrollPropagation: React.PropTypes.bool,
-    focusableTabIndex: React.PropTypes.number
+    className: PropTypes.string,
+    style: PropTypes.object,
+    speed: PropTypes.number,
+    contentClassName: PropTypes.string,
+    contentStyle: PropTypes.object,
+    vertical: PropTypes.bool,
+    verticalContainerClassName: PropTypes.string,
+    verticalContainerStyle: PropTypes.object,
+    verticalScrollbarClassName: PropTypes.string,
+    verticalScrollbarStyle: PropTypes.object,
+    horizontal: PropTypes.bool,
+    horizontalContainerClassName: PropTypes.string,
+    horizontalContainerStyle: PropTypes.object,
+    horizontalScrollbarClassName: PropTypes.string,
+    horizontalScrollbarStyle: PropTypes.object,
+    onScroll: PropTypes.func,
+    contentWindow: PropTypes.any,
+    ownerDocument: PropTypes.any,
+    smoothScrolling: PropTypes.bool,
+    minScrollSize: PropTypes.number,
+    swapWheelAxes: PropTypes.bool,
+    stopScrollPropagation: PropTypes.bool,
+    focusableTabIndex: PropTypes.number
 };
 
 ScrollArea.defaultProps = {
