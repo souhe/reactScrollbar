@@ -187,8 +187,10 @@ export default class ScrollArea extends React.Component {
     }
 
     handleTouchMove(e) {
-        e.preventDefault();
-        e.stopPropagation();
+        if (this.canScroll()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
 
         let {touches} = e;
         if (touches.length === 1) {
@@ -422,6 +424,10 @@ export default class ScrollArea extends React.Component {
     canScrollX(state = this.state) {
         let scrollableX = state.realWidth > state.containerWidth;
         return scrollableX && this.props.horizontal;
+    }
+
+    canScroll(state = this.state) {
+        return this.canScrollY(state) || this.canScrollX(state);
     }
 
     getModifiedPositionsIfNeeded(newState) {
