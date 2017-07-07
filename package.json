@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/souhe/reactScrollbar.git"
+    "url": "https://github.com/mishantrop/reactScrollbar.git"
   },
   "keywords": [
     "react",
@@ -18,7 +18,7 @@
     "scroll",
     "scrollarea"
   ],
-  "author": "souhe",
+  "author": "mishantrop",
   "license": "MIT",
   "dependencies": {
     "config": "^1.24.0",
@@ -65,7 +65,7 @@
     "webpack-stream": "^3.1.0"
   },
   "bugs": {
-    "url": "https://github.com/souhe/reactScrollbar/issues"
+    "url": "https://github.com/mishantrop/reactScrollbar/issues"
   },
-  "homepage": "https://github.com/souhe/reactScrollbar"
+  "homepage": "https://github.com/mishantrop/reactScrollbar"
 }
