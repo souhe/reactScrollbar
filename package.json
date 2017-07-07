@@ -18,7 +18,7 @@
     "scroll",
     "scrollarea"
   ],
-  "author": "mishantrop",
+  "author": "mishanthrop",
   "license": "MIT",
   "dependencies": {
     "config": "^1.24.0",
