@@ -1,18 +1,12 @@
-
-[![build status](https://img.shields.io/travis/souhe/reactScrollbar/master.svg?style=flat-square)](https://travis-ci.org/souhe/reactScrollbar)
-[![npm package](https://img.shields.io/npm/v/react-scrollbar.svg?style=flat-square)](https://www.npmjs.org/package/react-scrollbar)
-[![npm downloads](https://img.shields.io/npm/dm/react-scrollbar.svg?style=flat-square)](https://www.npmjs.org/package/react-scrollbar)
-# react-scrollbar
-
 Simple ScrollArea component built for [React](http://facebook.github.io/react/).
 
 [Demo](http://souhe.github.io/reactScrollbar)
 
 ```bash
-npm install react-scrollbar --save
+npm install react-scrollarea --save
 ```
 
-React Scrollbar requires **React 0.13 or later**
+React Scrollbar requires **React 0.15 or later**
 
 Features:
  - built with and for `React`
@@ -59,7 +53,7 @@ For **React 0.13** you need to wrap `<ScrollArea>` child into a function.
 ```
 
 #### Version without boundled css styles ####
-If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line. 
+If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line.
 
 ```js
     var ScrollArea = require('react-scrollbar/no-css');
@@ -164,7 +158,7 @@ You can override document to make scrollarea works inside iframe.
 **Default: document**
 
 #### smoothScrolling
-When set to true, smooth scrolling for both scrollbars is enabled. 
+When set to true, smooth scrolling for both scrollbars is enabled.
 **Default: false**
 
 #### minScrollSize
@@ -237,7 +231,7 @@ It allows to scroll to the right of `ScrollArea` component.
 It moves horizontal scrollbar. `leftPosition` is a distance between left edge of `scrollArea` container and left edge of `scrollArea` content.  
 
 # Change log
-Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. 
+Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page.
 
 # License
 MIT
