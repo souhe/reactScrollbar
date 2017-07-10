@@ -60,15 +60,26 @@ class ScrollBar extends React.Component {
     }
 
     render(){
-        let {smoothScrolling, isDragging, type, scrollbarStyle, containerStyle, scrollbarClassName, containerClassName} = this.props;
+        let {
+          containerClassName,
+          containerClassNameActive,
+          containerClassNameHorizontal,
+          containerClassNameVertical,
+          containerStyle,
+          isDragging,
+          scrollbarClassName,
+          scrollbarStyle,
+          smoothScrolling,
+          type,
+        } = this.props;
         let isHorizontal = type === 'horizontal';
         let isVertical = type === 'vertical';
         let scrollStyles = this.createScrollStyles();
         let springifiedScrollStyles = smoothScrolling ? modifyObjValues(scrollStyles, x => spring(x)) : scrollStyles;
 
-        let containerClassNameActive = isDragging ? `${containerClassName}--active` : '';
-        let containerClassNameOrientation = isHorizontal ? `${containerClassName}--horizontal` : `${containerClassName}--vertical`;
-        let scrollbarContainerClasses = `${containerClassName} ${containerClassNameActive} ${containerClassNameOrientation}`;
+        containerClassNameActive = isDragging ? containerClassNameActive : '';
+        let containerClassNameOrientation = isHorizontal ? containerClassNameHorizontal : containerClassNameVertical;
+        let scrollbarContainerClasses = [containerClassName, containerClassNameActive, containerClassNameOrientation].join(' ');
 
         return (
             <Motion style={springifiedScrollStyles}>
@@ -164,26 +175,32 @@ class ScrollBar extends React.Component {
 }
 
 ScrollBar.propTypes = {
+    containerClassName: PropTypes.string,
+    containerClassNameActive: PropTypes.string,
+    containerClassNameHorizontal: PropTypes.string,
+    containerClassNameVertical: PropTypes.string,
+    containerSize: PropTypes.number,
+    containerStyle: PropTypes.object,
+    minScrollSize: PropTypes.number,
+    onFocus: PropTypes.func,
     onMove: PropTypes.func,
     onPositionChange: PropTypes.func,
-    onFocus: PropTypes.func,
-    realSize: PropTypes.number,
-    containerSize: PropTypes.number,
-    position: PropTypes.number,
-    containerStyle: PropTypes.object,
-    containerClassName: PropTypes.string,
-    scrollbarStyle: PropTypes.object,
-    scrollbarClassName: PropTypes.string,
-    type: PropTypes.oneOf(['vertical', 'horizontal']),
     ownerDocument: PropTypes.any,
+    position: PropTypes.number,
+    realSize: PropTypes.number,
+    scrollbarClassName: PropTypes.string,
+    scrollbarStyle: PropTypes.object,
     smoothScrolling: PropTypes.bool,
-    minScrollSize: PropTypes.number
+    type: PropTypes.oneOf(['vertical', 'horizontal']),
 };
 
 ScrollBar.defaultProps = {
-    type : 'vertical',
+    containerClassName: 'scrollbar-container',
+    containerClassNameActive: 'scrollbar-container--active',
+    containerClassNameHorizontal: 'scrollbar-container--horizontal',
+    containerClassNameVertical: 'scrollbar-container--vertical',
+    scrollbarClassName: 'scrollbar',
     smoothScrolling: false,
-    containerClassName: 'scrollbar-container222',
-    scrollbarClassName: 'scrollbar222',
+    type : 'vertical',
 };
 export default ScrollBar;

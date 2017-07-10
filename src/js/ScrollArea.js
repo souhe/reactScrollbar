@@ -100,6 +100,9 @@ export default class ScrollArea extends React.Component {
                 onPositionChange={this.handleScrollbarYPositionChange.bind(this)}
                 containerStyle={this.props.verticalContainerStyle}
                 containerClassName={this.props.verticalContainerClassName}
+                containerClassNameActive={this.props.verticalContainerClassNameActive}
+                containerClassNameHorizontal={this.props.verticalContainerClassNameHorizontal}
+                containerClassNameVertical={this.props.verticalContainerClassNameVertical}
                 scrollbarStyle={this.props.verticalScrollbarStyle}
                 scrollbarClassName={this.props.verticalScrollbarClassName}
                 smoothScrolling={withMotion}
@@ -118,6 +121,9 @@ export default class ScrollArea extends React.Component {
                 onPositionChange={this.handleScrollbarXPositionChange.bind(this)}
                 containerStyle={this.props.horizontalContainerStyle}
                 containerClassName={this.props.horizontalContainerClassName}
+                containerClassNameActive={this.props.horizontalContainerClassNameActive}
+                containerClassNameHorizontal={this.props.horizontalContainerClassNameHorizontal}
+                containerClassNameVertical={this.props.horizontalContainerClassNameVertical}
                 scrollbarStyle={this.props.horizontalScrollbarStyle}
                 scrollbarClassName={this.props.horizontalScrollbarClassName}
                 smoothScrolling={withMotion}
