@@ -183,7 +183,7 @@ ScrollBar.propTypes = {
 ScrollBar.defaultProps = {
     type : 'vertical',
     smoothScrolling: false,
-    containerClassName: 'scrollbar-container',
-    scrollbarClassName: 'scrollbar',
+    containerClassName: 'scrollbar-container222',
+    scrollbarClassName: 'scrollbar222',
 };
 export default ScrollBar;
