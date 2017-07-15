@@ -1,26 +1,27 @@
+## About
 Simple ScrollArea component built for [React](http://facebook.github.io/react/).
 
-[Demo](http://souhe.github.io/reactScrollbar)
-
+Demo: http://souhe.github.io/reactScrollbar
+## Install
 ```bash
 npm install react-scrollarea --save
 ```
-
-React Scrollbar requires **React 0.15 or later**
+## Requirements
+React Scrollarea requires **React 0.15 or later**
 
 Features:
- - built with and for `React`
- - horizontal and vertical scrollbars
- - touch support
- - scrollbar dragging and clicking
- - smooth scrolling
- - universal app support
- - customizable styles
- - and more...
+* built with and for React
+* horizontal and vertical scrollbars
+* touch support
+* scrollbar dragging and clicking
+* smooth scrolling
+* universal app support
+* customizable styles
+* and more...
 
-## Usage examples
+## Usage
 
-#### React 0.14
+### React 0.14
 ```js
     var React = require('react');
     var ReactDOM = require('react-dom');
@@ -34,7 +35,7 @@ Features:
             className="area"
             contentClassName="content"
             horizontal={false}
-            >
+          >
             <div>Some long content.</div>
           </ScrollArea>
         );
@@ -44,16 +45,8 @@ Features:
     ReactDOM.render(<App/>, document.body);
 ```
 
-#### React 0.13
-For **React 0.13** you need to wrap `<ScrollArea>` child into a function.
-```js
-<ScrollArea>
-    { () => <div>Some long content. </div> }
-</ScrollArea>
-```
-
-#### Version without boundled css styles ####
-If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line.
+### Version without boundled css styles
+If you prefer including scrollarea without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line.
 
 ```js
     var ScrollArea = require('react-scrollbar/no-css');
@@ -81,25 +74,31 @@ then open [http://localhost:8003](http://localhost:8003).
 
 ```js
     <ScrollArea
-        speed={Number}
         className={String}
-        style={Object}
         contentClassName={String}
         contentStyle={Object}
-        horizontal={Boolean}
-        horizontalContainerStyle={Object}
-        horizontalScrollbarStyle={Object}
-        vertical={Boolean}
-        verticalContainerStyle={Object}
-        verticalScrollbarStyle={Object}
-        onScroll={(value) => {}}
         contentWindow={Object}
+        focusableTabIndex={Number}
+        horizontal={Boolean}
+        horizontalContainerClassNameActive={String}
+        horizontalContainerStyle={Object}
+        horizontalSContainerClassName={String},
+        horizontalScrollbarClassName={String},
+        horizontalScrollbarStyle={Object}
+        minScrollSize={Number}
+        onScroll={(value) => {}}
         ownerDocument={Object}
         smoothScrolling={Boolean}
-        minScrollSize={Number}
-        swapWheelAxes={Boolean}
+        speed={Number}
         stopScrollPropagation={Boolean}
-        focusableTabIndex={Number}
+        style={Object}
+        swapWheelAxes={Boolean}
+        vertical={Boolean}
+        verticalContainerClassName={String}
+        verticalContainerClassNameActive={String}
+        verticalContainerStyle={Object}
+        verticalScrollbarClassName={String}
+        verticalScrollbarStyle={Object}
     >
 ```
 
