@@ -21,10 +21,10 @@
   "author": "mishanthrop",
   "license": "MIT",
   "dependencies": {
-    "config": "^1.24.0",
-    "line-height": "^0.1.1",
-    "react": "^15.4.1",
-    "react-motion": "^0.4.3"
+    "config": "^1.26.1",
+    "line-height": "^0.3.1",
+    "react": "^15.6.1",
+    "react-motion": "^0.5.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -34,7 +34,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
     "babel-runtime": "^6.9.0",
-    "chai": "^3.5.0",
+    "chai": "^4.1.0",
     "css-loader": "^0.23.1",
     "expect": "^1.13.4",
     "expect-jsx": "^2.5.1",
