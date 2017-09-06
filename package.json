@@ -1,6 +1,6 @@
 {
   "name": "react-scrollarea",
-  "version": "0.6.4",
+  "version": "0.6.3",
   "description": "ScrollArea component for react",
   "main": "./dist/scrollArea.js",
   "scripts": {
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mishantrop/reactScrollbar.git"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org"
   },
   "keywords": [
     "react",
