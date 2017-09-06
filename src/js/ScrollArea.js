@@ -465,7 +465,7 @@ ScrollArea.propTypes = {
     contentClassName: PropTypes.string,
     contentStyle: PropTypes.object,
     contentWindow: PropTypes.any,
-    focusableTabIndex: PropTypes.number
+    focusableTabIndex: PropTypes.number,
     horizontal: PropTypes.bool,
     horizontalContainerClassNameActive: PropTypes.string,
     horizontalContainerStyle: PropTypes.object,
