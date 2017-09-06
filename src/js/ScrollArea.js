@@ -490,7 +490,7 @@ ScrollArea.propTypes = {
 
 ScrollArea.defaultProps = {
     contentWindow: (typeof window === "object") ? window : undefined,
-    focusableTabIndex: 1
+    focusableTabIndex: 1,
     horizontal: true,
     ownerDocument: (typeof document === "object") ? document : undefined,
     smoothScrolling: false,
