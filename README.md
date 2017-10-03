@@ -12,7 +12,7 @@ by yarn:
 yarn add react-scrollarea
 ```
 ## Requirements
-React Scrollarea requires **React 0.15 or later**
+React Scrollarea requires React 0.15 or React 0.16
 
 Features:
 * built with and for React
