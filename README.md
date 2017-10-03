@@ -3,8 +3,13 @@ Simple ScrollArea component built for [React](http://facebook.github.io/react/).
 
 Demo: http://souhe.github.io/reactScrollbar
 ## Install
+by npm:
 ```bash
 npm install react-scrollarea --save
+```
+by yarn:
+```bash
+yarn add react-scrollarea
 ```
 ## Requirements
 React Scrollarea requires **React 0.15 or later**
@@ -21,28 +26,23 @@ Features:
 
 ## Usage
 
-### React 0.14
+### React 0.15
 ```js
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    var ScrollArea = require('react-scrollbar');
-
-    var App = React.createClass({
-      render() {
-        return (
-          <ScrollArea
-            speed={0.8}
-            className="area"
-            contentClassName="content"
-            horizontal={false}
-          >
-            <div>Some long content.</div>
-          </ScrollArea>
-        );
-      }
-    });
-
-    ReactDOM.render(<App/>, document.body);
+import ScrollArea from 'react-scrollarea/src/js/ScrollAreaWithoutCss';
+...
+<ScrollArea
+  className={s['navigation-scrollarea']}
+  contentClassName={s['navigation-scrollarea-content']}
+  smoothScrolling
+  speed={0.8}
+  verticalContainerClassName={s['navigation-scrollbar-container']}
+  verticalContainerClassNameActive={s['navigation-scrollbar-container--active']}
+  verticalContainerClassNameHorizontal={s['navigation-scrollbar-container--horizontal']}
+  verticalContainerClassNameVertical={s['navigation-scrollbar-container--vertical']}
+  verticalScrollbarClassName={s['navigation-scrollbar']}
+>
+  <Dialog />
+</ScrollArea>
 ```
 
 ### Version without boundled css styles
@@ -99,7 +99,7 @@ then open [http://localhost:8003](http://localhost:8003).
         verticalContainerStyle={Object}
         verticalScrollbarClassName={String}
         verticalScrollbarStyle={Object}
-    >
+    />
 ```
 
 #### speed
