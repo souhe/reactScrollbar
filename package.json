@@ -24,7 +24,7 @@
     "config": "^1.24.0",
     "line-height": "^0.1.1",
     "react": "^15.4.1",
-    "react-motion": "^0.4.3"
+    "react-motion": "^0.5.2"
   },
   "devDependencies": {
     "babel": "^6.5.2",
