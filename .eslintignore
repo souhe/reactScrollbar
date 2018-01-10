@@ -1,0 +1,5 @@
+node_modules
+public/*
+source/config.js
+source/systemConfig.js
+coverage/*
