@@ -1,13 +1,9 @@
 ## About
 Simple ScrollArea component built for [React](http://facebook.github.io/react/).
 
-Demo: http://souhe.github.io/reactScrollbar
+Demo: https://mishantrop.github.io/reactScrollareaDemo/
 ## Install
-by npm:
-```bash
-npm install react-scrollarea --save
-```
-by yarn:
+
 ```bash
 yarn add react-scrollarea
 ```
@@ -26,22 +22,22 @@ Features:
 
 ## Usage
 
-### React 0.15
+### React 15-16
 ```js
 import ScrollArea from 'react-scrollarea/src/js/ScrollAreaWithoutCss';
 ...
 <ScrollArea
-  className={s['navigation-scrollarea']}
-  contentClassName={s['navigation-scrollarea-content']}
+  className={'scrollarea'}
+  contentClassName={'scrollarea-content'}
   smoothScrolling
   speed={0.8}
-  verticalContainerClassName={s['navigation-scrollbar-container']}
-  verticalContainerClassNameActive={s['navigation-scrollbar-container--active']}
-  verticalContainerClassNameHorizontal={s['navigation-scrollbar-container--horizontal']}
-  verticalContainerClassNameVertical={s['navigation-scrollbar-container--vertical']}
-  verticalScrollbarClassName={s['navigation-scrollbar']}
+  verticalContainerClassName={'scrollbar-container'}
+  verticalContainerClassNameActive={'scrollbar-container--active'}
+  verticalContainerClassNameHorizontal={'scrollbar-container--horizontal'}
+  verticalContainerClassNameVertical={'scrollbar-container--vertical'}
+  verticalScrollbarClassName={'scrollbar'}
 >
-  <Dialog />
+  Hello
 </ScrollArea>
 ```
 
@@ -49,17 +45,17 @@ import ScrollArea from 'react-scrollarea/src/js/ScrollAreaWithoutCss';
 If you prefer including scrollarea without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line.
 
 ```js
-    var ScrollArea = require('react-scrollbar/no-css');
+import ScrollArea from 'react-scrollarea/src/js/ScrollAreaWithoutCss';
 ```
-Then **include scrollArea.css** file into your project.
+Then **include css-file** file into your project.
 
 
 ### Run the example app
 
 ```bash
-git clone https://github.com/souhe/reactScrollbar.git
-cd reactScrollbar
-npm install
+git clone https://github.com/mishantrop/reactScrollarea.git
+cd reactScrollarea
+yarn
 gulp watch
 ```
 
@@ -73,33 +69,33 @@ then open [http://localhost:8003](http://localhost:8003).
 ### Props
 
 ```js
-    <ScrollArea
-        className={String}
-        contentClassName={String}
-        contentStyle={Object}
-        contentWindow={Object}
-        focusableTabIndex={Number}
-        horizontal={Boolean}
-        horizontalContainerClassNameActive={String}
-        horizontalContainerStyle={Object}
-        horizontalSContainerClassName={String},
-        horizontalScrollbarClassName={String},
-        horizontalScrollbarStyle={Object}
-        minScrollSize={Number}
-        onScroll={(value) => {}}
-        ownerDocument={Object}
-        smoothScrolling={Boolean}
-        speed={Number}
-        stopScrollPropagation={Boolean}
-        style={Object}
-        swapWheelAxes={Boolean}
-        vertical={Boolean}
-        verticalContainerClassName={String}
-        verticalContainerClassNameActive={String}
-        verticalContainerStyle={Object}
-        verticalScrollbarClassName={String}
-        verticalScrollbarStyle={Object}
-    />
+<ScrollArea
+    className={String}
+    contentClassName={String}
+    contentStyle={Object}
+    contentWindow={Object}
+    focusableTabIndex={Number}
+    horizontal={Boolean}
+    horizontalContainerClassNameActive={String}
+    horizontalContainerStyle={Object}
+    horizontalSContainerClassName={String},
+    horizontalScrollbarClassName={String},
+    horizontalScrollbarStyle={Object}
+    minScrollSize={Number}
+    onScroll={(value) => {}}
+    ownerDocument={Object}
+    smoothScrolling={Boolean}
+    speed={Number}
+    stopScrollPropagation={Boolean}
+    style={Object}
+    swapWheelAxes={Boolean}
+    vertical={Boolean}
+    verticalContainerClassName={String}
+    verticalContainerClassNameActive={String}
+    verticalContainerStyle={Object}
+    verticalScrollbarClassName={String}
+    verticalScrollbarStyle={Object}
+/>
 ```
 
 #### speed
@@ -175,42 +171,6 @@ After set to true, mouse wheel event will not propagate. This option is specific
 After set to a number, scrollarea-content is rendered with a tabindex value set to the passed in. This option is specifically useful in allowing the scroll area to be focusable.
 **Default: undefined**
 
-
-### Context
-In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:
-
-#### `refresh()`
-That method allows manual refreshing of the scrollbar.
-
-React 0.14 example using ES6 syntax:
-```js
-class App extends React.Component {
-    render(){
-        return (
-            <ScrollArea>
-                <Content />
-            </ScrollArea>
-        );
-    }
-}
-
-class Content extends React.Component {
-    render(){
-        return (
-            <div onClick={this.handleSomeAction.bind(this)}> Some long content </div>
-        );
-    }
-
-    handleSomeAction(){
-        this.context.scrollArea.refresh();
-    }
-}
-
-Content.contextTypes = {
-    scrollArea: React.PropTypes.object
-};
-```
-
 #### `scrollTop()`
 It allows to scroll to the top of `ScrollArea` component.
 
@@ -218,7 +178,7 @@ It allows to scroll to the top of `ScrollArea` component.
 It allows to scroll to the bottom of `ScrollArea` component.
 
 #### `scrollYTo(topPosition)`
-It moves vertical scrollbar. `topPosition` is a distance between the top of `scrollArea` container and the top of `scrollArea` content.  
+It moves vertical scrollbar. `topPosition` is a distance between the top of `scrollArea` container and the top of `scrollArea` content.
 
 #### `scrollLeft()`
 It allows to scroll to the left of `ScrollArea` component.
@@ -227,10 +187,4 @@ It allows to scroll to the left of `ScrollArea` component.
 It allows to scroll to the right of `ScrollArea` component.
 
 #### `scrollXTo(leftPosition)`
-It moves horizontal scrollbar. `leftPosition` is a distance between left edge of `scrollArea` container and left edge of `scrollArea` content.  
-
-# Change log
-Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page.
-
-# License
-MIT
+It moves horizontal scrollbar. `leftPosition` is a distance between left edge of `scrollArea` container and left edge of `scrollArea` content.
