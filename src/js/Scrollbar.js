@@ -67,12 +67,12 @@ class ScrollBar extends React.Component {
   handleScrollBarContainerClick(e) {
     e.preventDefault();
     const multiplier = this.computeMultiplier();
-    let clientPosition = this.isVertical() ? e.clientY : e.clientX;
-    let {
+    const clientPosition = this.isVertical() ? e.clientY : e.clientX;
+    const {
       top,
-      left
+      left,
     } = this.scrollbarContainer.getBoundingClientRect();
-    let clientScrollPosition = this.isVertical() ? top : left;
+    const clientScrollPosition = this.isVertical() ? top : left;
 
     let position = clientPosition - clientScrollPosition;
     let proportionalToPageScrollSize = this.props.containerSize * this.props.containerSize / this.props.realSize;
@@ -173,7 +173,7 @@ class ScrollBar extends React.Component {
     let containerClassNameOrientation = isHorizontal ? containerClassNameHorizontal : containerClassNameVertical;
     let scrollbarContainerClasses = [containerClassName, containerClassNameActive, containerClassNameOrientation].join(' ');
 
-    return ( <
+    return (<
       Motion style = {
         springifiedScrollStyles
       } > {
