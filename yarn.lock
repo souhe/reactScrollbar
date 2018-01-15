@@ -2616,15 +2616,15 @@ gulp-util@*, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.4, gulp-util@^3.
     through2 "^2.0.0"
     vinyl "^0.5.0"
 
-gulp@3.9.0:
-  version "3.9.0"
-  resolved "https://registry.npmjs.org/gulp/-/gulp-3.9.0.tgz#cf1fba4cb558bb8c6ae6c9613f583ae2620d214a"
+gulp@3.9.1:
+  version "3.9.1"
+  resolved "http://npm2.devpizzasoft.ru:4874/gulp/-/gulp-3.9.1.tgz#571ce45928dd40af6514fc4011866016c13845b4"
   dependencies:
     archy "^1.0.0"
     chalk "^1.0.0"
     deprecated "^0.0.1"
     gulp-util "^3.0.0"
-    interpret "^0.6.2"
+    interpret "^1.0.0"
     liftoff "^2.1.0"
     minimist "^1.1.0"
     orchestrator "^0.3.0"
@@ -2903,7 +2903,7 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-interpret@^0.6.2, interpret@^0.6.4:
+interpret@^0.6.4:
   version "0.6.6"
   resolved "https://registry.npmjs.org/interpret/-/interpret-0.6.6.tgz#fecd7a18e7ce5ca6abfb953e1f86213a49f1625b"
 
