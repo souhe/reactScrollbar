@@ -46,14 +46,16 @@ class ScrollBar extends React.Component {
     }
   }
 
-  calcFractionalPosition(realContentSize, containerSize, contentPosition) {
+  calcFractionalPosition = (realContentSize, containerSize, contentPosition) => {
     const relativeSize = realContentSize - containerSize;
     return 1 - ((relativeSize - contentPosition) / relativeSize);
   }
 
   calculateState(props) {
+    // eslint-disable-next-line max-len
     const fractionalPosition = this.calcFractionalPosition(props.realSize, props.containerSize, props.position);
-    const proportionalToPageScrollSize = props.containerSize * props.containerSize / props.realSize;
+    // eslint-disable-next-line max-len
+    const proportionalToPageScrollSize = (props.containerSize * props.containerSize) / props.realSize;
     const scrollSize = proportionalToPageScrollSize < props.minScrollSize ?
       props.minScrollSize : proportionalToPageScrollSize;
     const scrollPosition = (props.containerSize - scrollSize) * fractionalPosition;
@@ -75,23 +77,24 @@ class ScrollBar extends React.Component {
     const clientScrollPosition = this.isVertical() ? top : left;
 
     const position = clientPosition - clientScrollPosition;
-    const proportionalToPageScrollSize = this.props.containerSize * this.props.containerSize / this.props.realSize;
+    // eslint-disable-next-line max-len
+    const proportionalToPageScrollSize = (this.props.containerSize * this.props.containerSize) / this.props.realSize;
 
     this.setState({
       isDragging: true,
       lastClientPosition: clientPosition,
     });
-    this.props.onPositionChange((position - proportionalToPageScrollSize / 2) / multiplier);
+    this.props.onPositionChange(((position - proportionalToPageScrollSize) / 2) / multiplier);
   }
 
   handleMouseMoveForHorizontal(e) {
-    let multiplier = this.computeMultiplier();
+    const multiplier = this.computeMultiplier();
 
     if (this.state.isDragging) {
       e.preventDefault();
-      let deltaX = this.state.lastClientPosition - e.clientX;
+      const deltaX = this.state.lastClientPosition - e.clientX;
       this.setState({
-        lastClientPosition: e.clientX
+        lastClientPosition: e.clientX,
       });
       this.props.onMove(0, deltaX / multiplier);
     }
@@ -135,12 +138,12 @@ class ScrollBar extends React.Component {
         height: this.state.scrollSize,
         marginTop: this.state.position,
       };
-    } else {
-      return {
+    }
+    return {
       width: this.state.scrollSize,
-      marginLeft: this.state.position
-    };}
-    return '';
+      marginLeft: this.state.position,
+    };
+  }
 
   computeMultiplier() {
     return (this.props.containerSize) / this.props.realSize;
@@ -163,51 +166,45 @@ class ScrollBar extends React.Component {
       smoothScrolling,
       type,
     } = this.props;
-    let isHorizontal = type === 'horizontal';
-    let isVertical = type === 'vertical';
-    let scrollStyles = this.createScrollStyles();
+    const isHorizontal = type === 'horizontal';
+    // const isVertical = type === 'vertical';
+    const scrollStyles = this.createScrollStyles();
     let springifiedScrollStyles = smoothScrolling ? modifyObjValues(scrollStyles, x => spring(x)) : scrollStyles;
 
     containerClassNameActive = isDragging ? containerClassNameActive : '';
     let containerClassNameOrientation = isHorizontal ? containerClassNameHorizontal : containerClassNameVertical;
     let scrollbarContainerClasses = [containerClassName, containerClassNameActive, containerClassNameOrientation].join(' ');
 
-    return (<
-      Motion style = {
-        springifiedScrollStyles
-      } > {
-        style =>
-        <
-        div
-        className = {
-          scrollbarContainerClasses
+    return (
+      <Motion style = {springifiedScrollStyles}>
+        {
+          style =>
+          <div
+            className={
+              scrollbarContainerClasses
+            }
+            style={
+              containerStyle
+            }
+            onMouseDown={
+              this.handleScrollBarContainerClick.bind(this)
+            }
+            ref={
+              x => this.scrollbarContainer = x
+            }
+          >
+          <div
+            className={scrollbarClassName}
+            style={
+              { ...scrollbarStyle,
+                ...style
+              }
+            }
+            onMouseDown={this.handleMouseDown.bind(this)}
+          />
+          </div>
         }
-        style = {
-          containerStyle
-        }
-        onMouseDown = {
-          this.handleScrollBarContainerClick.bind(this)
-        }
-        ref = {
-          x => this.scrollbarContainer = x
-        } >
-        <
-        div
-        className = {
-          scrollbarClassName
-        }
-        style = {
-          { ...scrollbarStyle,
-            ...style
-          }
-        }
-        onMouseDown = {
-          this.handleMouseDown.bind(this)
-        }
-        /> <
-        /div>
-      } <
-      /Motion>
+      </Motion>
     );
   }
 }
