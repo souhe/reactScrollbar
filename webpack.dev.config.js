@@ -1,9 +1,7 @@
-'use strict'
-var baseConfig  = require('./webpack.base.config.js');
-var objectAssign = require('object-assign');
+const baseConfig = require('./webpack.base.config.js');
+const objectAssign = require('object-assign');
 
-var config = objectAssign({}, baseConfig);
+const config = objectAssign({}, baseConfig);
 
-config.devtool = "inline-source-map";
-
+config.devtool = 'inline-source-map';
 module.exports = config;
