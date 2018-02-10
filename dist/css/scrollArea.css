@@ -1,0 +1,65 @@
+.scrollarea-content {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative
+}
+
+.scrollarea-content:focus {
+  outline: 0;
+}
+
+.scrollarea {
+  overflow: hidden;
+  position: relative;
+}
+
+.scrollarea .scrollbar-container {
+    background-color: none;
+    opacity: 0.1;
+    position: absolute;
+    z-index: 9999;
+    transition: background-color linear 0.4s, opacity linear 0.4s;
+  }
+
+.scrollarea .scrollbar-container--horizontal {
+      bottom: 0;
+      height: 10px;
+      left: 0;
+      width: 100%;
+    }
+
+.scrollarea .scrollbar-container--horizontal .scrollbar {
+        background-color: #000;
+        height: 8px;
+        margin: 1px 0 0;
+        width: 20px;
+      }
+
+.scrollarea .scrollbar-container--vertical {
+      height: 100%;
+      right: 0;
+      top: 0;
+      width: 10px;
+    }
+
+.scrollarea .scrollbar-container--vertical .scrollbar {
+        background-color: #000;
+        height: 20px;
+        margin: 0 0 0 1px;
+        width: 8px;
+      }
+
+.scrollarea .scrollbar-container:hover {
+  background-color: gray;
+  opacity: 0.6;
+}
+
+.scrollarea .scrollbar-container--active {
+      background-color: gray;
+      opacity: 0.6;
+}
+
+.scrollarea:hover .scrollbar-container {
+  opacity: 0.3;
+}

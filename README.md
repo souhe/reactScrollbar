@@ -1,78 +1,61 @@
-
-[![build status](https://img.shields.io/travis/souhe/reactScrollbar/master.svg?style=flat-square)](https://travis-ci.org/souhe/reactScrollbar)
-[![npm package](https://img.shields.io/npm/v/react-scrollbar.svg?style=flat-square)](https://www.npmjs.org/package/react-scrollbar)
-[![npm downloads](https://img.shields.io/npm/dm/react-scrollbar.svg?style=flat-square)](https://www.npmjs.org/package/react-scrollbar)
-# react-scrollbar
-
+## About
 Simple ScrollArea component built for [React](http://facebook.github.io/react/).
 
-[Demo](http://souhe.github.io/reactScrollbar)
+Demo: https://mishantrop.github.io/reactScrollareaDemo/
+## Install
 
 ```bash
-npm install react-scrollbar --save
+yarn add react-scrollarea
 ```
-
-React Scrollbar requires **React 0.13 or later**
+## Requirements
+React Scrollarea requires React 0.15 or React 0.16
 
 Features:
- - built with and for `React`
- - horizontal and vertical scrollbars
- - touch support
- - scrollbar dragging and clicking
- - smooth scrolling
- - universal app support
- - customizable styles
- - and more...
+* built with and for React
+* horizontal and vertical scrollbars
+* touch support
+* scrollbar dragging and clicking
+* smooth scrolling
+* universal app support
+* customizable styles
+* and more...
 
-## Usage examples
+## Usage
 
-#### React 0.14
+### React 15-16
 ```js
-    var React = require('react');
-    var ReactDOM = require('react-dom');
-    var ScrollArea = require('react-scrollbar');
-
-    var App = React.createClass({
-      render() {
-        return (
-          <ScrollArea
-            speed={0.8}
-            className="area"
-            contentClassName="content"
-            horizontal={false}
-            >
-            <div>Some long content.</div>
-          </ScrollArea>
-        );
-      }
-    });
-
-    ReactDOM.render(<App/>, document.body);
-```
-
-#### React 0.13
-For **React 0.13** you need to wrap `<ScrollArea>` child into a function.
-```js
-<ScrollArea>
-    { () => <div>Some long content. </div> }
+import ScrollArea from 'react-scrollarea/src/js/ScrollAreaWithoutCss';
+...
+<ScrollArea
+  className={'scrollarea'}
+  contentClassName={'scrollarea-content'}
+  smoothScrolling
+  speed={0.8}
+  verticalContainerClassName={'scrollbar-container'}
+  verticalContainerClassNameActive={'scrollbar-container--active'}
+  verticalContainerClassNameHorizontal={'scrollbar-container--horizontal'}
+  verticalContainerClassNameVertical={'scrollbar-container--vertical'}
+  verticalScrollbarClassName={'scrollbar'}
+>
+  Hello
 </ScrollArea>
 ```
 
-#### Version without boundled css styles ####
-If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line. 
+### Version without boundled css styles
+If you prefer including scrollarea without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line.
 
 ```js
-    var ScrollArea = require('react-scrollbar/no-css');
+import ScrollArea from 'react-scrollarea/src/js/ScrollAreaWithoutCss';
 ```
-Then **include scrollArea.css** file into your project.
+Then **include css-file** file into your project.
 
 
 ### Run the example app
 
 ```bash
-git clone https://github.com/souhe/reactScrollbar.git
-cd reactScrollbar
-npm install
+git clone https://github.com/mishantrop/reactScrollarea.git
+cd reactScrollarea
+yarn
 gulp watch
 ```
 
@@ -86,27 +69,33 @@ then open [http://localhost:8003](http://localhost:8003).
 ### Props
 
 ```js
-    <ScrollArea
-        speed={Number}
-        className={String}
-        style={Object}
-        contentClassName={String}
-        contentStyle={Object}
-        horizontal={Boolean}
-        horizontalContainerStyle={Object}
-        horizontalScrollbarStyle={Object}
-        vertical={Boolean}
-        verticalContainerStyle={Object}
-        verticalScrollbarStyle={Object}
-        onScroll={(value) => {}}
-        contentWindow={Object}
-        ownerDocument={Object}
-        smoothScrolling={Boolean}
-        minScrollSize={Number}
-        swapWheelAxes={Boolean}
-        stopScrollPropagation={Boolean}
-        focusableTabIndex={Number}
-    >
+<ScrollArea
+    className={String}
+    contentClassName={String}
+    contentStyle={Object}
+    contentWindow={Object}
+    focusableTabIndex={Number}
+    horizontal={Boolean}
+    horizontalContainerClassNameActive={String}
+    horizontalContainerStyle={Object}
+    horizontalSContainerClassName={String},
+    horizontalScrollbarClassName={String},
+    horizontalScrollbarStyle={Object}
+    minScrollSize={Number}
+    onScroll={(value) => {}}
+    ownerDocument={Object}
+    smoothScrolling={Boolean}
+    speed={Number}
+    stopScrollPropagation={Boolean}
+    style={Object}
+    swapWheelAxes={Boolean}
+    vertical={Boolean}
+    verticalContainerClassName={String}
+    verticalContainerClassNameActive={String}
+    verticalContainerStyle={Object}
+    verticalScrollbarClassName={String}
+    verticalScrollbarStyle={Object}
+/>
 ```
 
 #### speed
@@ -164,7 +153,7 @@ You can override document to make scrollarea works inside iframe.
 **Default: document**
 
 #### smoothScrolling
-When set to true, smooth scrolling for both scrollbars is enabled. 
+When set to true, smooth scrolling for both scrollbars is enabled.
 **Default: false**
 
 #### minScrollSize
@@ -182,42 +171,6 @@ After set to true, mouse wheel event will not propagate. This option is specific
 After set to a number, scrollarea-content is rendered with a tabindex value set to the passed in. This option is specifically useful in allowing the scroll area to be focusable.
 **Default: undefined**
 
-
-### Context
-In context of each `<ScrollArea>` child could be injected an object `scrollArea` contains method:
-
-#### `refresh()`
-That method allows manual refreshing of the scrollbar.
-
-React 0.14 example using ES6 syntax:
-```js
-class App extends React.Component {
-    render(){
-        return (
-            <ScrollArea>
-                <Content />
-            </ScrollArea>
-        );
-    }
-}
-
-class Content extends React.Component {
-    render(){
-        return (
-            <div onClick={this.handleSomeAction.bind(this)}> Some long content </div>
-        );
-    }
-
-    handleSomeAction(){
-        this.context.scrollArea.refresh();
-    }
-}
-
-Content.contextTypes = {
-    scrollArea: React.PropTypes.object
-};
-```
-
 #### `scrollTop()`
 It allows to scroll to the top of `ScrollArea` component.
 
@@ -225,7 +178,7 @@ It allows to scroll to the top of `ScrollArea` component.
 It allows to scroll to the bottom of `ScrollArea` component.
 
 #### `scrollYTo(topPosition)`
-It moves vertical scrollbar. `topPosition` is a distance between the top of `scrollArea` container and the top of `scrollArea` content.  
+It moves vertical scrollbar. `topPosition` is a distance between the top of `scrollArea` container and the top of `scrollArea` content.
 
 #### `scrollLeft()`
 It allows to scroll to the left of `ScrollArea` component.
@@ -234,10 +187,4 @@ It allows to scroll to the left of `ScrollArea` component.
 It allows to scroll to the right of `ScrollArea` component.
 
 #### `scrollXTo(leftPosition)`
-It moves horizontal scrollbar. `leftPosition` is a distance between left edge of `scrollArea` container and left edge of `scrollArea` content.  
-
-# Change log
-Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. 
-
-# License
-MIT
+It moves horizontal scrollbar. `leftPosition` is a distance between left edge of `scrollArea` container and left edge of `scrollArea` content.

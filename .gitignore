@@ -1,9 +1,10 @@
-/dist/
-/node_modules/
-/bower_components/
+/.idea
 /.vscode/
-/npm-debug.log
+/bower_components/
 /examples/main.js
 /examples/site.css
+/node_modules/
+/npm-debug.log
 jsconfig.json
-/.idea
+yarn.lock
+yarn-error.log
