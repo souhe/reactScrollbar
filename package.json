@@ -1,6 +1,6 @@
 {
   "name": "react-scrollarea",
-  "version": "0.6.12",
+  "version": "0.6.11",
   "description": "ScrollArea component for react",
   "main": "./dist/scrollArea.js",
   "scripts": {
