@@ -8,18 +8,16 @@ const config = {
   target: 'web',
   watch: true,
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loader: 'babel-loader',
-      query: {
-        presets: [['env', {
-            browsers: ['last 2 versions'],
-            include: ['transform-es2015-arrow-functions', 'es6.map'],
-            modules: false,
-            useBuiltIns: 'entry',
-          }]]
-      }
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.css$/,
+        loader: 'postcss-loader',
+      },
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({

@@ -156,7 +156,6 @@ class ScrollBar extends React.Component {
   render() {
     const {
       containerClassName,
-      containerClassNameActive,
       containerClassNameHorizontal,
       containerClassNameVertical,
       containerStyle,
@@ -166,6 +165,11 @@ class ScrollBar extends React.Component {
       smoothScrolling,
       type,
     } = this.props;
+    
+    let {
+      containerClassNameActive,
+    } = this.props;
+    
     const isHorizontal = type === 'horizontal';
     // const isVertical = type === 'vertical';
     const scrollStyles = this.createScrollStyles();
