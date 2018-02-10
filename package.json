@@ -79,8 +79,6 @@
     "postcss-pseudoelements": "4.0.0",
     "postcss-selector-matches": "3.0.1",
     "postcss-selector-not": "3.0.1",
-    "react": "^0.15.4 || ^16.0.0",
-    "react-dom": "^0.15.4 || ^16.0.0",
     "react-addons-test-utils": "15.1.0",
     "run-sequence": "1.1.4",
     "style-loader": "0.13.0",
@@ -89,6 +87,10 @@
     "uglifyjs-webpack-plugin": "1.1.6",
     "webpack": "1.12.2",
     "webpack-stream": "3.1.0"
+  },
+  "peerDependencies": {
+    "react": "^0.15.4 || ^16.0.0",
+    "react-dom": "^0.15.4 || ^16.0.0"
   },
   "bugs": {
     "url": "https://github.com/mishantrop/reactScrollbar/issues"
