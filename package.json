@@ -5,8 +5,7 @@
   "main": "./dist/scrollArea.js",
   "scripts": {
     "js-no-css": "webpack --colors --watch --config ./webpack.nocss.config.js",
-    "js": "webpack --colors --watch --config ./webpack.config.js",
-    "test": "./node_modules/.bin/karma start karma.config.js --single-run --browsers PhantomJS"
+    "js": "webpack --colors --watch --config ./webpack.config.js"
   },
   "repository": {
     "type": "git",

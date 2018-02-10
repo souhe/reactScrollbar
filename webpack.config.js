@@ -20,9 +20,9 @@ const config = {
     ],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': 'production',
-    }),
+    //new webpack.DefinePlugin({
+    //  'process.env.NODE_ENV': 'production',
+    //}),
     new UglifyJSPlugin(),
   ],
   stats: {
@@ -33,7 +33,6 @@ const config = {
 
 const mainConfig = Object.assign({}, config, {
   name: 'main',
-  // entry: path.resolve(__dirname, 'src/js/ScrollAreaWithCss.js'),
   entry: [path.resolve(__dirname, 'src/js/ScrollAreaWithCss.js')],
   output: {
     path: path.resolve(__dirname, 'dist'),
