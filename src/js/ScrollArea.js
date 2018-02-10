@@ -1,26 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import lineHeight from 'line-height';
 import { Motion, spring } from 'react-motion';
 import ScrollBar from './Scrollbar';
 import {
   findDOMNode,
-  warnAboutFunctionChild,
-  warnAboutElementChild,
-  positiveOrZero,
   modifyObjValues,
+  positiveOrZero,
+  warnAboutElementChild,
+  warnAboutFunctionChild,
 } from './utils';
 
 const eventTypes = {
-  wheel: 'wheel',
   api: 'api',
+  keyPress: 'keypress',
+  mousemove: 'mousemove',
   touch: 'touch',
   touchEnd: 'touchEnd',
-  mousemove: 'mousemove',
-  keyPress: 'keypress',
+  wheel: 'wheel',
 };
 
-export default class ScrollArea extends React.Component {
+export default class ScrollArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -145,12 +145,12 @@ export default class ScrollArea extends React.Component {
       />
     );
 
-    if (typeof children === 'function') {
-      warnAboutFunctionChild();
-      children = children();
-    } else {
-      warnAboutElementChild();
-    }
+    // if (typeof children === 'function') {
+    //   warnAboutFunctionChild();
+    //   children = children();
+    // } else {
+    //   warnAboutElementChild();
+    // }
 
     const classes = `scrollarea ${(className || '')}`;
     const contentClasses = `scrollarea-content ${(contentClassName || '')}`;
@@ -251,26 +251,26 @@ export default class ScrollArea extends React.Component {
     if (e.target.tagName.toLowerCase() !== 'input') {
       let deltaY = 0;
       let deltaX = 0;
-      const lineHeight = this.lineHeightPx ? this.lineHeightPx : 10;
+      const lineHeight2 = this.lineHeightPx ? this.lineHeightPx : 10;
 
       switch (e.keyCode) {
         case 33: // page up
-          deltaY = this.state.containerHeight - lineHeight;
+          deltaY = this.state.containerHeight - lineHeight2;
           break;
         case 34: // page down
-          deltaY = -this.state.containerHeight + lineHeight;
+          deltaY = -this.state.containerHeight + lineHeight2;
           break;
         case 37: // left
-          deltaX = lineHeight;
+          deltaX = lineHeight2;
           break;
         case 38: // up
-          deltaY = lineHeight;
+          deltaY = lineHeight2;
           break;
         case 39: // right
-          deltaX = -lineHeight;
+          deltaX = -lineHeight2;
           break;
         case 40: // down
-          deltaY = -lineHeight;
+          deltaY = -lineHeight2;
           break;
         default:
           break;
