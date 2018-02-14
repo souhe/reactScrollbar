@@ -73,6 +73,8 @@ Then **include scrollArea.css** file into your project.
 git clone https://github.com/souhe/reactScrollbar.git
 cd reactScrollbar
 npm install
+gulp build-examples
+gulp less-examples
 gulp watch
 ```
 
