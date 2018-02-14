@@ -1,8 +1,12 @@
 import React from 'react';
-import ScrollBar from './Scrollbar';
-import {findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues} from './utils';
+import PropTypes from 'prop-types';
 import lineHeight from 'line-height';
-import {Motion, spring} from 'react-motion';
+import { Motion, spring } from 'react-motion';
+
+import {
+  findDOMNode, warnAboutFunctionChild, warnAboutElementChild, positiveOrZero, modifyObjValues,
+} from './utils';
+import ScrollBar from './Scrollbar';
 
 const eventTypes = {
     wheel: 'wheel',
@@ -274,7 +278,7 @@ export default class ScrollArea extends React.Component {
 
     handleKeyDown(e) {
         // only handle if scroll area is in focus
-        if (e.target.tagName.toLowerCase() !== 'input') {
+        if (e.target.tagName.toLowerCase() !== 'input' && !e.target.isContentEditable) {
             let deltaY = 0;
             let deltaX = 0;
             let lineHeight = this.lineHeightPx ? this.lineHeightPx : 10;
@@ -446,29 +450,29 @@ export default class ScrollArea extends React.Component {
 }
 
 ScrollArea.childContextTypes = {
-    scrollArea: React.PropTypes.object
+    scrollArea: PropTypes.object,
 };
 
 ScrollArea.propTypes = {
-    className: React.PropTypes.string,
-    style: React.PropTypes.object,
-    speed: React.PropTypes.number,
-    contentClassName: React.PropTypes.string,
-    contentStyle: React.PropTypes.object,
-    vertical: React.PropTypes.bool,
-    verticalContainerStyle: React.PropTypes.object,
-    verticalScrollbarStyle: React.PropTypes.object,
-    horizontal: React.PropTypes.bool,
-    horizontalContainerStyle: React.PropTypes.object,
-    horizontalScrollbarStyle: React.PropTypes.object,
-    onScroll: React.PropTypes.func,
-    contentWindow: React.PropTypes.any,
-    ownerDocument: React.PropTypes.any,
-    smoothScrolling: React.PropTypes.bool,
-    minScrollSize: React.PropTypes.number,
-    swapWheelAxes: React.PropTypes.bool,
-    stopScrollPropagation: React.PropTypes.bool,
-    focusableTabIndex: React.PropTypes.number
+    className: PropTypes.string,
+    style: PropTypes.object,
+    speed: PropTypes.number,
+    contentClassName: PropTypes.string,
+    contentStyle: PropTypes.object,
+    vertical: PropTypes.bool,
+    verticalContainerStyle: PropTypes.object,
+    verticalScrollbarStyle: PropTypes.object,
+    horizontal: PropTypes.bool,
+    horizontalContainerStyle: PropTypes.object,
+    horizontalScrollbarStyle: PropTypes.object,
+    onScroll: PropTypes.func,
+    contentWindow: PropTypes.any,
+    ownerDocument: PropTypes.any,
+    smoothScrolling: PropTypes.bool,
+    minScrollSize: PropTypes.number,
+    swapWheelAxes: PropTypes.bool,
+    stopScrollPropagation: PropTypes.bool,
+    focusableTabIndex: PropTypes.number,
 };
 
 ScrollArea.defaultProps = {
@@ -479,5 +483,5 @@ ScrollArea.defaultProps = {
     swapWheelAxes: false,
     contentWindow: (typeof window === "object") ? window : undefined,
     ownerDocument: (typeof document === "object") ? document : undefined,
-    focusableTabIndex: 1
+    focusableTabIndex: 1,
 };
