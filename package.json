@@ -23,8 +23,6 @@
   "dependencies": {
     "config": "^1.24.0",
     "line-height": "^0.1.1",
-    "prop-types": "^15.6.0",
-    "react": "^15.4.1",
     "react-motion": "^0.5.2"
   },
   "devDependencies": {
@@ -64,6 +62,10 @@
     "style-loader": "^0.13.0",
     "webpack": "^1.12.2",
     "webpack-stream": "^3.1.0"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.6.0",
+    "react": "^15.3.0 || ^16.0.0-rc || ^16.0"
   },
   "bugs": {
     "url": "https://github.com/souhe/reactScrollbar/issues"
