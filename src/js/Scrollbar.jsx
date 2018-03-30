@@ -50,7 +50,13 @@ class ScrollBar extends React.Component {
     calculateState(props){
         let fractionalPosition = this.calculateFractionalPosition(props.realSize, props.containerSize, props.position);
         let proportionalToPageScrollSize = props.containerSize * props.containerSize / props.realSize;
-        let scrollSize = proportionalToPageScrollSize < props.minScrollSize ? props.minScrollSize : proportionalToPageScrollSize;
+        let scrollSize;
+
+        if (props.scrollSize) {
+          scrollSize = props.scrollSize;
+        } else {
+          scrollSize = proportionalToPageScrollSize < props.minScrollSize ? props.minScrollSize : proportionalToPageScrollSize;
+        }
 
         let scrollPosition = (props.containerSize - scrollSize) * fractionalPosition;
         return {
