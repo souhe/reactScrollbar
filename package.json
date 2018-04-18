@@ -4,7 +4,8 @@
   "description": "ScrollArea component for react",
   "main": "./dist/scrollArea.js",
   "scripts": {
-    "test": "./node_modules/.bin/karma start karma.config.js --single-run --browsers PhantomJS"
+    "test": "./node_modules/.bin/karma start karma.config.js --single-run --browsers PhantomJS",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
