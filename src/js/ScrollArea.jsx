@@ -217,9 +217,17 @@ export default class ScrollArea extends React.Component {
     }
 
     handleTouchEnd(e) {
-        let {deltaX, deltaY, timestamp} = this.eventPreviousValues;
+        let deltaX,
+          deltaY,
+          timestamp;
+        if (this.eventPreviousValues) {
+            deltaX = this.eventPreviousValues.deltaX;
+            deltaY = this.eventPreviousValues.deltaY;
+            timestamp = this.eventPreviousValues.timestamp;
+        }
         if (typeof deltaX === 'undefined') deltaX = 0;
         if (typeof deltaY === 'undefined') deltaY = 0;
+        if (typeof timestamp === 'undefined') timestamp = Date.now();
         if (Date.now() - timestamp < 200) {
             this.setStateFromEvent(this.composeNewState(-deltaX * 10, -deltaY * 10), eventTypes.touchEnd);
         }
