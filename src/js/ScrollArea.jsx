@@ -30,9 +30,9 @@ export default class ScrollArea extends React.Component {
         };
 
         this.scrollArea = {
-            // refresh: () => {
-            //     this.setSizesToState();
-            // },
+             refresh: () => {
+                 this.setSizesToState();
+                 },
             scrollTop: () => {
                 this.scrollTop();
             },
