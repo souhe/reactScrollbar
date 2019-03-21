@@ -1,9 +1,10 @@
-'use strict'
-var baseConfig  = require('./webpack.base.config.js');
+/* eslint-disable import/no-extraneous-dependencies */
+
+var baseConfig = require('./webpack.base.config.js');
 var objectAssign = require('object-assign');
 
 var config = objectAssign({}, baseConfig);
 
-config.devtool = "inline-source-map";
+config.devtool = 'inline-source-map';
 
 module.exports = config;

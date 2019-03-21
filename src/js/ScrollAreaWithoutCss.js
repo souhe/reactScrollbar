@@ -1,3 +1,3 @@
-import ScrollArea from './ScrollArea.jsx';
+import ScrollArea from './ScrollArea';
 
 export default ScrollArea;
