@@ -59,7 +59,7 @@ For **React 0.13** you need to wrap `<ScrollArea>` child into a function.
 ```
 
 #### Version without boundled css styles ####
-If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line. 
+If you prefer including scrollbar without css styles boundled inline to js file it's possible to import package without them. It's useful when you want to make custom css changes in scrollbars without using `!important` in each line.
 
 ```js
     var ScrollArea = require('react-scrollbar/no-css');
@@ -108,6 +108,7 @@ then open [http://localhost:8003](http://localhost:8003).
         swapWheelAxes={Boolean}
         stopScrollPropagation={Boolean}
         focusableTabIndex={Number}
+        preventScrollByTouch={Boolean}
     >
 ```
 
@@ -166,7 +167,7 @@ You can override document to make scrollarea works inside iframe.
 **Default: document**
 
 #### smoothScrolling
-When set to true, smooth scrolling for both scrollbars is enabled. 
+When set to true, smooth scrolling for both scrollbars is enabled.
 **Default: false**
 
 #### minScrollSize
@@ -183,6 +184,10 @@ After set to true, mouse wheel event will not propagate. This option is specific
 #### focusableTabIndex
 After set to a number, scrollarea-content is rendered with a tabindex value set to the passed in. This option is specifically useful in allowing the scroll area to be focusable.
 **Default: undefined**
+
+#### preventScrollByTouch
+After set to true, scrolling by touching on mobile devices will be prevented.
+**Default: false**
 
 
 ### Context
@@ -239,7 +244,7 @@ It allows to scroll to the right of `ScrollArea` component.
 It moves horizontal scrollbar. `leftPosition` is a distance between left edge of `scrollArea` container and left edge of `scrollArea` content.  
 
 # Change log
-Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page. 
+Every release is documented on the Github [Releases](https://github.com/souhe/reactScrollbar/releases) page.
 
 # License
 MIT

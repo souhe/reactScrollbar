@@ -89,8 +89,16 @@ export default class ScrollArea extends React.Component {
         this.setSizesToState();
     }
 
+    get touchEventProps() {
+      return this.props.preventScrollByTouch ? null : {
+        onTouchStart: this.handleTouchStart.bind(this),
+        onTouchMove: this.handleTouchMove.bind(this),
+        onTouchEnd: this.handleTouchEnd.bind(this)
+      }
+    }
+
     render() {
-        let {children, className, contentClassName, ownerDocument} = this.props;
+        let {children, className, contentClassName, ownerDocument, preventScrollByTouch} = this.props;
         let withMotion = this.props.smoothScrolling &&
             (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api || this.state.eventType === eventTypes.touchEnd ||
             this.state.eventType === eventTypes.keyPress);
@@ -154,11 +162,9 @@ export default class ScrollArea extends React.Component {
                             ref={x => this.content = x}
                             style={{ ...this.props.contentStyle, ...style }}
                             className={contentClasses}
-                            onTouchStart={this.handleTouchStart.bind(this)}
-                            onTouchMove={this.handleTouchMove.bind(this)}
-                            onTouchEnd={this.handleTouchEnd.bind(this)}
                             onKeyDown={this.handleKeyDown.bind(this)}
                             tabIndex={this.props.focusableTabIndex}
+                            {...this.touchEventProps}
                         >
                             {children}
                         </div>
@@ -479,6 +485,7 @@ ScrollArea.propTypes = {
     swapWheelAxes: PropTypes.bool,
     stopScrollPropagation: PropTypes.bool,
     focusableTabIndex: PropTypes.number,
+    preventScrollByTouch: PropTypes.bool,
 };
 
 ScrollArea.defaultProps = {
@@ -490,4 +497,5 @@ ScrollArea.defaultProps = {
     contentWindow: (typeof window === "object") ? window : undefined,
     ownerDocument: (typeof document === "object") ? document : undefined,
     focusableTabIndex: 1,
+    preventScrollByTouch: false
 };
