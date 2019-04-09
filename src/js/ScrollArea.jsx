@@ -82,7 +82,7 @@ export default class ScrollArea extends React.Component {
         if (this.props.contentWindow) {
             this.props.contentWindow.removeEventListener("resize", this.bindedHandleWindowResize);
         }
-        this.wrapper.removeEventListener("wheel");
+        this.wrapper.removeEventListener("wheel", this.handleWheel.bind(this), {passive: false});
     }
 
     componentDidUpdate() {
