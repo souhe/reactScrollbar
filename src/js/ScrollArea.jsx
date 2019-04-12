@@ -98,7 +98,7 @@ export default class ScrollArea extends React.Component {
     }
 
     render() {
-        let {children, className, contentClassName, ownerDocument, preventScrollByTouch} = this.props;
+        let {children, className, contentClassName, ownerDocument} = this.props;
         let withMotion = this.props.smoothScrolling &&
             (this.state.eventType === eventTypes.wheel || this.state.eventType === eventTypes.api || this.state.eventType === eventTypes.touchEnd ||
             this.state.eventType === eventTypes.keyPress);
