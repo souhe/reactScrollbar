@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import lineHeight from 'line-height';
 import { Motion, spring } from 'react-motion';
+import { styled } from 'linaria/react';
 
 import {
   findNode,
@@ -151,9 +152,6 @@ export default class ScrollArea extends React.Component {
       warnAboutElementChild();
     }
 
-    let classes = 'scrollarea ' + (className || '');
-    let contentClasses = 'scrollarea-content ' + (contentClassName || '');
-
     let contentStyle = {
       marginTop: -this.state.topPosition,
       marginLeft: -this.state.leftPosition,
@@ -165,15 +163,15 @@ export default class ScrollArea extends React.Component {
     return (
       <Motion style={springifiedContentStyle}>
         {style => (
-          <div
+          <Container
             ref={x => (this.wrapper = x)}
-            className={classes}
+            className={className}
             style={this.props.style}
           >
-            <div
+            <Content
               ref={x => (this.content = x)}
               style={{ ...this.props.contentStyle, ...style }}
-              className={contentClasses}
+              className={contentClassName}
               onTouchStart={this.handleTouchStart.bind(this)}
               onTouchMove={this.handleTouchMove.bind(this)}
               onTouchEnd={this.handleTouchEnd.bind(this)}
@@ -181,10 +179,10 @@ export default class ScrollArea extends React.Component {
               tabIndex={this.props.focusableTabIndex}
             >
               {children}
-            </div>
+            </Content>
             {scrollbarY}
             {scrollbarX}
-          </div>
+          </Container>
         )}
       </Motion>
     );
@@ -535,3 +533,23 @@ ScrollArea.defaultProps = {
   ownerDocument: typeof document === 'object' ? document : undefined,
   focusableTabIndex: 1,
 };
+
+const Container = styled.div`
+  position: relative;
+  overflow: hidden;
+`;
+
+const Content = styled.div`
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:hover .scrollbar-container {
+    opacity: 0.3;
+  }
+`;

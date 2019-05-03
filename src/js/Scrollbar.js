@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Motion, spring } from 'react-motion';
+import { styled } from 'linaria/react';
+import { css } from 'linaria';
+
 import { modifyObjValues } from './utils';
 
 class ScrollBar extends React.Component {
@@ -95,10 +98,9 @@ class ScrollBar extends React.Component {
       ? modifyObjValues(scrollStyles, x => spring(x))
       : scrollStyles;
 
-    let scrollbarClasses = `scrollbar-container ${isDragging ? 'active' : ''} ${
-      isVoriziontal ? 'horizontal' : ''
-    } ${isVertical ? 'vertical' : ''}`;
-
+    let scrollbarClasses = `${container} ${isDragging ? 'active' : ''} ${
+      isVoriziontal ? horizontalScrollbarContainer : ''
+    } ${isVertical ? verticalScrollbarContainer : ''}`;
     return (
       <Motion style={springifiedScrollStyles}>
         {style => (
@@ -109,7 +111,9 @@ class ScrollBar extends React.Component {
             ref={x => (this.scrollbarContainer = x)}
           >
             <div
-              className="scrollbar"
+              className={
+                isVoriziontal ? horizontalScrollbar : verticalScrollbar
+              }
               style={{ ...scrollbarStyle, ...style }}
               onMouseDown={this.handleMouseDown.bind(this)}
             />
@@ -217,5 +221,56 @@ ScrollBar.defaultProps = {
   type: 'vertical',
   smoothScrolling: false,
 };
+
+const container = css`
+  position: absolute;
+  background: none;
+  opacity: 0.1;
+  z-index: 99;
+
+  -webkit-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  -ms-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  transition: all 0.4s;
+
+  &:hover {
+    background: gray;
+    opacity: 0.6 !important;
+  }
+
+  &.active {
+    background: gray;
+    opacity: 0.6 !important;
+  }
+`;
+
+const horizontalScrollbarContainer = css`
+  width: 100%;
+  height: 10px;
+  left: 0;
+  bottom: 0;
+`;
+
+const verticalScrollbarContainer = css`
+  width: 10px;
+  height: 100%;
+  right: 0;
+  top: 0;
+`;
+
+const horizontalScrollbar = css`
+  width: 20px;
+  height: 8px;
+  background: black;
+  margin-top: 1px;
+`;
+
+const verticalScrollbar = css`
+  width: 8px;
+  height: 20px;
+  background: black;
+  margin-left: 1px;
+`;
 
 export default ScrollBar;
