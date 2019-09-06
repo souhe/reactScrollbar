@@ -61,6 +61,7 @@ export default class ScrollArea extends React.Component {
         };
 
         this.bindedHandleWindowResize = this.handleWindowResize.bind(this);
+        this.bindedHandleWheel = this.handleWheel.bind(this)
     }
 
     getChildContext() {
@@ -75,12 +76,14 @@ export default class ScrollArea extends React.Component {
         }
         this.lineHeightPx = lineHeight(findDOMNode(this.content));
         this.setSizesToState();
+        this.wrapper.addEventListener("wheel", this.bindedHandleWheel, {passive: false})
     }
 
     componentWillUnmount() {
         if (this.props.contentWindow) {
             this.props.contentWindow.removeEventListener("resize", this.bindedHandleWindowResize);
         }
+        this.wrapper.removeEventListener("wheel", this.bindedHandleWheel);
     }
 
     componentDidUpdate() {
@@ -147,9 +150,7 @@ export default class ScrollArea extends React.Component {
                     <div
                         ref={x => this.wrapper = x}
                         className={classes}
-                        style={this.props.style}
-                        onWheel={this.handleWheel.bind(this)}
-                    >
+                        style={this.props.style}>
                         <div
                             ref={x => this.content = x}
                             style={{ ...this.props.contentStyle, ...style }}
