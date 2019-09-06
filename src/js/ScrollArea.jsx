@@ -30,9 +30,9 @@ export default class ScrollArea extends React.Component {
         };
 
         this.scrollArea = {
-             refresh: () => {
-                 this.setSizesToState();
-                 },
+            refresh: () => {
+                this.setSizesToState();
+            },
             scrollTop: () => {
                 this.scrollTop();
             },
@@ -371,10 +371,10 @@ export default class ScrollArea extends React.Component {
     }
 
     computeSizes() {
-        let realHeight = (this.content) ? this.content.offsetHeight : 0;
-        let containerHeight = (this.wrapper) ? this.wrapper.offsetHeight : 0;
-        let realWidth = (this.content) ? this.content.offsetWidth : 0;
-        let containerWidth = (this.content) ? this.wrapper.offsetWidth : 0;
+        let realHeight = this.content ? this.content.offsetHeight : 0;
+        let containerHeight = this.wrapper ? this.wrapper.offsetHeight : 0;
+        let realWidth = this.content ? this.content.offsetWidth : 0;
+        let containerWidth = this.content ? this.wrapper.offsetWidth : 0;
 
         return {
             realHeight: realHeight,
