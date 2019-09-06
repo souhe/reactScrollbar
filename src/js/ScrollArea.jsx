@@ -371,10 +371,10 @@ export default class ScrollArea extends React.Component {
     }
 
     computeSizes() {
-        let realHeight = this.content.offsetHeight;
-        let containerHeight = this.wrapper.offsetHeight;
-        let realWidth = this.content.offsetWidth;
-        let containerWidth = this.wrapper.offsetWidth;
+        let realHeight = this.content ? this.content.offsetHeight : 0;
+        let containerHeight = this.wrapper ? this.wrapper.offsetHeight : 0;
+        let realWidth = this.content ? this.content.offsetWidth : 0;
+        let containerWidth = this.content ? this.wrapper.offsetWidth : 0;
 
         return {
             realHeight: realHeight,
