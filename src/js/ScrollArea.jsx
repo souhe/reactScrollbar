@@ -258,9 +258,11 @@ export default class ScrollArea extends React.Component {
          * e.deltaMode === 1: The delta values are specified in lines
          * https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent/deltaMode
          */
+
+        const lineHeight = !isNaN(this.lineHeightPx) && this.lineHeightPx ? this.lineHeightPx : 10;
         if (e.deltaMode === 1) {
-            deltaY = deltaY * this.lineHeightPx;
-            deltaX = deltaX * this.lineHeightPx;
+            deltaY = deltaY * lineHeight;
+            deltaX = deltaX * lineHeight;
         }
 
         deltaY = deltaY * this.props.speed;
@@ -284,7 +286,7 @@ export default class ScrollArea extends React.Component {
         if (e.target.tagName.toLowerCase() !== 'input' && e.target.tagName.toLowerCase() !== 'textarea' && !e.target.isContentEditable) {
             let deltaY = 0;
             let deltaX = 0;
-            let lineHeight = this.lineHeightPx ? this.lineHeightPx : 10;
+            let lineHeight = !isNaN(this.lineHeightPx) && this.lineHeightPx ? this.lineHeightPx : 10;
 
             switch (e.keyCode) {
                 case 33: // page up
